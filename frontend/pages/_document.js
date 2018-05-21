@@ -18,7 +18,7 @@ export default class BaseDocument extends Document {
   render = () => (
     <html lang="en">
       <Head>
-        <title>Nowfeeling</title>
+        <title>QuoteBook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {this.props.styleTags}
       </Head>
