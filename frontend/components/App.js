@@ -1,25 +1,17 @@
 import React from 'react'
 import {Provider} from 'react-redux'
-import {hydrate, injectGlobal} from 'emotion'
 import {lifecycle} from 'recompose'
+import {injectGlobal} from 'styled-components'
 
 import store from '../ducks'
 
-if (typeof window !== 'undefined') {
-  // Hydrates the styles from emotion.
-  hydrate(window.__NEXT_DATA__.ids)
-}
-
 const enhance = lifecycle({
+  // inject global css style
   componentWillMount() {
-    // Global styles belongs here.
     injectGlobal`
       body {
         margin: 0;
-        font-weight: 300;
-        font-family: Saira Semi Condensed, sans-serif;
       }
-
       * {
         box-sizing: border-box;
       }
@@ -27,7 +19,6 @@ const enhance = lifecycle({
   }
 })
 
-// This HoC (Higher-Order Component) allows us to inject Providers into each page.
 const App = Component =>
   enhance(props => (
     <Provider store={store}>

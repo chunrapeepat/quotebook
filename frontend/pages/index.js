@@ -1,37 +1,13 @@
-import React from 'react'
-import {keyframes} from 'emotion'
-import styled from 'react-emotion'
+import React, {Component} from 'react'
 
 import App from '../components/App'
-import Fold from '../components/LandingFold'
 
-const Page = styled.div`
-  display: flex;
+import Button from '../components/Button'
 
-  width: 100%;
-  min-height: 100vh;
-  background: #ffffff;
-`
-
-const Nav = () => <nav />
-
-const Reason = () => <section />
-
-const Action = () => <section />
-
-const Footer = () => <footer />
-
-// Flow 1.1
-// Landing Page: Explain Intention of BarCode
-
-const Landing = () => (
-  <Page>
-    <Nav />
-    <Fold />
-    <Reason />
-    <Action />
-    <Footer />
-  </Page>
+const IndexView = () => (
+  <div>
+    <Button>Hit my ass!</Button>
+  </div>
 )
 
-export default App(Landing)
+export default App(IndexView)

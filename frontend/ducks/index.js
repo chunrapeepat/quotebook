@@ -2,8 +2,6 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import {all} from 'redux-saga/effects'
 
-import app from './app'
-
 const saga = createSagaMiddleware()
 
 const composeEnhancers =
@@ -11,7 +9,7 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
     : compose
 
-export const reducers = combineReducers({app})
+export const reducers = combineReducers({})
 const store = createStore(reducers, composeEnhancers(applyMiddleware(saga)))
 
 function* rootSaga() {

@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from 'styled-components'
 import Ink from 'react-ink'
 
 const Button = styled.button`

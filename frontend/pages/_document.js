@@ -1,46 +1,26 @@
 import React from 'react'
 import Document, {Head, Main, NextScript} from 'next/document'
-import {extractCritical} from 'emotion-server'
-import {flush} from 'emotion'
-
-const dev = process.env.NODE_ENV !== 'production'
+import {ServerStyleSheet} from 'styled-components'
 
 export default class BaseDocument extends Document {
-  // This will extract the critical stylesheets and render the page.
+  // This will extract the stylesheets ane render to the page.
   static getInitialProps({renderPage}) {
-    // Flush the styles in development
-    if (dev) {
-      flush()
-    }
-
-    const page = renderPage()
-    const styles = extractCritical(page.html)
+    const sheet = new ServerStyleSheet()
+    const page = renderPage(App => props => sheet.collectStyles(<App {...props} />))
+    const styleTags = sheet.getStyleElement()
 
     return {
       ...page,
-      ...styles
-    }
-  }
-
-  constructor(props) {
-    super(props)
-
-    const {__NEXT_DATA__, ids} = props
-    if (ids) {
-      __NEXT_DATA__.ids = ids
+      styleTags,
     }
   }
 
   render = () => (
     <html lang="en">
       <Head>
-        <title>Skootar Clone</title>
+        <title>Nowfeeling</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style dangerouslySetInnerHTML={{__html: this.props.css}} />
-        <link
-          href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed"
-          rel="stylesheet"
-        />
+        {this.props.styleTags}
       </Head>
       <body>
         <Main />
