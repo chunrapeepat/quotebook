@@ -1,4 +1,12 @@
 {
-  "extends": "react-static/.babelrc",
-  "plugins": ["babel-plugin-styled-components"]
+  "presets": [
+    "next/babel",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-runtime",
+    "transform-decorators-legacy",
+    ["emotion", {"inline": true}]
+  ]
 }
+
