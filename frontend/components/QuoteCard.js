@@ -6,9 +6,7 @@ import {fonts, colors} from '../core/styled'
 const imageSize = 120;
 
 const Container = styled.div`
-  width: 700px;
-  margin: auto auto;
-  margin: 50px 0;
+  margin-bottom: 50px;
   display: flex;
 
   transition: 0.3s;
