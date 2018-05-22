@@ -11,29 +11,42 @@ const MenubarContainer = styled.div`
 
 const Heading = styled.h1`
   margin: 0;
-  font-family: ${fonts.header};
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
   left: 50%;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
   transform: translateX(-50%);
 
   font-size: 2rem;
+  font-family: ${fonts.header};
 `
 
 const SearchIcon = styled.div`
   position: absolute;
-  left: 0;
-  top: 1rem;
-  font-size: 1.2rem;
   cursor: pointer;
+  left: 0;
+  top: 0.5rem;
+
+  font-size: 1.2rem;
 `
 
 const RightContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0.5rem;
+
   font-size: 1.2rem;
+`
+
+const ProfileImage = styled.img`
+  width: 10px;
+  height: 10px;
+  transform: scale(2.5);
+  border-radius: 50%;
+`
+
+const ProfileName = styled.span`
+  margin-left: 15px;
 `
 
 class Menubar extends Component {
@@ -47,13 +60,23 @@ class Menubar extends Component {
         <Container relative>
 
           <SearchIcon>
-            <i class="zmdi zmdi-search"></i>
+            <Button inline icon><i class="zmdi zmdi-search"></i></Button>
           </SearchIcon>
 
           {!this.state.isAuthenticate &&
             <RightContainer>
               <Button inline margin="0 10px">Sign in</Button>
               <Button inline regular>About QuoteBook</Button>
+            </RightContainer>
+          }
+
+          {this.state.isAuthenticate &&
+            <RightContainer>
+              <Button icon inline margin="0 10px"><i class="zmdi zmdi-notifications-none"></i></Button>
+              <Button inline>
+                <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
+                <ProfileName>Chun Rapeepat</ProfileName>
+              </Button>
             </RightContainer>
           }
 
