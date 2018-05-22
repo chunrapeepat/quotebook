@@ -20,6 +20,7 @@ export default class BaseDocument extends Document {
       <Head>
         <title>QuoteBook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Chonburi|Merriweather:400,700|Trirong:400,700" rel="stylesheet"/>
         {this.props.styleTags}
       </Head>
       <body>
