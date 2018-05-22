@@ -12,6 +12,7 @@ export const colors = {
   main: '#333',
   content: '#555',
   fade: '#888',
+  background: '#f8f8f8',
 }
 
 // all helper function

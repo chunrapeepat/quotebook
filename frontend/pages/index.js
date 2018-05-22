@@ -6,10 +6,11 @@ import Menubar from '../containers/Menubar'
 import QuoteCard from '../components/QuoteCard'
 
 import {Container} from '../core/styled'
+import PopularUser from '../containers/PopularUser'
 
 const IndexContainer = styled.div`
   display: flex;
-  margin-top: 70px;
+  margin-top: 30px;
 
   & > div:nth-child(1) {
     flex: 3;
@@ -35,7 +36,7 @@ const IndexView = () => (
           <QuoteCard />
         </div>
         <div>
-          this
+          <PopularUser />
         </div>
       </IndexContainer>
     </Container>

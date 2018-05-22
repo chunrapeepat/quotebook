@@ -9,15 +9,6 @@ const Container = styled.div`
   margin-bottom: 50px;
   display: flex;
 
-  transition: 0.3s;
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
-
-  &:hover {
-    -webkit-filter: grayscale(0%);
-    filter: grayscale(0%);
-  }
-
   & > div:nth-child(1) {
     width: ${imageSize}px;
     margin-right: 20px;
