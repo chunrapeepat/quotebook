@@ -4,16 +4,16 @@ import Ink from 'react-ink'
 import {colors, fonts} from '../core/styled'
 
 const Button = styled.button`
-  position: relative;
   border: 0;
+  position: relative;
   outline: none;
   cursor: pointer;
   padding: 7px 10px;
   border-radius: 3px;
   background: white;
 
-  color: ${colors.main};
   font-size: 0.8rem;
+  color: ${colors.main};
   font-family: ${fonts.normal};
 
   margin: ${props => props.margin ? props.margin : 0};
