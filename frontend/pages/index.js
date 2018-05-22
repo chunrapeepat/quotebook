@@ -2,11 +2,11 @@ import React, {Component} from 'react'
 
 import App from '../components/App'
 
-import Button from '../components/Button'
+import Menubar from '../containers/Menubar'
 
 const IndexView = () => (
   <div>
-    <Button>Hit my ass!</Button>
+    <Menubar />
   </div>
 )
 

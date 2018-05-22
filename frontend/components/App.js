@@ -5,8 +5,8 @@ import {injectGlobal} from 'styled-components'
 
 import store from '../ducks'
 
+// inject global css style
 const enhance = lifecycle({
-  // inject global css style
   componentWillMount() {
     injectGlobal`
       body {
