@@ -65,8 +65,8 @@ class Menubar extends Component {
 
           {!this.state.isAuthenticate &&
             <RightContainer>
-              <Button inline margin="0 10px">Sign in</Button>
-              <Button inline regular>About QuoteBook</Button>
+              <Button inline margin="0 10px">Sign In</Button>
+              <Button inline regular>Post Your Own</Button>
             </RightContainer>
           }
 
