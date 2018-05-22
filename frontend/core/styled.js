@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 // style global variable and function belong here
 
 // all fonts variable
@@ -9,8 +9,29 @@ export const fonts = {
 
 // all colors variable
 export const colors = {
-  main: '#212121',
+  main: '#333',
+  content: '#555',
+  fade: '#888',
 }
+
+// all helper function
+const sizes = {
+  giant: 1170,
+  desktop: 992,
+  tablet: 768,
+  phone: 376,
+}
+
+// iterate through the sizes and create a media template
+export const media = Object.keys(sizes).reduce((accumulator, label) => {
+  const emSize = sizes[label] / 16
+  accumulator[label] = (...args) => css`
+    @media (max-width: ${emSize}em) {
+      ${css(...args)}
+    }
+  `
+  return accumulator
+}, {})
 
 // all helper components
 export const Container = styled.div`
