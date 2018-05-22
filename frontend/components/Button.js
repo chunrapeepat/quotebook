@@ -1,38 +1,33 @@
 import styled from 'styled-components'
 import Ink from 'react-ink'
 
+import {colors, fonts} from '../core/styled'
+
 const Button = styled.button`
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-appearance: none;
-  border: none;
+  border: 0;
   outline: none;
-  background: white;
+  color: ${colors.main};
+  font-size: 0.8rem;
   cursor: pointer;
+  padding: 7px 10px;
+  border-radius: 3px;
+  background: white;
+  font-family: ${fonts.normal};
 
-  color: ${props => (props.color ? '#ffffff' : '#555')};
-  background: ${props => props.color || '#ffffff'};
+  margin: ${props => props.margin ? props.margin : 0};
 
-  font-size: 1.3em;
-  font-weight: 300;
-  font-family: Saira Semi Condensed, sans-serif;
-  padding: 0.38em 0;
-  line-height: 1.3em;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  transition: all 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  ${props => props.regular ? `
+    border: 1px solid #ccc;
+  ` : ``}
 
-  @media screen and (max-width: 900px) {
+  ${props => props.width ? `
     width: 100%;
-  }
+  ` : ``}
 
-  &:hover {
-    transform: translateY(-4px);
-    color: white;
-  }
+  ${props => props.inline ? `
+    display: inline-block;
+  `: ``}
 `
 
 export default ({children, ...props}) => (

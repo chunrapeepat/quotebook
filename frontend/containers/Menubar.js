@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 
 import App from '../components/App'
+import Button from '../components/Button'
 import {Container, fonts, colors} from '../core/styled'
 
 const MenubarContainer = styled.div`
+  padding: 7px 0;
 `
 
 const Heading = styled.h1`
@@ -30,7 +32,7 @@ const SearchIcon = styled.div`
 const RightContainer = styled.div`
   position: absolute;
   right: 0;
-  top: 1rem;
+  top: 0.5rem;
   font-size: 1.2rem;
 `
 
@@ -50,7 +52,8 @@ class Menubar extends Component {
 
           {!this.state.isAuthenticate &&
             <RightContainer>
-              Hi
+              <Button inline margin="0 10px">Sign in</Button>
+              <Button inline regular>About QuoteBook</Button>
             </RightContainer>
           }
 
