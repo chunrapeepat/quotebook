@@ -10,7 +10,7 @@ export const fontSize = {
   small: 0.8,
   normal: 1,
   icon: 1.2,
-  big: 1.5,
+  big: 1.3,
   giant: 2,
   quote: 3,
 }

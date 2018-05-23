@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 import {fonts, colors, fontSize} from '../core/styled'
 
-const imageSize = 120
+const imageSize = 100
 
 const Container = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   display: flex;
 
   & > div:nth-child(1) {

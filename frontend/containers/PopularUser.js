@@ -2,11 +2,11 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 
 import App from '../components/App'
+import UserItem from '../components/UserItem'
 import {fonts, colors, fontSize} from '../core/styled'
 
 const Container = styled.div`
   width: 100%;
-  height: 300px;
   border-radius: 3px;
   padding: 7px 12px;
   position: sticky;
@@ -25,6 +25,11 @@ class PopularUser extends Component {
     return (
       <Container>
         <Heading>Popular User</Heading>
+        <UserItem />
+        <UserItem />
+        <UserItem />
+        <UserItem />
+        <UserItem />
       </Container>
     )
   }
