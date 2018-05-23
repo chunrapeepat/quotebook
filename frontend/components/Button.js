@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Ink from 'react-ink'
 
-import {colors, fonts} from '../core/styled'
+import {colors, fonts, fontSize} from '../core/styled'
 
 const Button = styled.button`
   border: 0;
@@ -12,15 +12,15 @@ const Button = styled.button`
   border-radius: 3px;
   background: white;
 
-  font-size: 0.8rem;
   color: ${colors.main};
+  font-size: ${fontSize.small}rem;
   font-family: ${fonts.normal};
 
   margin: ${props => props.margin ? props.margin : 0};
 
   ${props => props.icon ? `
     padding: 0px 8px;
-    font-size: 1.2rem;
+    font-size: ${fontSize.icon}rem;
     transform: translateY(3px);
   ` : ``}
 

@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 import App from '../components/App'
 import Menubar from '../containers/Menubar'
+import QuoteComment from '../containers/QuoteComment'
 
-import {Container, fonts, colors} from '../core/styled'
+import {Container, fonts, colors, fontSize} from '../core/styled'
 
 const imageSize = 200
 
@@ -25,7 +26,7 @@ const QuoteContainer = styled.div`
 const QuoteText = styled.h1`
   font-family: ${fonts.header};
   margin: 0;
-  font-size: 3rem;
+  font-size: ${fontSize.quote}rem;
   letter-spacing: 1px;
 `
 
@@ -51,6 +52,35 @@ const ProfileContainer = styled.div`
   background-size: cover;
 `
 
+const ActionContainer = styled.div`
+  font-family: ${fonts.normal};
+  color: ${colors.content};
+  font-size: ${fontSize.normal}rem;
+  margin-bottom: 20px;
+
+  & > div {
+    width: 4px;
+    height: 4px;
+    margin: 0 10px;
+    display: inline-block;
+    transform: translateY(-3px);
+    background: ${colors.content};
+  }
+
+  & > a {
+    text-decoration: none;
+    color: ${colors.content};
+  }
+
+  & > a:hover {
+    text-decoration: underline;
+  }
+
+  & i {
+    margin-right: 3px;
+  }
+`
+
 const QuoteView = () => (
   <div>
     <Menubar />
@@ -65,6 +95,16 @@ const QuoteView = () => (
           </QuoteAuthor>
         </div>
       </QuoteContainer>
+
+      <ActionContainer>
+        <i class="zmdi zmdi-star-outline"></i> <span>300</span>
+        <div/>
+        <a href=""><i class="zmdi zmdi-facebook-box"></i> share to Facebook</a>
+        <div/>
+        <a href=""><i class="zmdi zmdi-twitter-box"></i> share to Twitter</a>
+      </ActionContainer>
+
+      <QuoteComment />
     </Container>
   </div>
 )

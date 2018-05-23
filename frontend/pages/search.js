@@ -42,35 +42,17 @@ const Sidebar = styled.div`
   top: 20px;
 `
 
-const DailyQuoteContainer = styled.div`
+const SearchBox = styled.input`
+  outline: none;
   width: 100%;
-  padding: 50px 0;
-  background: url(${props => props.src});
-  background-size: cover;
-  text-align: center;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 7px;
+  margin-top: 60px;
+  margin-bottom: 30px;
 
-  & h1 {
-    margin: 0;
-    margin-top: 20px;
-    color: ${colors.whiteMain};
-    font-family: ${fonts.header};
-    font-size: ${fontSize.quote}rem;
-  }
-
-  & h2 {
-    margin: 0;
-    margin-top: 15px;
-    color: ${colors.whiteContent};
-    font-family: ${fonts.normal};
-    font-size: ${fontSize.big}rem;
-  }
-
-  & h3 {
-    margin: 0;
-    color: ${colors.whiteFade};
-    font-family: ${fonts.normal};
-    font-size: ${fontSize.normal}rem;
-  }
+  font-family: ${fonts.normal};
+  font-size: ${fontSize.giant}rem;
 `
 
 const Footer = () => (
@@ -84,23 +66,11 @@ const Footer = () => (
   </FooterContainer>
 )
 
-const DailyQuote = ({src}) => (
-  <DailyQuoteContainer src={src}>
-    <Container>
-      <h3>MOST POPULAR QUOTE TODAY</h3>
-      <h1>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</h1>
-      <h2>- Chun Rapeepat</h2>
-    </Container>
-  </DailyQuoteContainer>
-)
-
 const IndexView = () => (
   <div>
     <Menubar />
-    <DailyQuote src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png">
-
-    </DailyQuote>
     <Container>
+      <SearchBox type="text" placeholder="Search Everything from QuoteBook" />
       <IndexContainer>
         <div>
           <QuoteCard />

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import App from '../components/App'
 import Button from '../components/Button'
-import {Container, fonts, colors} from '../core/styled'
+import {Container, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`
   padding: 7px 0;
@@ -17,7 +17,7 @@ const Heading = styled.h1`
   display: inline-block;
   transform: translateX(-50%);
 
-  font-size: 2rem;
+  font-size: ${fontSize.giant};
   font-family: ${fonts.header};
 `
 
@@ -27,7 +27,7 @@ const SearchIcon = styled.div`
   left: 0;
   top: 0.5rem;
 
-  font-size: 1.2rem;
+  font-size: ${fontSize.icon};
 `
 
 const RightContainer = styled.div`
@@ -35,7 +35,7 @@ const RightContainer = styled.div`
   right: 0;
   top: 0.5rem;
 
-  font-size: 1.2rem;
+  font-size: ${fontSize.icon};
 `
 
 const ProfileImage = styled.img`
