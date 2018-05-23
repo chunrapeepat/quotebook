@@ -1,19 +1,27 @@
 import styled, {css} from 'styled-components'
 // style global variable and function belong here
 
-// all fonts variable
 export const fonts = {
   header: `'Abril Fatface', 'Chonburi', cursive`,
   normal: `'Merriweather', 'Trirong', serif`,
 }
 
-// all colors variable
+export const fontSize = {
+  small: 0.8,
+  normal: 1,
+  icon: 1.2,
+  big: 1.5,
+  giant: 2,
+  quote: 3,
+}
+
 export const colors = {
   main: '#333',
   content: '#555',
   fade: '#888',
   background: '#f8f8f8',
 }
+
 
 // all helper function
 const sizes = {

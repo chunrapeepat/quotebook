@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import App from '../components/App'
 import Menubar from '../containers/Menubar'
 
-import {Container, fonts, colors} from '../core/styled'
+import {Container, fonts, colors, fontSize} from '../core/styled'
 
 const imageSize = 200
 
@@ -25,7 +25,7 @@ const QuoteContainer = styled.div`
 const QuoteText = styled.h1`
   font-family: ${fonts.header};
   margin: 0;
-  font-size: 3rem;
+  font-size: ${fontSize.quote}rem;
   letter-spacing: 1px;
 `
 
