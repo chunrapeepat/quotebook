@@ -20,6 +20,9 @@ export const colors = {
   content: '#555',
   fade: '#888',
   background: '#f8f8f8',
+  whiteMain: '#eee',
+  whiteContent: '#ccc',
+  whiteFade: '#999',
 }
 
 

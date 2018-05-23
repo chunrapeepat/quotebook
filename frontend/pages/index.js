@@ -42,6 +42,37 @@ const Sidebar = styled.div`
   top: 20px;
 `
 
+const DailyQuoteContainer = styled.div`
+  width: 100%;
+  padding: 50px 0;
+  background: url(${props => props.src});
+  background-size: cover;
+  text-align: center;
+
+  & h1 {
+    margin: 0;
+    margin-top: 20px;
+    color: ${colors.whiteMain};
+    font-family: ${fonts.header};
+    font-size: ${fontSize.quote}rem;
+  }
+
+  & h2 {
+    margin: 0;
+    margin-top: 15px;
+    color: ${colors.whiteContent};
+    font-family: ${fonts.normal};
+    font-size: ${fontSize.big}rem;
+  }
+
+  & h3 {
+    margin: 0;
+    color: ${colors.whiteFade};
+    font-family: ${fonts.normal};
+    font-size: ${fontSize.normal}rem;
+  }
+`
+
 const Footer = () => (
   <FooterContainer>
     <div>
@@ -53,9 +84,22 @@ const Footer = () => (
   </FooterContainer>
 )
 
+const DailyQuote = ({src}) => (
+  <DailyQuoteContainer src={src}>
+    <Container>
+      <h3>MOST POPULAR QUOTE TODAY</h3>
+      <h1>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</h1>
+      <h2>- Chun Rapeepat</h2>
+    </Container>
+  </DailyQuoteContainer>
+)
+
 const IndexView = () => (
   <div>
     <Menubar />
+    <DailyQuote src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png">
+
+    </DailyQuote>
     <Container>
       <IndexContainer>
         <div>
