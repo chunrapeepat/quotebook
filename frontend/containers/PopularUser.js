@@ -9,8 +9,6 @@ const Container = styled.div`
   width: 100%;
   border-radius: 3px;
   padding: 7px 12px;
-  position: sticky;
-  top: 20px;
   background: ${colors.background};
 `
 

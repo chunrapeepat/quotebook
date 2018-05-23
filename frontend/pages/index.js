@@ -4,9 +4,8 @@ import styled from 'styled-components'
 import App from '../components/App'
 import Menubar from '../containers/Menubar'
 import QuoteCard from '../components/QuoteCard'
-
-import {Container} from '../core/styled'
 import PopularUser from '../containers/PopularUser'
+import {Container, fonts, colors, fontSize} from '../core/styled'
 
 const IndexContainer = styled.div`
   display: flex;
@@ -22,6 +21,38 @@ const IndexContainer = styled.div`
   }
 `
 
+const FooterContainer = styled.div`
+  padding: 7px 10px;
+  margin-top: 20px;
+  font-family: ${fonts.normal};
+  font-size: ${fontSize.small}rem;
+
+  & > div > a {
+    color: ${colors.main};
+    margin-right: 10px;
+  }
+
+  & > p {
+    color: ${colors.content};
+  }
+`
+
+const Sidebar = styled.div`
+  position: sticky;
+  top: 20px;
+`
+
+const Footer = () => (
+  <FooterContainer>
+    <div>
+      <a href="">About us</a>
+      <a href="">Facebook</a><br/>
+      <a href="">Privacy & Terms</a>
+    </div>
+    <p>Copyright © 2018 QuoteBook, The Chun Rapeepat Production.</p>
+  </FooterContainer>
+)
+
 const IndexView = () => (
   <div>
     <Menubar />
@@ -36,7 +67,10 @@ const IndexView = () => (
           <QuoteCard />
         </div>
         <div>
-          <PopularUser />
+          <Sidebar>
+            <PopularUser />
+            <Footer />
+          </Sidebar>
         </div>
       </IndexContainer>
     </Container>
