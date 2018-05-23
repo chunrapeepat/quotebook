@@ -2,46 +2,44 @@ import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-const Page = styled.div`
-  display: flex;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  background: white;
+import Button from '../components/Button'
+import {fonts, fontSize, colors} from '../core/styled'
 
-  font-family: Roboto, sans-serif;
-  font-weight: 300;
+const Page = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  text-align: center;
+  padding: 20px;
+  transform: translateY(-50%);
 `
 
 const Heading = styled.h2`
   margin: 0 auto;
 
-  color: #666;
+  color: ${colors.main};
   font-weight: 300;
-  font-size: 1.9em;
+  font-family: ${fonts.header};
+  font-size: ${fontSize.quote}em;
 `
 
 const Text = styled.p`
-  color: #555;
-  font-weight: 300;
+  color: ${colors.content};
   line-height: 1.8em;
   text-align: center;
-  font-size: 1.2em;
-`
-
-const Anchor = styled.a`
-
+  margin-bottom: 30px;
+  font-family: ${fonts.normal};
+  font-size: ${fontSize.normal}em;
 `
 
 const Error = ({statusCode}) => (
   <Page>
-    <Heading>How did you get here? Impressive!</Heading>
+    <Heading>ERROR 404</Heading>
     <Text>
-      I'm not really sure how you got here.
-      Would you mind going back, Please?
+      Sorry! The page you were looking for could not be found.
     </Text>
     <Link href='/'>
-      <Anchor>Go Back</Anchor>
+      <Button regular>GO BACK TO HOME PAGE</Button>
     </Link>
   </Page>
 )
