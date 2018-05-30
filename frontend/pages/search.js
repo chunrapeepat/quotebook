@@ -66,29 +66,35 @@ const Footer = () => (
   </FooterContainer>
 )
 
-const IndexView = () => (
-  <div>
-    <Menubar />
-    <Container>
-      <SearchBox type="text" placeholder="Search Everything from QuoteBook" />
-      <IndexContainer>
-        <div>
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-        </div>
-        <div>
-          <Sidebar>
-            <PopularUser />
-            <Footer />
-          </Sidebar>
-        </div>
-      </IndexContainer>
-    </Container>
-  </div>
-)
+class IndexView extends Component {
+  render() {
+    return (
+      <div>
+        <Menubar />
+        <Container>
+          <SearchBox
+            autoFocus
+            type="text" placeholder="Search Everything from QuoteBook" />
+          <IndexContainer>
+            <div>
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+            </div>
+            <div>
+              <Sidebar>
+                <PopularUser />
+                <Footer />
+              </Sidebar>
+            </div>
+          </IndexContainer>
+        </Container>
+      </div>
+    )
+  }
+}
 
 export default App(IndexView)

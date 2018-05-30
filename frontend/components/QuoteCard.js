@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 import {fonts, colors, fontSize} from '../core/styled'
 
-const imageSize = 100
+const imageSize = 130
 
 const Container = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   display: flex;
 
   & > div:nth-child(1) {
@@ -21,18 +21,25 @@ const Container = styled.div`
 
 const ProfileContainer = styled.div`
   width: ${imageSize}px;
-  height: ${imageSize * 1.5}px;
+  height: ${imageSize}px;
   background: url(${props => props.src}) no-repeat top center, #ccc;
   background-size: cover;
 `
 
 const ContentContainer = styled.div`
-  & > h2 {
+  width: 0px;
+
+  & h2 {
     margin: 0;
-    font-size: ${fontSize.big}rem;
+    margin-top: 5px;
     color: ${colors.main};
-    font-family: ${fonts.header};
+    font-size: ${fontSize.big}rem;
+    font-family: ${fonts.normal};
     letter-spacing: 1px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `
 

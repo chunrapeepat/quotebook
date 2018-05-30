@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import Link from 'next/link'
 
 import App from '../components/App'
 import Button from '../components/Button'
@@ -60,7 +61,9 @@ class Menubar extends Component {
         <Container relative>
 
           <SearchIcon>
-            <Button inline icon><i class="zmdi zmdi-search"></i></Button>
+            <Link href="/search">
+              <Button inline icon><i className="zmdi zmdi-search"></i></Button>
+            </Link>
           </SearchIcon>
 
           {!this.state.isAuthenticate &&
@@ -80,7 +83,9 @@ class Menubar extends Component {
             </RightContainer>
           }
 
-          <Heading>QuoteBook</Heading>
+          <Link href="/">
+            <Heading>QuoteBook</Heading>
+          </Link>
         </Container>
       </MenubarContainer>
     )
