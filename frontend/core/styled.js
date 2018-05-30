@@ -50,6 +50,10 @@ export const Container = styled.div`
   width: 1000px;
   margin: auto auto;
 
+  ${props => props['with-margin'] ? `
+    margin-top: 20px;
+  ` : ''}
+
   ${props => props.relative ? `
     position: relative;
   ` : ``}
