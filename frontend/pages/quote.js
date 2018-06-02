@@ -85,6 +85,17 @@ const ActionContainer = styled.div`
   `}
 `
 
+const ProfileImage = styled.span`
+  background: url(${props => props.src}) no-repeat center center;
+  background-size: cover;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  transform: translateY(7px);
+`
+
 const QuoteView = () => (
   <div>
     <Menubar night/>
@@ -94,6 +105,7 @@ const QuoteView = () => (
         <QuoteText>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</QuoteText>
         <QuoteAuthor>
           <div />
+          <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg" />
           Chun Rapeepat
         </QuoteAuthor>
       </QuoteContainer>
