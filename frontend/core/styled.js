@@ -12,7 +12,7 @@ export const fontSize = {
   icon: 1.2,
   big: 1.3,
   giant: 2,
-  quote: 3,
+  quote: 3.5,
 }
 
 export const colors = {

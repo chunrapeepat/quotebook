@@ -5,22 +5,21 @@ import App from '../components/App'
 import Menubar from '../containers/Menubar'
 import QuoteComment from '../containers/QuoteComment'
 
-import {Container, fonts, colors, fontSize} from '../core/styled'
-
-const imageSize = 200
+import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const QuoteContainer = styled.div`
-  display: flex;
-  margin: 80px 0;
+  padding: 80px;
+  padding-bottom: 100px;
 
-  & > div:nth-child(1) {
-    width: ${imageSize}px;
-    margin-right: 50px;
-  }
+  ${media.desktop`
+    padding: 80px 50px;
+    padding-bottom: 90px;
+  `}
 
-  & > div:nth-child(2) {
-    flex: 1;
-  }
+  ${media.tablet`
+    padding: 50px 20px;
+    padding-bottom: 70px;
+  `}
 `
 
 const QuoteText = styled.h1`
@@ -28,6 +27,14 @@ const QuoteText = styled.h1`
   margin: 0;
   font-size: ${fontSize.quote}rem;
   letter-spacing: 1px;
+
+  ${media.desktop`
+    font-size: ${fontSize.quote - 0.5}rem;
+  `}
+
+  ${media.tablet`
+    font-size: ${fontSize.quote - 1.5}rem;
+  `}
 `
 
 const QuoteAuthor = styled.div`
@@ -43,13 +50,6 @@ const QuoteAuthor = styled.div`
     margin-right: 10px;
     transform: translateY(-3px);
   }
-`
-
-const ProfileContainer = styled.div`
-  width: ${imageSize}px;
-  height: ${imageSize * 2}px;
-  background: url(${props => props.src}) no-repeat top center, #ccc;
-  background-size: cover;
 `
 
 const ActionContainer = styled.div`
@@ -79,21 +79,23 @@ const ActionContainer = styled.div`
   & i {
     margin-right: 3px;
   }
+
+  ${media.tablet`
+    font-size: ${fontSize.small}rem;
+  `}
 `
 
 const QuoteView = () => (
   <div>
     <Menubar night/>
     <Container>
+
       <QuoteContainer>
-        <ProfileContainer src="https://image.ibb.co/g6T0fo/Screen_Shot_2561_05_22_at_13_32_17.png"/>
-        <div>
-          <QuoteText>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</QuoteText>
-          <QuoteAuthor>
-            <div />
-            Chun Rapeepat
-          </QuoteAuthor>
-        </div>
+        <QuoteText>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</QuoteText>
+        <QuoteAuthor>
+          <div />
+          Chun Rapeepat
+        </QuoteAuthor>
       </QuoteContainer>
 
       <ActionContainer>
