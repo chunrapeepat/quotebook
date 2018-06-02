@@ -49,7 +49,7 @@ export default () => (
     <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg" />
     <Content>
       <h2>Chun Rapeepat</h2>
-      <div>2000 followers</div>
+      <div>101 quotes</div>
     </Content>
   </Container>
 )

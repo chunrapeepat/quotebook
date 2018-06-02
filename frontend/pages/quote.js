@@ -97,8 +97,6 @@ const QuoteView = () => (
       </QuoteContainer>
 
       <ActionContainer>
-        <i class="zmdi zmdi-star-outline"></i> <span>300</span>
-        <div/>
         <a href=""><i class="zmdi zmdi-facebook-box"></i> share to Facebook</a>
         <div/>
         <a href=""><i class="zmdi zmdi-twitter-box"></i> share to Twitter</a>
