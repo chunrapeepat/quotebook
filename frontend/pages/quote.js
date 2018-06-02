@@ -83,7 +83,7 @@ const ActionContainer = styled.div`
 
 const QuoteView = () => (
   <div>
-    <Menubar />
+    <Menubar night/>
     <Container>
       <QuoteContainer>
         <ProfileContainer src="https://image.ibb.co/g6T0fo/Screen_Shot_2561_05_22_at_13_32_17.png"/>

@@ -8,6 +8,10 @@ import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`
   padding: 7px 0;
+
+  ${props => props.night ? `
+    background: ${colors.main};
+  ` : ``}
 `
 
 const Heading = styled.h1`
@@ -20,6 +24,10 @@ const Heading = styled.h1`
 
   font-size: ${fontSize.giant};
   font-family: ${fonts.header};
+
+  ${props => props.night ? `
+    color: white;
+  ` : ``}
 
   ${media.desktop`
     position: static;
@@ -34,6 +42,13 @@ const SearchIcon = styled.div`
   top: 0.5rem;
 
   font-size: ${fontSize.icon};
+
+  ${props => props.night ? `
+    & button {
+      color: white;
+      background: ${colors.main};
+    }
+  ` : ``}
 
   ${media.desktop`
     display: none;
@@ -55,6 +70,13 @@ const RightContainer = styled.div`
 
   font-size: ${fontSize.icon};
 
+  ${props => props.night ? `
+    & button {
+      color: white;
+      background: ${colors.main};
+    }
+  ` : ``}
+
   ${media.desktop`
     right: 10px;
   `}
@@ -66,8 +88,14 @@ const RightContainer = styled.div`
 
 const MobileMenu = styled.div`
   display: none;
-
   margin-top: 7px;
+
+  ${props => props.night ? `
+    & button {
+      color: white;
+      background: ${colors.main};
+    }
+  ` : ``}
 
   ${media.tablet`
     display: block;
@@ -92,21 +120,21 @@ class Menubar extends Component {
 
   render() {
     return (
-      <MenubarContainer>
+      <MenubarContainer night={this.props.night}>
         <Container relative>
 
           <Link href="/">
-            <Heading>QuoteBook</Heading>
+            <Heading night={this.props.night}>QuoteBook</Heading>
           </Link>
 
-          <SearchIcon>
+          <SearchIcon night={this.props.night}>
             <Link href="/search">
               <Button inline icon><i className="zmdi zmdi-search"></i></Button>
             </Link>
           </SearchIcon>
 
           {!this.state.isAuthenticate &&
-            <RightContainer>
+            <RightContainer night={this.props.night}>
               <SearchIconMobile>
                 <Link href="/search">
                   <Button inline icon><i className="zmdi zmdi-search"></i></Button>
@@ -119,7 +147,7 @@ class Menubar extends Component {
           }
 
           {this.state.isAuthenticate &&
-            <RightContainer>
+            <RightContainer night={this.props.night}>
               <SearchIconMobile>
                 <Link href="/search">
                   <Button inline icon><i className="zmdi zmdi-search"></i></Button>
@@ -131,7 +159,7 @@ class Menubar extends Component {
             </RightContainer>
           }
 
-          <MobileMenu>
+          <MobileMenu night={this.props.night}>
             {!this.state.isAuthenticate &&
               <div>
                 <Button inline>Search</Button>
