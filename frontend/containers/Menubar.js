@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import App from '../components/App'
 import Button from '../components/Button'
-import {Container, fonts, colors, fontSize} from '../core/styled'
+import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`
   padding: 7px 0;
@@ -20,6 +20,11 @@ const Heading = styled.h1`
 
   font-size: ${fontSize.giant};
   font-family: ${fonts.header};
+
+  ${media.desktop`
+    position: static;
+    transform: translateX(0);
+  `}
 `
 
 const SearchIcon = styled.div`
@@ -29,6 +34,18 @@ const SearchIcon = styled.div`
   top: 0.5rem;
 
   font-size: ${fontSize.icon};
+
+  ${media.desktop`
+    display: none;
+  `}
+`
+
+const SearchIconMobile = styled.div`
+  display: none;
+
+  ${media.desktop`
+    display: inline-block;
+  `}
 `
 
 const RightContainer = styled.div`
@@ -37,6 +54,24 @@ const RightContainer = styled.div`
   top: 0.5rem;
 
   font-size: ${fontSize.icon};
+
+  ${media.desktop`
+    right: 10px;
+  `}
+
+  ${media.tablet`
+    display: none;
+  `}
+`
+
+const MobileMenu = styled.div`
+  display: none;
+
+  margin-top: 7px;
+
+  ${media.tablet`
+    display: block;
+  `}
 `
 
 const ProfileImage = styled.img`
@@ -60,6 +95,10 @@ class Menubar extends Component {
       <MenubarContainer>
         <Container relative>
 
+          <Link href="/">
+            <Heading>QuoteBook</Heading>
+          </Link>
+
           <SearchIcon>
             <Link href="/search">
               <Button inline icon><i className="zmdi zmdi-search"></i></Button>
@@ -68,24 +107,49 @@ class Menubar extends Component {
 
           {!this.state.isAuthenticate &&
             <RightContainer>
-              <Button inline margin="0 10px">Sign In</Button>
+              <SearchIconMobile>
+                <Link href="/search">
+                  <Button inline icon><i className="zmdi zmdi-search"></i></Button>
+                </Link>
+              </SearchIconMobile>
+              <Button inline>Sign In</Button>
+              <Button inline margin="0 10px 0 0">About</Button>
               <Button inline regular>Post Your Own</Button>
             </RightContainer>
           }
 
           {this.state.isAuthenticate &&
             <RightContainer>
-              <Button icon inline margin="0 10px"><i class="zmdi zmdi-notifications-none"></i></Button>
-              <Button inline>
-                <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
-                <ProfileName>Chun Rapeepat</ProfileName>
-              </Button>
+              <SearchIconMobile>
+                <Link href="/search">
+                  <Button inline icon><i className="zmdi zmdi-search"></i></Button>
+                </Link>
+              </SearchIconMobile>
+              <Button inline>Profile</Button>
+              <Button inline margin="0 10px 0 0">Logout</Button>
+              <Button inline regular>Post Your Own</Button>
             </RightContainer>
           }
 
-          <Link href="/">
-            <Heading>QuoteBook</Heading>
-          </Link>
+          <MobileMenu>
+            {!this.state.isAuthenticate &&
+              <div>
+                <Button inline>Search</Button>
+                <Button inline>Sign In</Button>
+                <Button inline>About</Button>
+                <Button inline>Post Your Own</Button>
+              </div>
+            }
+            {this.state.isAuthenticate &&
+              <div>
+                <Button inline>Search</Button>
+                <Button inline>Profile</Button>
+                <Button inline>Logout</Button>
+                <Button inline>Post Your Own</Button>
+              </div>
+            }
+          </MobileMenu>
+
         </Container>
       </MenubarContainer>
     )
