@@ -88,17 +88,10 @@ const Content = styled.div`
   }
 `
 
-const Feeling = styled.div`
-  font-family: ${fonts.normal};
-  color: ${colors.fade};
-  font-size: ${fontSize.small}rem;
-`
-
 export default () => (
   <Container>
     <ProfileContainer src="https://image.ibb.co/g6T0fo/Screen_Shot_2561_05_22_at_13_32_17.png"/>
     <ContentContainer>
-      <Feeling>FEELING FUNNY</Feeling>
       <h2>The avoidance of taxes is the only intellectual pursuit that still carries any reward.</h2>
       <QuoteAuthor><div/> Chun Rapeepat</QuoteAuthor>
       <Content>
