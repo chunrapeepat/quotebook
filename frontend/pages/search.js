@@ -5,7 +5,7 @@ import App from '../components/App'
 import Menubar from '../containers/Menubar'
 import QuoteCard from '../components/QuoteCard'
 import PopularUser from '../containers/PopularUser'
-import {Container, fonts, colors, fontSize} from '../core/styled'
+import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const IndexContainer = styled.div`
   display: flex;
@@ -19,6 +19,18 @@ const IndexContainer = styled.div`
   & > div:nth-child(2) {
     flex: 1;
   }
+
+  ${media.desktop`
+    display: block;
+
+    & > div:nth-child(1) {
+      margin-right: 0;
+    }
+  `}
+
+  ${media.tablet`
+    margin-top: 20px;
+  `}
 `
 
 const FooterContainer = styled.div`
@@ -53,6 +65,18 @@ const SearchBox = styled.input`
 
   font-family: ${fonts.normal};
   font-size: ${fontSize.giant}rem;
+
+  ${media.desktop`
+    margin-top: 40px;
+    margin-bottom: 10px;
+    font-size: ${fontSize.giant - 0.5}rem;
+  `}
+
+  ${media.tablet`
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: ${fontSize.giant - 0.8}rem;
+  `}
 `
 
 const Footer = () => (
@@ -70,7 +94,7 @@ class IndexView extends Component {
   render() {
     return (
       <div>
-        <Menubar />
+        <Menubar night/>
         <Container>
           <SearchBox
             autoFocus
