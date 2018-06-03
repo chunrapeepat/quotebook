@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 import App from '../components/App'
 import Menubar from '../containers/Menubar'
-import ProfileQuoteCard from '../components/ProfileQuoteCard'
-import {Container, fonts, colors, fontSize} from '../core/styled'
+import Button from '../components/Button'
+import QuoteCard from '../components/QuoteCard'
+import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const imageSize = 230;
 
@@ -19,6 +20,19 @@ const ProfileContainer = styled.div`
   & > div:nth-child(2) {
     flex: 1;
   }
+
+  ${media.desktop`
+    display: block;
+
+    & > div:nth-child(1) {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+
+      border-bottom: 1px solid #ccc;
+    }
+  `}
 `
 
 const ProfileImage = styled.div`
@@ -35,6 +49,10 @@ const ProfileName = styled.div`
   font-size: ${fontSize.big}rem;
   margin-top: 20px;
   color: ${colors.main};
+
+  ${media.desktop`
+    margin-top: 0;
+  `}
 `
 
 const Bio = styled.div`
@@ -51,6 +69,10 @@ const BioIcon = styled.div`
   margin-top: 20px;
   color: ${colors.content};
 
+  ${media.desktop`
+    margin-top: 10px;
+  `}
+
   & div {
     margin-top: 5px;
   }
@@ -60,9 +82,32 @@ const BioIcon = styled.div`
   }
 `
 
-const Sticky = styled.div`
+const BioContainer = styled.div`
   position: sticky;
   top: 20px;
+
+  ${media.desktop`
+    position: static;
+    display: flex;
+
+    & > div:nth-child(1) {
+      width: 90px;
+      height: 90px;
+      margin-right: 15px;
+    }
+
+    & > div:nth-child(2) {
+      flex: 1;
+    }
+  `}
+
+  ${media.tablet`
+    & > div:nth-child(1) {
+      width: 60px;
+      height: 60px;
+      margin-right: 10px;
+    }
+  `}
 `
 
 const QuoteView = () => (
@@ -72,29 +117,32 @@ const QuoteView = () => (
       <ProfileContainer>
 
         <div>
-          <Sticky>
+          <BioContainer>
             <ProfileImage src="https://cdn-images-1.medium.com/max/280/1*FKjV0WBgu3xhpeUwOSaABQ@2x.jpeg" />
-            <ProfileName>Chun Rapeepat</ProfileName>
-            <Bio>Hello, I'm Chun Rapeepat, 18 y/o full-stack developer from Thailand. Our mission is to build software for solving problems & expand the circle with communities.</Bio>
-            <BioIcon>
-              <div><i className="zmdi zmdi-case"></i> Founder at QuoteBook</div>
-              <div><i className="zmdi zmdi-pin"></i> Bangkok, Thailand</div>
-              <div><i className="zmdi zmdi-facebook-box"></i> Chun Rapeepat</div>
-              <div><i className="zmdi zmdi-link"></i> https://thechun.xyz</div>
-            </BioIcon>
-          </Sticky>
+            <div>
+              <ProfileName>Chun Rapeepat</ProfileName>
+              <Bio>Hello, I'm Chun Rapeepat, 18 y/o full-stack developer from Thailand. Our mission is to build software for solving problems & expand the circle with communities.</Bio>
+              <BioIcon>
+                <div><i className="zmdi zmdi-case"></i> Founder at QuoteBook</div>
+                <div><i className="zmdi zmdi-pin"></i> Bangkok, Thailand</div>
+                <div><i className="zmdi zmdi-facebook-box"></i> Chun Rapeepat</div>
+                <div><i className="zmdi zmdi-link"></i> https://thechun.xyz</div>
+              </BioIcon>
+              {/* <Button width regular style={{'marginTop': '30px'}}>Edit Bio</Button> */}
+            </div>
+          </BioContainer>
         </div>
 
         <div>
-          <ProfileQuoteCard />
-          <ProfileQuoteCard />
-          <ProfileQuoteCard />
-          <ProfileQuoteCard />
-          <ProfileQuoteCard />
-          <ProfileQuoteCard />
-          <ProfileQuoteCard />
-          <ProfileQuoteCard />
-          <ProfileQuoteCard />
+          <QuoteCard noprofile/>
+          <QuoteCard noprofile/>
+          <QuoteCard noprofile/>
+          <QuoteCard noprofile/>
+          <QuoteCard noprofile/>
+          <QuoteCard noprofile/>
+          <QuoteCard noprofile/>
+          <QuoteCard noprofile/>
+          <QuoteCard noprofile/>
         </div>
 
       </ProfileContainer>

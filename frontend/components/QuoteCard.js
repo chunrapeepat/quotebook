@@ -14,7 +14,7 @@ const Container = styled.div`
 
   &:hover {
     border: 1px solid #ccc;
-    background: #fafafa;
+    background: #FDFDFD;
   }
 
   & > div:nth-child(1) {
@@ -37,6 +37,10 @@ const ProfileContainer = styled.div`
   background: url(${props => props.src}) no-repeat top center, #ccc;
   background-size: cover;
   border-radius: 3px;
+
+  ${props => props.noprofile ? `
+    display: none;
+  ` : ``}
 `
 
 const ContentContainer = styled.div`
@@ -97,9 +101,9 @@ const Content = styled.div`
   }
 `
 
-export default () => (
+export default ({ noprofile }) => (
   <Container>
-    <ProfileContainer src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
+    <ProfileContainer noprofile={noprofile} src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
     <ContentContainer>
       <Content>
         <a href=""><i class="zmdi zmdi-facebook-box"></i> share to Facebook</a>
