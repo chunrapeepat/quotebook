@@ -67,7 +67,7 @@ const Sticky = styled.div`
 
 const QuoteView = () => (
   <div>
-    <Menubar />
+    <Menubar night/>
     <Container with-margin>
       <ProfileContainer>
 

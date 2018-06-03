@@ -3,11 +3,19 @@ import styled from 'styled-components'
 
 import {fonts, colors, fontSize} from '../core/styled'
 
-const imageSize = 130
+const imageSize = 55
 
 const Container = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   display: flex;
+  border-radius: 3px;
+  border: 1px solid #fafafa;
+  padding: 10px;
+
+  &:hover {
+    border: 1px solid #ccc;
+    background: #fafafa;
+  }
 
   & > div:nth-child(1) {
     width: ${imageSize}px;
@@ -24,6 +32,7 @@ const ProfileContainer = styled.div`
   height: ${imageSize}px;
   background: url(${props => props.src}) no-repeat top center, #ccc;
   background-size: cover;
+  border-radius: 3px;
 `
 
 const ContentContainer = styled.div`
@@ -36,18 +45,14 @@ const ContentContainer = styled.div`
     font-size: ${fontSize.big}rem;
     font-family: ${fonts.normal};
     letter-spacing: 1px;
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
 `
 
 const QuoteAuthor = styled.div`
   font-family: ${fonts.normal};
   color: ${colors.main};
-  margin-top: 25px;
   font-size: ${fontSize.normal}rem;
+  margin-top: 10px;
 
   & > div {
     display: inline-block;
@@ -63,7 +68,7 @@ const Content = styled.div`
   font-family: ${fonts.normal};
   color: ${colors.content};
   font-size: ${fontSize.small}rem;
-  margin-top: 10px;
+  margin-bottom: 10px;
 
   & > div {
     width: 4px;
@@ -90,15 +95,15 @@ const Content = styled.div`
 
 export default () => (
   <Container>
-    <ProfileContainer src="https://image.ibb.co/g6T0fo/Screen_Shot_2561_05_22_at_13_32_17.png"/>
+    <ProfileContainer src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
     <ContentContainer>
-      <h2>The avoidance of taxes is the only intellectual pursuit that still carries any reward.</h2>
-      <QuoteAuthor><div/> Chun Rapeepat</QuoteAuthor>
       <Content>
         <a href=""><i class="zmdi zmdi-facebook-box"></i> share to Facebook</a>
         <div/>
         <a href=""><i class="zmdi zmdi-twitter-box"></i> share to Twitter</a>
       </Content>
+      <h2>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</h2>
+      <QuoteAuthor><div/> Chun Rapeepat</QuoteAuthor>
     </ContentContainer>
   </Container>
 )
