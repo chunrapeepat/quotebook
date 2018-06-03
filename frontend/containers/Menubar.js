@@ -4,10 +4,14 @@ import Link from 'next/link'
 
 import App from '../components/App'
 import Button from '../components/Button'
-import {Container, fonts, colors, fontSize} from '../core/styled'
+import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`
   padding: 7px 0;
+
+  ${props => props.night ? `
+    background: ${colors.main};
+  ` : ``}
 `
 
 const Heading = styled.h1`
@@ -20,6 +24,15 @@ const Heading = styled.h1`
 
   font-size: ${fontSize.giant};
   font-family: ${fonts.header};
+
+  ${props => props.night ? `
+    color: white;
+  ` : ``}
+
+  ${media.desktop`
+    position: static;
+    transform: translateX(0);
+  `}
 `
 
 const SearchIcon = styled.div`
@@ -29,6 +42,25 @@ const SearchIcon = styled.div`
   top: 0.5rem;
 
   font-size: ${fontSize.icon};
+
+  ${props => props.night ? `
+    & button {
+      color: white;
+      background: ${colors.main};
+    }
+  ` : ``}
+
+  ${media.desktop`
+    display: none;
+  `}
+`
+
+const SearchIconMobile = styled.div`
+  display: none;
+
+  ${media.desktop`
+    display: inline-block;
+  `}
 `
 
 const RightContainer = styled.div`
@@ -37,6 +69,37 @@ const RightContainer = styled.div`
   top: 0.5rem;
 
   font-size: ${fontSize.icon};
+
+  ${props => props.night ? `
+    & button {
+      color: white;
+      background: ${colors.main};
+    }
+  ` : ``}
+
+  ${media.desktop`
+    right: 10px;
+  `}
+
+  ${media.tablet`
+    display: none;
+  `}
+`
+
+const MobileMenu = styled.div`
+  display: none;
+  margin-top: 7px;
+
+  ${props => props.night ? `
+    & button {
+      color: white;
+      background: ${colors.main};
+    }
+  ` : ``}
+
+  ${media.tablet`
+    display: block;
+  `}
 `
 
 const ProfileImage = styled.img`
@@ -57,35 +120,64 @@ class Menubar extends Component {
 
   render() {
     return (
-      <MenubarContainer>
+      <MenubarContainer night={this.props.night}>
         <Container relative>
 
-          <SearchIcon>
+          <Link href="/">
+            <Heading night={this.props.night}>QuoteBook</Heading>
+          </Link>
+
+          <SearchIcon night={this.props.night}>
             <Link href="/search">
               <Button inline icon><i className="zmdi zmdi-search"></i></Button>
             </Link>
           </SearchIcon>
 
           {!this.state.isAuthenticate &&
-            <RightContainer>
-              <Button inline margin="0 10px">Sign In</Button>
+            <RightContainer night={this.props.night}>
+              <SearchIconMobile>
+                <Link href="/search">
+                  <Button inline icon><i className="zmdi zmdi-search"></i></Button>
+                </Link>
+              </SearchIconMobile>
+              <Button inline>Sign In</Button>
+              <Button inline margin="0 10px 0 0">About</Button>
               <Button inline regular>Post Your Own</Button>
             </RightContainer>
           }
 
           {this.state.isAuthenticate &&
-            <RightContainer>
-              <Button icon inline margin="0 10px"><i class="zmdi zmdi-notifications-none"></i></Button>
-              <Button inline>
-                <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
-                <ProfileName>Chun Rapeepat</ProfileName>
-              </Button>
+            <RightContainer night={this.props.night}>
+              <SearchIconMobile>
+                <Link href="/search">
+                  <Button inline icon><i className="zmdi zmdi-search"></i></Button>
+                </Link>
+              </SearchIconMobile>
+              <Button inline>Profile</Button>
+              <Button inline margin="0 10px 0 0">Logout</Button>
+              <Button inline regular>Post Your Own</Button>
             </RightContainer>
           }
 
-          <Link href="/">
-            <Heading>QuoteBook</Heading>
-          </Link>
+          <MobileMenu night={this.props.night}>
+            {!this.state.isAuthenticate &&
+              <div>
+                <Button inline>Search</Button>
+                <Button inline>Sign In</Button>
+                <Button inline>About</Button>
+                <Button inline>Post Your Own</Button>
+              </div>
+            }
+            {this.state.isAuthenticate &&
+              <div>
+                <Button inline>Search</Button>
+                <Button inline>Profile</Button>
+                <Button inline>Logout</Button>
+                <Button inline>Post Your Own</Button>
+              </div>
+            }
+          </MobileMenu>
+
         </Container>
       </MenubarContainer>
     )

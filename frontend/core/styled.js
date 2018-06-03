@@ -12,7 +12,7 @@ export const fontSize = {
   icon: 1.2,
   big: 1.3,
   giant: 2,
-  quote: 3,
+  quote: 3.5,
 }
 
 export const colors = {
@@ -29,16 +29,16 @@ export const colors = {
 // all helper function
 const sizes = {
   giant: 1170,
-  desktop: 992,
-  tablet: 768,
+  desktop: 1000,
+  tablet: 600,
   phone: 376,
 }
 
 // iterate through the sizes and create a media template
 export const media = Object.keys(sizes).reduce((accumulator, label) => {
-  const emSize = sizes[label] / 16
+  const emSize = sizes[label]
   accumulator[label] = (...args) => css`
-    @media (max-width: ${emSize}em) {
+    @media (max-width: ${emSize}px) {
       ${css(...args)}
     }
   `
@@ -47,7 +47,7 @@ export const media = Object.keys(sizes).reduce((accumulator, label) => {
 
 // all helper components
 export const Container = styled.div`
-  width: 1000px;
+  width: ${sizes.desktop}px;
   margin: auto auto;
 
   ${props => props['with-margin'] ? `
@@ -57,4 +57,9 @@ export const Container = styled.div`
   ${props => props.relative ? `
     position: relative;
   ` : ``}
+
+  ${media.desktop`
+    width: 100%;
+    padding: 0 10px;
+  `}
 `
