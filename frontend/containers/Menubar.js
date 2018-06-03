@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import App from '../components/App'
 import Button from '../components/Button'
+import Modal from '../components/Modal'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`
@@ -113,14 +114,28 @@ const ProfileName = styled.span`
   margin-left: 15px;
 `
 
+const SignInModal = (props) => (
+  <Modal {...props}>
+    <div style={{'background': 'white', 'height': '300px'}}>
+      This is a signin modal
+    </div>
+  </Modal>
+)
+
 class Menubar extends Component {
   state = {
     isAuthenticate: false,
+    showSignInModal: false,
   }
 
   render() {
     return (
       <MenubarContainer night={this.props.night}>
+
+        <SignInModal close={() => this.setState({
+          showSignInModal: false,
+        })} show={this.state.showSignInModal}/>
+
         <Container relative>
 
           <Link href="/">
@@ -140,7 +155,9 @@ class Menubar extends Component {
                   <Button inline icon><i className="zmdi zmdi-search"></i></Button>
                 </Link>
               </SearchIconMobile>
-              <Button inline>Sign In</Button>
+              <Button inline onClick={() => this.setState({
+                showSignInModal: true,
+              })}>Sign In</Button>
               <Button inline margin="0 10px 0 0">About</Button>
               <Button inline regular>Post Your Own</Button>
             </RightContainer>
@@ -163,7 +180,9 @@ class Menubar extends Component {
             {!this.state.isAuthenticate &&
               <div>
                 <Button inline>Search</Button>
-                <Button inline>Sign In</Button>
+                <Button inline onClick={() => this.setState({
+                  showSignInModal: true,
+                })}>Sign In</Button>
                 <Button inline>About</Button>
                 <Button inline>Post Your Own</Button>
               </div>
