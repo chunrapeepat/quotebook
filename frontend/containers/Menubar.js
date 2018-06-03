@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import App from '../components/App'
 import Button from '../components/Button'
-import Modal from '../components/Modal'
+import SignInModal from '../containers/SignInModal'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`
@@ -113,14 +113,6 @@ const ProfileImage = styled.img`
 const ProfileName = styled.span`
   margin-left: 15px;
 `
-
-const SignInModal = (props) => (
-  <Modal {...props}>
-    <div style={{'background': 'white', 'height': '300px'}}>
-      This is a signin modal
-    </div>
-  </Modal>
-)
 
 class Menubar extends Component {
   state = {
