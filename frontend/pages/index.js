@@ -5,7 +5,7 @@ import App from '../components/App'
 import Menubar from '../containers/Menubar'
 import QuoteCard from '../components/QuoteCard'
 import PopularUser from '../containers/PopularUser'
-import {Container, fonts, colors, fontSize} from '../core/styled'
+import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const IndexContainer = styled.div`
   display: flex;
@@ -19,6 +19,18 @@ const IndexContainer = styled.div`
   & > div:nth-child(2) {
     flex: 1;
   }
+
+  ${media.desktop`
+    display: block;
+
+    & > div:nth-child(1) {
+      margin-right: 0;
+    }
+  `}
+
+  ${media.tablet`
+    margin-top: 20px;
+  `}
 `
 
 const FooterContainer = styled.div`

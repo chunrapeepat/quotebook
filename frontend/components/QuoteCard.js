@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import {fonts, colors, fontSize} from '../core/styled'
+import {fonts, media, colors, fontSize} from '../core/styled'
 
 const imageSize = 55
 
@@ -25,6 +25,10 @@ const Container = styled.div`
   & > div:nth-child(2) {
     flex: 1;
   }
+
+  ${media.tablet`
+    margin-bottom: 10px;
+  `}
 `
 
 const ProfileContainer = styled.div`

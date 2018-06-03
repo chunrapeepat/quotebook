@@ -3,13 +3,17 @@ import styled from 'styled-components'
 
 import App from '../components/App'
 import UserItem from '../components/UserItem'
-import {fonts, colors, fontSize} from '../core/styled'
+import {fonts, media, colors, fontSize} from '../core/styled'
 
 const Container = styled.div`
   width: 100%;
   border-radius: 3px;
   padding: 7px 12px;
   background: ${colors.background};
+
+  ${media.tablet`
+    display: none;
+  `}
 `
 
 const Heading = styled.div`
