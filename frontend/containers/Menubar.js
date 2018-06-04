@@ -4,6 +4,8 @@ import Link from 'next/link'
 
 import App from '../components/App'
 import Button from '../components/Button'
+import SignInModal from '../containers/SignInModal'
+import PostQuoteModal from '../containers/PostQuoteModal'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`
@@ -115,12 +117,23 @@ const ProfileName = styled.span`
 
 class Menubar extends Component {
   state = {
-    isAuthenticate: false,
+    isAuthenticate: true,
+    showSignInModal: false,
+    postQuoteModal: false,
   }
 
   render() {
     return (
       <MenubarContainer night={this.props.night}>
+
+        <SignInModal close={() => this.setState({
+          showSignInModal: false,
+        })} show={this.state.showSignInModal}/>
+
+        <PostQuoteModal close={() => this.setState({
+          postQuoteModal: false,
+        })} show={this.state.postQuoteModal}/>
+
         <Container relative>
 
           <Link href="/">
@@ -140,7 +153,9 @@ class Menubar extends Component {
                   <Button inline icon><i className="zmdi zmdi-search"></i></Button>
                 </Link>
               </SearchIconMobile>
-              <Button inline>Sign In</Button>
+              <Button inline onClick={() => this.setState({
+                showSignInModal: true,
+              })}>Sign In</Button>
               <Button inline margin="0 10px 0 0">About</Button>
               <Button inline regular>Post Your Own</Button>
             </RightContainer>
@@ -155,7 +170,9 @@ class Menubar extends Component {
               </SearchIconMobile>
               <Button inline>Profile</Button>
               <Button inline margin="0 10px 0 0">Logout</Button>
-              <Button inline regular>Post Your Own</Button>
+              <Button inline regular onClick={() => this.setState({
+                postQuoteModal: true,
+              })}>Post Your Own</Button>
             </RightContainer>
           }
 
@@ -163,7 +180,9 @@ class Menubar extends Component {
             {!this.state.isAuthenticate &&
               <div>
                 <Button inline>Search</Button>
-                <Button inline>Sign In</Button>
+                <Button inline onClick={() => this.setState({
+                  showSignInModal: true,
+                })}>Sign In</Button>
                 <Button inline>About</Button>
                 <Button inline>Post Your Own</Button>
               </div>
