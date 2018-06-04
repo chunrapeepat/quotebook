@@ -5,6 +5,7 @@ import Link from 'next/link'
 import App from '../components/App'
 import Button from '../components/Button'
 import SignInModal from '../containers/SignInModal'
+import PostQuoteModal from '../containers/PostQuoteModal'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`
@@ -116,8 +117,9 @@ const ProfileName = styled.span`
 
 class Menubar extends Component {
   state = {
-    isAuthenticate: false,
+    isAuthenticate: true,
     showSignInModal: false,
+    postQuoteModal: false,
   }
 
   render() {
@@ -127,6 +129,10 @@ class Menubar extends Component {
         <SignInModal close={() => this.setState({
           showSignInModal: false,
         })} show={this.state.showSignInModal}/>
+
+        <PostQuoteModal close={() => this.setState({
+          postQuoteModal: false,
+        })} show={this.state.postQuoteModal}/>
 
         <Container relative>
 
@@ -164,7 +170,9 @@ class Menubar extends Component {
               </SearchIconMobile>
               <Button inline>Profile</Button>
               <Button inline margin="0 10px 0 0">Logout</Button>
-              <Button inline regular>Post Your Own</Button>
+              <Button inline regular onClick={() => this.setState({
+                postQuoteModal: true,
+              })}>Post Your Own</Button>
             </RightContainer>
           }
 

@@ -41,6 +41,11 @@ const Button = styled.button`
     padding: 10px;
     background: #415A94;
   `: ``}
+
+  ${props => props.success ? `
+    background: #00AD0B;
+    color: white;
+  `: ``}
 `
 
 export default ({children, ...props}) => (
