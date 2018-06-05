@@ -1,20 +1,30 @@
-const {createServer} = require('http')
-const {parse} = require('url')
+const express = require('express')
 const next = require('next')
+const appConfig = require('./config/app')
 
-const dev = process.env.NODE_ENV !== 'production'
-const port = parseInt(process.env.PORT, 10) || 3000
+const apiHandler = require('./handlers')
 
-const app = next({dev})
+const dev = appConfig.environment !== 'production'
+const app = next({ dev })
 const handle = app.getRequestHandler()
 
-// This allows you to have maximum control over the server-side.
-app.prepare().then(() => {
-  createServer((req, res) => {
-    const url = parse(req.url, true)
-    handle(req, res, url)
-  }).listen(port, (err) => {
-    if (err) throw err
-    console.log(`> Ready on http://localhost:${port}`)
+app.prepare()
+  .then(() => {
+    const server = express()
+
+    // server.get('/posts/:id', (req, res) => {
+    //   return app.render(req, res, '/posts', { id: req.params.id })
+    // })
+
+    // api server route
+    server.use('/api', apiHandler)
+
+    server.get('*', (req, res) => {
+      return handle(req, res)
+    })
+
+    server.listen(appConfig.port, err => {
+      if (err) throw err
+      console.log(`${appConfig.name} v${appConfig.version} listening on port ${appConfig.port}`)
+    })
   })
-})
