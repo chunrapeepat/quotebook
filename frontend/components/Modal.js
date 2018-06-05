@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import {media} from '../core/styled'
 
-const zIndex = 999999;
+const zIndex = 999999
 
 const ModalContainer = styled.div`
   ${props => props.show ? `
