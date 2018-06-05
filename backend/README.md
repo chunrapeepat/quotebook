@@ -18,4 +18,4 @@ QuoteBook backend instruction.
 - `/core` - core function like database or helper function
 
 ## Routes
-comming soon..
+- `/openid/facebook` - return facebook login url
