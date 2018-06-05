@@ -34,6 +34,7 @@ const Content = styled.div`
   transform: translateY(-50%) translateX(-50%);
 `
 
+// Modal Component
 // receive close function from props `close`
 // this function will be call when user click on modal background
 
