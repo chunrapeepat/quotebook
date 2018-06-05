@@ -1,5 +1,6 @@
 const express = require('express')
 const next = require('next')
+const passport = require('passport')
 const appConfig = require('./config/app')
 
 const apiHandler = require('./handlers')
@@ -11,6 +12,9 @@ const handle = app.getRequestHandler()
 app.prepare()
   .then(() => {
     const server = express()
+
+    // middlewares
+    server.use(passport.initialize())
 
     // server.get('/posts/:id', (req, res) => {
     //   return app.render(req, res, '/posts', { id: req.params.id })
