@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import App from '../components/App'
 import UserItem from '../components/UserItem'
+
 import {fonts, media, colors, fontSize} from '../core/styled'
 
 const Container = styled.div`
