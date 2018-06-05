@@ -3,6 +3,17 @@ import Ink from 'react-ink'
 
 import {colors, fonts, fontSize} from '../core/styled'
 
+// Button Component Props
+
+// - icon: button for icon (bigger font size)
+// - width: make button full of width
+// - inline: display inline-block
+
+// - none: default button with no border & background
+// - regular: default button with border
+// - facebook: facebook button
+// - success: green button
+
 const Button = styled.button`
   border: 0;
   position: relative;

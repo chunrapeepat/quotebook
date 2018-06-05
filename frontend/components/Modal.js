@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import {media} from '../core/styled'
 
-const zIndex = 999999;
+const zIndex = 999999
 
 const ModalContainer = styled.div`
   ${props => props.show ? `
@@ -34,6 +34,7 @@ const Content = styled.div`
   transform: translateY(-50%) translateX(-50%);
 `
 
+// Modal Component
 // receive close function from props `close`
 // this function will be call when user click on modal background
 

@@ -2,9 +2,12 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 
 import App from '../components/App'
-import Menubar from '../containers/Menubar'
 import QuoteCard from '../components/QuoteCard'
+import Footer from '../components/Footer'
+
+import Menubar from '../containers/Menubar'
 import PopularUser from '../containers/PopularUser'
+
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const IndexContainer = styled.div`
@@ -31,22 +34,6 @@ const IndexContainer = styled.div`
   ${media.tablet`
     margin-top: 20px;
   `}
-`
-
-const FooterContainer = styled.div`
-  padding: 7px 10px;
-  margin-top: 20px;
-  font-family: ${fonts.normal};
-  font-size: ${fontSize.small}rem;
-
-  & > div > a {
-    color: ${colors.main};
-    margin-right: 10px;
-  }
-
-  & > p {
-    color: ${colors.content};
-  }
 `
 
 const Sidebar = styled.div`
@@ -84,17 +71,6 @@ const DailyQuoteContainer = styled.div`
     font-size: ${fontSize.normal}rem;
   }
 `
-
-const Footer = () => (
-  <FooterContainer>
-    <div>
-      <a href="">About us</a>
-      <a href="">Facebook</a><br/>
-      <a href="">Privacy & Terms</a>
-    </div>
-    <p>Copyright © 2018 QuoteBook, The Chun Rapeepat Production.</p>
-  </FooterContainer>
-)
 
 const DailyQuote = ({src}) => (
   <DailyQuoteContainer src={src}>

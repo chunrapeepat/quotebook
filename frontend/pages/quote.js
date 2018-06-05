@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 
 import App from '../components/App'
+
 import Menubar from '../containers/Menubar'
 import QuoteComment from '../containers/QuoteComment'
 

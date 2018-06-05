@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 
 import App from '../components/App'
-import Menubar from '../containers/Menubar'
 import Button from '../components/Button'
 import QuoteCard from '../components/QuoteCard'
+
+import Menubar from '../containers/Menubar'
+
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const imageSize = 230;

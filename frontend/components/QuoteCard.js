@@ -101,6 +101,9 @@ const Content = styled.div`
   }
 `
 
+// QuoteCard Component
+// noprofile props: remove profile image from card
+
 export default ({ noprofile }) => (
   <Container>
     <ProfileContainer noprofile={noprofile} src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>

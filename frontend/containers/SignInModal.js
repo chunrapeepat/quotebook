@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import Modal from '../components/Modal'
 import Button from '../components/Button'
+
 import {fonts, fontSize, media} from '../core/styled'
 
 const Container = styled.div`

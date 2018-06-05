@@ -4,8 +4,10 @@ import Link from 'next/link'
 
 import App from '../components/App'
 import Button from '../components/Button'
+
 import SignInModal from '../containers/SignInModal'
 import PostQuoteModal from '../containers/PostQuoteModal'
+
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const MenubarContainer = styled.div`

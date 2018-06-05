@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 import Modal from '../components/Modal'
 import Button from '../components/Button'
-import {fonts, fontSize, media, colors} from '../core/styled'
 import {Textarea, Input} from '../components/Input'
+
+import {fonts, fontSize, media, colors} from '../core/styled'
 
 const Container = styled.div`
   background: white;

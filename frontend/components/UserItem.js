@@ -44,6 +44,8 @@ const Content = styled.div`
   }
 `
 
+// UserItem Component
+
 export default () => (
   <Container>
     <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg" />

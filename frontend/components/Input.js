@@ -3,6 +3,10 @@ import styled from 'styled-components'
 
 import {fonts, colors, fontSize} from '../core/styled'
 
+// Components
+// - Textarea: default textarea
+// - Input: default input
+
 export const Textarea = styled.textarea`
   width: 100%!important;
   height: 100px!important;
