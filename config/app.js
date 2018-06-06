@@ -9,3 +9,6 @@ exports.version = '1.0.0'
 
 // Current environment
 exports.environment = 'development'
+
+// Base url
+exports.baseURL = 'https://localhost'
