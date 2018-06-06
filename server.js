@@ -1,5 +1,8 @@
 const express = require('express')
+const https = require('https')
 const next = require('next')
+const path = require('path')
+const fs = require('fs')
 const appConfig = require('./config/app')
 
 const apiHandler = require('./handlers')
@@ -7,6 +10,12 @@ const apiHandler = require('./handlers')
 const dev = appConfig.environment !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
+
+// certificate option
+const certOptions = {
+  key: fs.readFileSync(path.resolve('server.key')),
+  cert: fs.readFileSync(path.resolve('server.crt')),
+}
 
 app.prepare()
   .then(() => {
@@ -23,8 +32,10 @@ app.prepare()
       return handle(req, res)
     })
 
-    server.listen(appConfig.port, err => {
-      if (err) throw err
-      console.log(`${appConfig.name} v${appConfig.version} listening on port ${appConfig.port}`)
-    })
+    // server.listen(appConfig.port, err => {
+    //   if (err) throw err
+    //   console.log(`${appConfig.name} v${appConfig.version} listening on port ${appConfig.port}`)
+    // })
+
+    https.createServer(certOptions, server).listen(appConfig.port)
   })

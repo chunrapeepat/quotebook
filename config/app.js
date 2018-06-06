@@ -1,5 +1,5 @@
 // default port
-exports.port = 3000
+exports.port = 443
 
 // Application name
 exports.name = 'QuoteBook'
