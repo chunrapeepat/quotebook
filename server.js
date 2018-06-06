@@ -30,6 +30,9 @@ app.prepare()
   .then(() => {
     const server = express()
 
+    // middlewares
+    server.use(passport.initialize())
+
     // server.get('/posts/:id', (req, res) => {
     //   return app.render(req, res, '/posts', { id: req.params.id })
     // })
