@@ -1,5 +1,5 @@
 // default port
-exports.port = 3000
+exports.port = 443
 
 // Application name
 exports.name = 'QuoteBook'
@@ -9,3 +9,6 @@ exports.version = '1.0.0'
 
 // Current environment
 exports.environment = 'development'
+
+// Base url
+exports.baseURL = 'https://localhost'
