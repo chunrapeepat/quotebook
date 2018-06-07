@@ -39,6 +39,9 @@ router.get('/facebook', async (req, res) => {
     return res.json({
       success: true,
       payload: {
+        fbid: profile.id,
+        display_name: profile.name,
+        profile_image: `https://graph.facebook.com/${profile.id}/picture?type=large&width=720&height=720`,
         token,
       }
     })

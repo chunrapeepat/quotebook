@@ -83,14 +83,6 @@ const DailyQuote = ({src}) => (
 )
 
 class IndexView extends Component {
-  componentDidMount() {
-    const url = new URL(window.location.href)
-    const fbCode = url.searchParams.get('code')
-    if (fbCode !== null) {
-      // send request to auth in backend
-    }
-  }
-
   render() {
     return (
       <div>

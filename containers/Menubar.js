@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import {connect} from 'react-redux'
+
+import {
+  userLogin,
+  userLoginWaiting,
+} from '../ducks/user'
 
 import App from '../components/App'
 import Button from '../components/Button'
@@ -119,9 +125,17 @@ const ProfileName = styled.span`
 
 class Menubar extends Component {
   state = {
-    isAuthenticate: false,
     showSignInModal: false,
     postQuoteModal: false,
+  }
+
+  componentDidMount() {
+    const url = new URL(window.location.href)
+    const fbCode = url.searchParams.get('code')
+    if (fbCode !== null) {
+      this.props.userLogin(fbCode)
+      this.props.userLoginWaiting()
+    }
   }
 
   render() {
@@ -148,7 +162,7 @@ class Menubar extends Component {
             </Link>
           </SearchIcon>
 
-          {!this.state.isAuthenticate &&
+          {!this.props.user.isUserLogin &&
             <RightContainer night={this.props.night}>
               <SearchIconMobile>
                 <Link href="/search">
@@ -163,7 +177,7 @@ class Menubar extends Component {
             </RightContainer>
           }
 
-          {this.state.isAuthenticate &&
+          {this.props.user.isUserLogin &&
             <RightContainer night={this.props.night}>
               <SearchIconMobile>
                 <Link href="/search">
@@ -179,7 +193,7 @@ class Menubar extends Component {
           }
 
           <MobileMenu night={this.props.night}>
-            {!this.state.isAuthenticate &&
+            {!this.props.user.isUserLogin &&
               <div>
                 <Button inline>Search</Button>
                 <Button inline onClick={() => this.setState({
@@ -189,7 +203,7 @@ class Menubar extends Component {
                 <Button inline>Post Your Own</Button>
               </div>
             }
-            {this.state.isAuthenticate &&
+            {this.props.user.isUserLogin &&
               <div>
                 <Button inline>Search</Button>
                 <Button inline>Profile</Button>
@@ -205,4 +219,20 @@ class Menubar extends Component {
   }
 }
 
-export default App(Menubar)
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    userLogin: code => dispatch(userLogin(code)),
+    userLoginWaiting: () => dispatch(userLoginWaiting()),
+  }
+}
+
+export default App(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Menubar))
