@@ -21,6 +21,7 @@
     "react-dom": "^16.0.0",
     "react-facebook-login": "^4.0.1",
     "react-ink": "^6.2.0",
+    "react-loading": "^2.0.2",
     "react-redux": "^5.0.6",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",

@@ -10,6 +10,7 @@ import {
 
 import App from '../components/App'
 import Button from '../components/Button'
+import SignInLoading from '../components/SignInLoading'
 
 import SignInModal from '../containers/SignInModal'
 import PostQuoteModal from '../containers/PostQuoteModal'
@@ -141,6 +142,10 @@ class Menubar extends Component {
   render() {
     return (
       <MenubarContainer night={this.props.night}>
+
+        {this.props.user.isWaiting &&
+          <SignInLoading />
+        }
 
         <SignInModal close={() => this.setState({
           showSignInModal: false,

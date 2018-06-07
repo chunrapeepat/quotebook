@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Router from 'next/router'
 import {takeLatest} from 'redux-saga'
 import {call, put} from 'redux-saga/effects'
 import {createReducer, createAction, createActionType} from '../core/helper'
@@ -49,12 +50,14 @@ export const userReducer = createReducer(initial, state => ({
     }
   },
   [USER_LOGIN_ERROR]: () => {
+    Router.push('/')
     return {
       ...state,
-      ...initial,
+      isWaiting: false,
     }
   },
   [USER_LOGIN_SUCCESS]: profile => {
+    Router.push('/')
     return {
       ...state,
       isWaiting: false,
