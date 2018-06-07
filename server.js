@@ -5,6 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const mongoose = require('mongoose')
 const passport = require('passport')
+const bodyParser = require('body-parser')
 
 const appConfig = require('./config/app')
 const dbConfig = require('./config/database')
@@ -33,6 +34,8 @@ app.prepare()
 
     // middlewares
     server.use(passport.initialize())
+    server.use(bodyParser.json())
+    server.use(bodyParser.urlencoded({extended: true}))
 
     // server.get('/posts/:id', (req, res) => {
     //   return app.render(req, res, '/posts', { id: req.params.id })

@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {
   userLogin,
   userLoginWaiting,
+  userLoginWithToken,
 } from '../ducks/user'
 
 import App from '../components/App'
@@ -131,10 +132,16 @@ class Menubar extends Component {
   }
 
   componentDidMount() {
+    // if found code parameter
     const url = new URL(window.location.href)
     const fbCode = url.searchParams.get('code')
     if (fbCode !== null) {
       this.props.userLogin(fbCode)
+      this.props.userLoginWaiting()
+    }
+    // check token and auto login
+    if (localStorage.getItem('token') != null && !this.props.user.isUserLogin) {
+      this.props.userLoginWithToken()
       this.props.userLoginWaiting()
     }
   }
@@ -232,6 +239,7 @@ const mapDispatchToProps = dispatch => {
   return {
     userLogin: code => dispatch(userLogin(code)),
     userLoginWaiting: () => dispatch(userLoginWaiting()),
+    userLoginWithToken: () => dispatch(userLoginWithToken()),
   }
 }
 
