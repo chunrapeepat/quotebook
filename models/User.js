@@ -27,6 +27,10 @@ const userSchema = new Schema({
   profile_image: {
     type: String,
   },
+  bio: {
+    type: String,
+    default: '',
+  },
   created_at: {
     type: Number,
     required: true,
