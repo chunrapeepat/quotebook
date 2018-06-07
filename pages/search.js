@@ -66,7 +66,7 @@ const SearchBox = styled.input`
   `}
 `
 
-class IndexView extends Component {
+class SearchView extends Component {
   render() {
     return (
       <div>
@@ -97,4 +97,4 @@ class IndexView extends Component {
   }
 }
 
-export default App(IndexView)
+export default App(SearchView)

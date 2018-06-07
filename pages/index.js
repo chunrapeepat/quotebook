@@ -82,31 +82,35 @@ const DailyQuote = ({src}) => (
   </DailyQuoteContainer>
 )
 
-const IndexView = () => (
-  <div>
-    <Menubar />
-    <DailyQuote src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png">
+class IndexView extends Component {
+  render() {
+    return (
+      <div>
+        <Menubar />
+        <DailyQuote src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png">
 
-    </DailyQuote>
-    <Container>
-      <IndexContainer>
-        <div>
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-        </div>
-        <div>
-          <Sidebar>
-            <PopularUser />
-            <Footer />
-          </Sidebar>
-        </div>
-      </IndexContainer>
-    </Container>
-  </div>
-)
+        </DailyQuote>
+        <Container>
+          <IndexContainer>
+            <div>
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+            </div>
+            <div>
+              <Sidebar>
+                <PopularUser />
+                <Footer />
+              </Sidebar>
+            </div>
+          </IndexContainer>
+        </Container>
+      </div>
+    )
+  }
+}
 
 export default App(IndexView)

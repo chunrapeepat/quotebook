@@ -1,5 +1,5 @@
 // database username (admin)
-const username = exports.username = 'quotebook'
+const username = exports.username = 'chun'
 
 // database password (secure)
 const password = exports.password = 'password'

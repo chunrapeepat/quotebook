@@ -12,8 +12,7 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'email', 'displayName', 'photos'],
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log('got new user', profile)
-    console.log(accessToken, refreshToken)
+    // do nothing becase this will not be called!
   }
 ))
 
@@ -25,8 +24,7 @@ router.get('/facebook',
   passport.authenticate('facebook', {scope: ['email']}))
 
 router.get('/facebook-callback', (req, res) => {
-  res.redirect(baseURL)
-  passport.authenticate('facebook', { failureRedirect: '/' })(req, res)
+  res.redirect(`${baseURL}?code=${req.query.code}`)
 })
 
 module.exports = router
