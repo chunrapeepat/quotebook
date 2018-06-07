@@ -66,7 +66,7 @@ export const userReducer = createReducer(initial, state => ({
     }
   },
   [USER_LOGIN_ERROR]: () => {
-    Router.push('/')
+    Router.push(window.location.pathname)
     localStorage.removeItem('token')
     return {
       ...state,
@@ -74,7 +74,7 @@ export const userReducer = createReducer(initial, state => ({
     }
   },
   [USER_LOGIN_SUCCESS]: profile => {
-    Router.push('/')
+    Router.push(window.location.pathname)
     localStorage.setItem('token', profile.token)
     return {
       ...state,
