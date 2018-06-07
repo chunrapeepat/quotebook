@@ -2,6 +2,8 @@ const router = require('express').Router()
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
 
+const User = require('../models/User')
+const middlewares = require('./middlewares')
 const baseURL = require('../config/app').baseURL
 const fbConfig = require('../config/openid').facebook
 const userAPI = require ('../api/user')
@@ -9,6 +11,46 @@ const jwtConfig = require('../config/jwt')
 
 router.get('/', (req, res) => {
   res.redirect(baseURL)
+})
+
+router.post('/logout', middlewares.userLogged, async (req, res) => {
+  const token = req.headers.token
+  // find profile from token
+  try {
+    const profile = await User.findOne({token})
+    // remove token from database
+    userAPI.updateToken(profile.fbid, '')
+    return res.json({
+      success: true,
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
+router.post('/token', middlewares.userLogged, async (req, res) => {
+  const token = req.headers.token
+  // find profile from token
+  try {
+    const profile = await User.findOne({token})
+    return res.json({
+      success: true,
+      payload: {
+        fbid: profile.fbid,
+        display_name: profile.display_name,
+        profile_image: profile.profile_image,
+        token,
+      }
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
 })
 
 router.get('/facebook', async (req, res) => {
@@ -31,7 +73,7 @@ router.get('/facebook', async (req, res) => {
     userAPI.newUserRegister(profile)
     // sign jwt token expired in 3 hours
     const token = jwt.sign({
-      id: profile.id,
+      fbid: profile.id,
     }, jwtConfig.secret, { expiresIn: '3h' })
     // update token on database
     userAPI.updateToken(profile.id, token)

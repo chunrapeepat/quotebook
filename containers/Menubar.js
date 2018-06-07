@@ -5,11 +5,14 @@ import {connect} from 'react-redux'
 
 import {
   userLogin,
+  userLogout,
   userLoginWaiting,
+  userLoginWithToken,
 } from '../ducks/user'
 
 import App from '../components/App'
 import Button from '../components/Button'
+import SignInLoading from '../components/SignInLoading'
 
 import SignInModal from '../containers/SignInModal'
 import PostQuoteModal from '../containers/PostQuoteModal'
@@ -130,10 +133,16 @@ class Menubar extends Component {
   }
 
   componentDidMount() {
+    // if found code parameter
     const url = new URL(window.location.href)
     const fbCode = url.searchParams.get('code')
     if (fbCode !== null) {
       this.props.userLogin(fbCode)
+      this.props.userLoginWaiting()
+    }
+    // check token and auto login
+    if (localStorage.getItem('token') != null && !this.props.user.isUserLogin) {
+      this.props.userLoginWithToken()
       this.props.userLoginWaiting()
     }
   }
@@ -141,6 +150,10 @@ class Menubar extends Component {
   render() {
     return (
       <MenubarContainer night={this.props.night}>
+
+        {this.props.user.isWaiting &&
+          <SignInLoading />
+        }
 
         <SignInModal close={() => this.setState({
           showSignInModal: false,
@@ -172,8 +185,9 @@ class Menubar extends Component {
               <Button inline onClick={() => this.setState({
                 showSignInModal: true,
               })}>Sign In</Button>
-              <Button inline margin="0 10px 0 0">About</Button>
-              <Button inline regular>Post Your Own</Button>
+              <Button inline regular onClick={() => this.setState({
+                showSignInModal: true,
+              })}>Post Your Own</Button>
             </RightContainer>
           }
 
@@ -184,8 +198,10 @@ class Menubar extends Component {
                   <Button inline icon><i className="zmdi zmdi-search"></i></Button>
                 </Link>
               </SearchIconMobile>
-              <Button inline>Profile</Button>
-              <Button inline margin="0 10px 0 0">Logout</Button>
+              <Link href={`/profile/${this.props.user.userProfile.fbid}`}>
+                <Button inline>Profile</Button>
+              </Link>
+              <Button onClick={this.props.userLogout} inline margin="0 10px 0 0">Logout</Button>
               <Button inline regular onClick={() => this.setState({
                 postQuoteModal: true,
               })}>Post Your Own</Button>
@@ -195,20 +211,29 @@ class Menubar extends Component {
           <MobileMenu night={this.props.night}>
             {!this.props.user.isUserLogin &&
               <div>
-                <Button inline>Search</Button>
+                <Link href="/search">
+                  <Button inline>Search</Button>
+                </Link>
                 <Button inline onClick={() => this.setState({
                   showSignInModal: true,
                 })}>Sign In</Button>
-                <Button inline>About</Button>
-                <Button inline>Post Your Own</Button>
+                <Button inline onClick={() => this.setState({
+                  showSignInModal: true,
+                })}>Post Your Own</Button>
               </div>
             }
             {this.props.user.isUserLogin &&
               <div>
-                <Button inline>Search</Button>
-                <Button inline>Profile</Button>
-                <Button inline>Logout</Button>
-                <Button inline>Post Your Own</Button>
+                <Link href="/search">
+                  <Button inline>Search</Button>
+                </Link>
+                <Link href={`/profile/${this.props.user.userProfile.fbid}`}>
+                  <Button inline>Profile</Button>
+                </Link>
+                <Button onClick={this.props.userLogout} inline>Logout</Button>
+                <Button inline onClick={() => this.setState({
+                  showSignInModal: true,
+                })}>Post Your Own</Button>
               </div>
             }
           </MobileMenu>
@@ -228,7 +253,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     userLogin: code => dispatch(userLogin(code)),
+    userLogout: () => {
+      dispatch(userLogout())
+      dispatch(userLoginWaiting())
+    },
     userLoginWaiting: () => dispatch(userLoginWaiting()),
+    userLoginWithToken: () => dispatch(userLoginWithToken()),
   }
 }
 
