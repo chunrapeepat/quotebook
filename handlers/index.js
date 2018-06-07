@@ -14,7 +14,9 @@ router.get('/', (req, res) => {
 router.use('/openid', openidHandler)
 
 // auth route : authenticate
+// - /auth/logout - remove token from database
 // - /auth/facebook - authenticate facebook response code
+// - /auth/token - authenticate with token
 router.use('/auth', authHandler)
 
 module.exports = router

@@ -10,6 +10,7 @@ import {createReducer, createAction, createActionType} from '../core/helper'
 const create = createActionType('user')
 
 export const USER_LOGIN = create('USER_LOGIN')
+export const USER_LOGOUT = create('USER_LOGOUT')
 export const USER_LOGIN_WAITING = create('USER_LOGIN_WAITING')
 export const USER_LOGIN_ERROR = create('USER_LOGIN_ERROR')
 export const USER_LOGIN_SUCCESS = create('USER_LOGIN_SUCCESS')
@@ -17,6 +18,7 @@ export const USER_LOGIN_WITH_TOKEN = create('USER_LOGIN_WITH_TOKEN')
 
 // create actions
 export const userLogin = createAction(USER_LOGIN)
+export const userLogout = createAction(USER_LOGOUT)
 export const userLoginWaiting = createAction(USER_LOGIN_WAITING)
 export const userLoginWithToken = createAction(USER_LOGIN_WITH_TOKEN)
 
@@ -52,9 +54,18 @@ function* userLoginTokenAsync(action) {
   }
 }
 
+// logout
+function* userLogoutAsync(action) {
+  const response = yield call(request.withToken, `/api/auth/logout`, {})
+  if (response.success) {
+    yield put({type: USER_LOGIN_ERROR})
+  }
+}
+
 // watcher sagas
 export function* watcherUserLogin() {
   yield takeLatest(USER_LOGIN, userLoginAsync)
+  yield takeLatest(USER_LOGOUT, userLogoutAsync)
   yield takeLatest(USER_LOGIN_WITH_TOKEN, userLoginTokenAsync)
 }
 
@@ -70,6 +81,7 @@ export const userReducer = createReducer(initial, state => ({
     localStorage.removeItem('token')
     return {
       ...state,
+      isUserLogin: false,
       isWaiting: false,
     }
   },

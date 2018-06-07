@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import {
   userLogin,
+  userLogout,
   userLoginWaiting,
   userLoginWithToken,
 } from '../ducks/user'
@@ -200,7 +201,7 @@ class Menubar extends Component {
               <Link href={`/profile/${this.props.user.userProfile.fbid}`}>
                 <Button inline>Profile</Button>
               </Link>
-              <Button inline margin="0 10px 0 0">Logout</Button>
+              <Button onClick={this.props.userLogout} inline margin="0 10px 0 0">Logout</Button>
               <Button inline regular onClick={() => this.setState({
                 postQuoteModal: true,
               })}>Post Your Own</Button>
@@ -229,7 +230,7 @@ class Menubar extends Component {
                 <Link href={`/profile/${this.props.user.userProfile.fbid}`}>
                   <Button inline>Profile</Button>
                 </Link>
-                <Button inline>Logout</Button>
+                <Button onClick={this.props.userLogout} inline>Logout</Button>
                 <Button inline onClick={() => this.setState({
                   showSignInModal: true,
                 })}>Post Your Own</Button>
@@ -252,6 +253,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     userLogin: code => dispatch(userLogin(code)),
+    userLogout: () => {
+      dispatch(userLogout())
+      dispatch(userLoginWaiting())
+    },
     userLoginWaiting: () => dispatch(userLoginWaiting()),
     userLoginWithToken: () => dispatch(userLoginWithToken()),
   }

@@ -13,6 +13,24 @@ router.get('/', (req, res) => {
   res.redirect(baseURL)
 })
 
+router.post('/logout', middlewares.userLogged, async (req, res) => {
+  const token = req.headers.token
+  // find profile from token
+  try {
+    const profile = await User.findOne({token})
+    // remove token from database
+    userAPI.updateToken(profile.fbid, '')
+    return res.json({
+      success: true,
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 router.post('/token', middlewares.userLogged, async (req, res) => {
   const token = req.headers.token
   // find profile from token
