@@ -82,31 +82,43 @@ const DailyQuote = ({src}) => (
   </DailyQuoteContainer>
 )
 
-const IndexView = () => (
-  <div>
-    <Menubar />
-    <DailyQuote src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png">
+class IndexView extends Component {
+  componentDidMount() {
+    const url = new URL(window.location.href)
+    const fbCode = url.searchParams.get('code')
+    if (fbCode !== null) {
+      // send request to auth in backend
+    }
+  }
 
-    </DailyQuote>
-    <Container>
-      <IndexContainer>
-        <div>
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-          <QuoteCard />
-        </div>
-        <div>
-          <Sidebar>
-            <PopularUser />
-            <Footer />
-          </Sidebar>
-        </div>
-      </IndexContainer>
-    </Container>
-  </div>
-)
+  render() {
+    return (
+      <div>
+        <Menubar />
+        <DailyQuote src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png">
+
+        </DailyQuote>
+        <Container>
+          <IndexContainer>
+            <div>
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+              <QuoteCard />
+            </div>
+            <div>
+              <Sidebar>
+                <PopularUser />
+                <Footer />
+              </Sidebar>
+            </div>
+          </IndexContainer>
+        </Container>
+      </div>
+    )
+  }
+}
 
 export default App(IndexView)

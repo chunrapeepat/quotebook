@@ -39,6 +39,10 @@ const JoinImage = styled.div`
 `
 
 export default class extends Component {
+  loginWithFacebook = () => {
+    window.location.href = '/api/openid/facebook'
+  }
+
   render() {
     const props = this.props
     return (
@@ -47,7 +51,7 @@ export default class extends Component {
           <Heading>Join QuoteBook</Heading>
           <JoinImage />
           <Desc>Post your own quote to share with everyone, comment, and share. just sign in with your Facebook account.</Desc>
-          <Button width facebook>SignIn with Facebook</Button>
+          <Button onClick={this.loginWithFacebook} width facebook>SignIn with Facebook</Button>
         </Container>
       </Modal>
     )

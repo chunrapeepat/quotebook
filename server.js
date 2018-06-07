@@ -4,6 +4,7 @@ const next = require('next')
 const path = require('path')
 const fs = require('fs')
 const mongoose = require('mongoose')
+const passport = require('passport')
 
 const appConfig = require('./config/app')
 const dbConfig = require('./config/database')

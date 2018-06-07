@@ -119,7 +119,7 @@ const ProfileName = styled.span`
 
 class Menubar extends Component {
   state = {
-    isAuthenticate: true,
+    isAuthenticate: false,
     showSignInModal: false,
     postQuoteModal: false,
   }
