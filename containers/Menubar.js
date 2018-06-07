@@ -184,7 +184,9 @@ class Menubar extends Component {
               <Button inline onClick={() => this.setState({
                 showSignInModal: true,
               })}>Sign In</Button>
-              <Button inline regular>Post Your Own</Button>
+              <Button inline regular onClick={() => this.setState({
+                showSignInModal: true,
+              })}>Post Your Own</Button>
             </RightContainer>
           }
 
@@ -195,7 +197,9 @@ class Menubar extends Component {
                   <Button inline icon><i className="zmdi zmdi-search"></i></Button>
                 </Link>
               </SearchIconMobile>
-              <Button inline>Profile</Button>
+              <Link href={`/profile/${this.props.user.userProfile.fbid}`}>
+                <Button inline>Profile</Button>
+              </Link>
               <Button inline margin="0 10px 0 0">Logout</Button>
               <Button inline regular onClick={() => this.setState({
                 postQuoteModal: true,
@@ -206,19 +210,29 @@ class Menubar extends Component {
           <MobileMenu night={this.props.night}>
             {!this.props.user.isUserLogin &&
               <div>
-                <Button inline>Search</Button>
+                <Link href="/search">
+                  <Button inline>Search</Button>
+                </Link>
                 <Button inline onClick={() => this.setState({
                   showSignInModal: true,
                 })}>Sign In</Button>
-                <Button inline>Post Your Own</Button>
+                <Button inline onClick={() => this.setState({
+                  showSignInModal: true,
+                })}>Post Your Own</Button>
               </div>
             }
             {this.props.user.isUserLogin &&
               <div>
-                <Button inline>Search</Button>
-                <Button inline>Profile</Button>
+                <Link href="/search">
+                  <Button inline>Search</Button>
+                </Link>
+                <Link href={`/profile/${this.props.user.userProfile.fbid}`}>
+                  <Button inline>Profile</Button>
+                </Link>
                 <Button inline>Logout</Button>
-                <Button inline>Post Your Own</Button>
+                <Button inline onClick={() => this.setState({
+                  showSignInModal: true,
+                })}>Post Your Own</Button>
               </div>
             }
           </MobileMenu>
