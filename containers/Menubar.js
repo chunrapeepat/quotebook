@@ -172,7 +172,6 @@ class Menubar extends Component {
               <Button inline onClick={() => this.setState({
                 showSignInModal: true,
               })}>Sign In</Button>
-              <Button inline margin="0 10px 0 0">About</Button>
               <Button inline regular>Post Your Own</Button>
             </RightContainer>
           }
@@ -199,7 +198,6 @@ class Menubar extends Component {
                 <Button inline onClick={() => this.setState({
                   showSignInModal: true,
                 })}>Sign In</Button>
-                <Button inline>About</Button>
                 <Button inline>Post Your Own</Button>
               </div>
             }
