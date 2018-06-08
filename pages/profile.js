@@ -113,8 +113,11 @@ const BioContainer = styled.div`
 `
 
 class ProfileView extends Component {
-  static async getInitialProps({req, res}) {
-    const id = req.params.id
+  static async getInitialProps({query, req}) {
+    let id
+    if (req === undefined) id = query.id
+    else id = req.params.id
+
     return {id}
   }
 
