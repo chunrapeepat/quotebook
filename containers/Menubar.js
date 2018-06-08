@@ -198,7 +198,7 @@ class Menubar extends Component {
                   <Button inline icon><i className="zmdi zmdi-search"></i></Button>
                 </Link>
               </SearchIconMobile>
-              <Link href={`/profile/${this.props.user.userProfile.fbid}`}>
+              <Link href="/profile" as={`/profile/${this.props.user.userProfile.fbid}`}>
                 <Button inline>Profile</Button>
               </Link>
               <Button onClick={this.props.userLogout} inline margin="0 10px 0 0">Logout</Button>
@@ -227,7 +227,7 @@ class Menubar extends Component {
                 <Link href="/search">
                   <Button inline>Search</Button>
                 </Link>
-                <Link href={`/profile/${this.props.user.userProfile.fbid}`}>
+                <Link href="/profile" as={`/profile/${this.props.user.userProfile.fbid}`}>
                   <Button inline>Profile</Button>
                 </Link>
                 <Button onClick={this.props.userLogout} inline>Logout</Button>

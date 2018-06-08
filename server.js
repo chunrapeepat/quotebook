@@ -37,9 +37,13 @@ app.prepare()
     server.use(bodyParser.json())
     server.use(bodyParser.urlencoded({extended: true}))
 
-    // server.get('/posts/:id', (req, res) => {
-    //   return app.render(req, res, '/posts', { id: req.params.id })
-    // })
+    server.get('/profile', (req, res) => {
+      return res.redirect('/')
+    })
+
+    server.get('/profile/:id', (req, res) => {
+      return app.render(req, res, '/profile', req.query)
+    })
 
     // api server route
     server.use('/api', apiHandler)

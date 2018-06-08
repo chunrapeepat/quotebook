@@ -112,44 +112,53 @@ const BioContainer = styled.div`
   `}
 `
 
-const QuoteView = () => (
-  <div>
-    <Menubar night/>
-    <Container with-margin>
-      <ProfileContainer>
+class ProfileView extends Component {
+  static async getInitialProps({req, res}) {
+    const id = req.params.id
+    return {id}
+  }
 
-        <div>
-          <BioContainer>
-            <ProfileImage src="https://cdn-images-1.medium.com/max/280/1*FKjV0WBgu3xhpeUwOSaABQ@2x.jpeg" />
+  render() {
+    return (
+      <div>
+        <Menubar night/>
+        <Container with-margin>
+          <ProfileContainer>
+
             <div>
-              <ProfileName>Chun Rapeepat</ProfileName>
-              <Bio>Hello, I'm Chun Rapeepat, 18 y/o full-stack developer from Thailand. Our mission is to build software for solving problems & expand the circle with communities.</Bio>
-              <BioIcon>
-                <div><i className="zmdi zmdi-case"></i> Founder at QuoteBook</div>
-                <div><i className="zmdi zmdi-pin"></i> Bangkok, Thailand</div>
-                <div><i className="zmdi zmdi-facebook-box"></i> Chun Rapeepat</div>
-                <div><i className="zmdi zmdi-link"></i> https://thechun.xyz</div>
-              </BioIcon>
-              {/* <Button width regular style={{'marginTop': '30px'}}>Edit Bio</Button> */}
+              <BioContainer>
+                <ProfileImage src="https://cdn-images-1.medium.com/max/280/1*FKjV0WBgu3xhpeUwOSaABQ@2x.jpeg" />
+                <div>
+                  <ProfileName>Chun Rapeepat {this.props.id}</ProfileName>
+                  <Bio>Hello, I'm Chun Rapeepat, 18 y/o full-stack developer from Thailand. Our mission is to build software for solving problems & expand the circle with communities.</Bio>
+                  <BioIcon>
+                    <div><i className="zmdi zmdi-case"></i> Founder at QuoteBook</div>
+                    <div><i className="zmdi zmdi-pin"></i> Bangkok, Thailand</div>
+                    <div><i className="zmdi zmdi-facebook-box"></i> Chun Rapeepat</div>
+                    <div><i className="zmdi zmdi-link"></i> https://thechun.xyz</div>
+                  </BioIcon>
+                  {/* <Button width regular style={{'marginTop': '30px'}}>Edit Bio</Button> */}
+                </div>
+              </BioContainer>
             </div>
-          </BioContainer>
-        </div>
 
-        <div>
-          <QuoteCard noprofile/>
-          <QuoteCard noprofile/>
-          <QuoteCard noprofile/>
-          <QuoteCard noprofile/>
-          <QuoteCard noprofile/>
-          <QuoteCard noprofile/>
-          <QuoteCard noprofile/>
-          <QuoteCard noprofile/>
-          <QuoteCard noprofile/>
-        </div>
+            <div>
+              <QuoteCard noprofile/>
+              <QuoteCard noprofile/>
+              <QuoteCard noprofile/>
+              <QuoteCard noprofile/>
+              <QuoteCard noprofile/>
+              <QuoteCard noprofile/>
+              <QuoteCard noprofile/>
+              <QuoteCard noprofile/>
+              <QuoteCard noprofile/>
+            </div>
 
-      </ProfileContainer>
-    </Container>
-  </div>
-)
+          </ProfileContainer>
+        </Container>
+      </div>
+    )
+  }
+}
 
-export default App(QuoteView)
+export default ProfileView
