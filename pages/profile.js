@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 import App from '../components/App'
 import Button from '../components/Button'
@@ -114,14 +115,19 @@ const BioContainer = styled.div`
 
 class ProfileView extends Component {
   static async getInitialProps({query, req}) {
-    let id
+    let id = null
     if (req === undefined) id = query.id
     else id = req.params.id
-
-    return {id}
+    // fetch api to get profile information
+    const resProfile = await axios.get(`/api/user/profile?id=${id}`).then(res => res.data)
+    if (resProfile.success) {
+      return {profile: resProfile.payload}
+    }
+    // error user not found or something
   }
 
   render() {
+    const {profile} = this.props
     return (
       <div>
         <Menubar night/>
@@ -130,16 +136,16 @@ class ProfileView extends Component {
 
             <div>
               <BioContainer>
-                <ProfileImage src="https://cdn-images-1.medium.com/max/280/1*FKjV0WBgu3xhpeUwOSaABQ@2x.jpeg" />
+                <ProfileImage src={profile.profile_image} />
                 <div>
-                  <ProfileName>Chun Rapeepat {this.props.id}</ProfileName>
-                  <Bio>Hello, I'm Chun Rapeepat, 18 y/o full-stack developer from Thailand. Our mission is to build software for solving problems & expand the circle with communities.</Bio>
-                  <BioIcon>
+                  <ProfileName>{profile.display_name}</ProfileName>
+                  <Bio>{profile.bio}</Bio>
+                  {/* <BioIcon>
                     <div><i className="zmdi zmdi-case"></i> Founder at QuoteBook</div>
                     <div><i className="zmdi zmdi-pin"></i> Bangkok, Thailand</div>
                     <div><i className="zmdi zmdi-facebook-box"></i> Chun Rapeepat</div>
                     <div><i className="zmdi zmdi-link"></i> https://thechun.xyz</div>
-                  </BioIcon>
+                  </BioIcon> */}
                   {/* <Button width regular style={{'marginTop': '30px'}}>Edit Bio</Button> */}
                 </div>
               </BioContainer>
