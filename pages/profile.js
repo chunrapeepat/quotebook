@@ -5,6 +5,7 @@ import axios from 'axios'
 import App from '../components/App'
 import Button from '../components/Button'
 import QuoteCard from '../components/QuoteCard'
+import Error from './_error'
 
 import Menubar from '../containers/Menubar'
 
@@ -114,7 +115,7 @@ const BioContainer = styled.div`
 `
 
 class ProfileView extends Component {
-  static async getInitialProps({query, req}) {
+  static async getInitialProps({query, req, res}) {
     let id = null
     if (req === undefined) id = query.id
     else id = req.params.id
@@ -124,10 +125,16 @@ class ProfileView extends Component {
       return {profile: resProfile.payload}
     }
     // error user not found or something
+    if (resProfile.error && res) res.statusCode = 404
+    return {profile:{}, notfound: true}
   }
 
   render() {
-    const {profile} = this.props
+    const {profile, notfound} = this.props
+    // render error 404 notfound instead
+    if (notfound) {
+      return <Error statusCode={404} />
+    }
     return (
       <div>
         <Menubar night/>
