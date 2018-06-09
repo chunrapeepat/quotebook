@@ -79,7 +79,7 @@ const Button = styled.button`
 
 export default ({children, ...props}) => (
   <Button {...props}>
-    {!props.icon || !props.link &&
+    {!props.icon && !props.link &&
       <Ink />
     }
     {children}

@@ -12,6 +12,13 @@ exports.userLogged = (req, res, next) => {
   }
   // get accessToken from header
   const accessToken = req.headers['authorization'].split(" ")[1]
+  // check token is null
+  if (accessToken === 'null') {
+    return res.json({
+      error: true,
+      message: 'invalid access token',
+    })
+  }
   // check in database
   User.count({token: accessToken}, (err, count) => {
     if (count <= 0) {
@@ -24,14 +31,17 @@ exports.userLogged = (req, res, next) => {
   // verify using jsonwebtoken
   jwt.verify(accessToken, jwtConfig.secret, (err, decoded) => {
     if (err) {
-      userAPI.updateToken(decoded.fbid, '')
+      if (decoded.fbid != undefined)
+        userAPI.updateToken(decoded.fbid, '')
+
       return res.json({
         error: true,
         message: 'invalid access token',
       })
     }
     // passing user facebook id
-    req.headers.fbid = decoded.fbid
+    if (decoded.fbid != undefined)
+      req.headers.fbid = decoded.fbid
   })
   // passing token and next()
   req.headers.token = accessToken

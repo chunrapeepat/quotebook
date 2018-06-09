@@ -83,6 +83,13 @@ export default class extends Component {
     response: {},
   }
 
+  resetState = () => {
+    this.setState({
+      response: {},
+      waiting: false,
+    })
+  }
+
   handleChange = event => {
     // reset state when user is typing
     this.setState({response:{}, waiting: false})
@@ -105,7 +112,7 @@ export default class extends Component {
   render() {
     const props = this.props
     return (
-      <Modal {...props}>
+      <Modal reset={this.resetState} {...props}>
         <Container>
           <Heading>Edit Bio</Heading>
           <Content>
