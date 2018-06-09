@@ -30,6 +30,8 @@ exports.userLogged = (req, res, next) => {
         message: 'invalid access token',
       })
     }
+    // passing user facebook id
+    req.headers.fbid = decoded.fbid
   })
   // passing token and next()
   req.headers.token = accessToken

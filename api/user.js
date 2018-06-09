@@ -37,3 +37,25 @@ exports.updateToken = (fbid, token) => {
     if (err) throw err
   })
 }
+
+// getUserProfile
+// get user profile by fbid (render on profile page)
+exports.getUserProfile = fbid => {
+  try {
+    return User.findOne({fbid})
+  } catch(e) {
+    return e
+  }
+}
+
+// updateBio
+// update user profile bio by fbid (facebook id)
+exports.updateBio = (fbid, bio) => {
+  try {
+    return User.update({fbid}, {
+      $set: {bio},
+    })
+  } catch (e) {
+    return e
+  }
+}

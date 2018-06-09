@@ -29,6 +29,10 @@ const Button = styled.button`
 
   margin: ${props => props.margin ? props.margin : 0};
 
+  & i {
+    margin-right: 5px;
+  }
+
   ${props => props.icon ? `
     padding: 0px 8px;
     font-size: ${fontSize.icon}rem;
@@ -57,11 +61,25 @@ const Button = styled.button`
     background: #00AD0B;
     color: white;
   `: ``}
+
+  ${props => props.link ? `
+    border-bottom: 2px solid white;
+    border-radius: 0;
+    text-align: left;
+    padding: 0;
+    padding-bottom: 5px;
+    color: #777;
+
+    &:hover {
+      color: #333;
+      border-bottom: 2px solid #333;
+    }
+  `: ``}
 `
 
 export default ({children, ...props}) => (
   <Button {...props}>
-    {!props.icon &&
+    {!props.icon || !props.link &&
       <Ink />
     }
     {children}

@@ -10,12 +10,12 @@ import {fonts, colors, fontSize} from '../core/styled'
 export const Textarea = styled.textarea`
   width: 100%!important;
   height: 100px!important;
+  border: 0;
   border-radius: 3px;
   outline: none;
   font-family: ${fonts.normal};
   font-size: ${fontSize.normal}rem;
   background: #fafafa;
-  border: 1px solid #ddd;
   padding: 20px;
   resize: none;
 `

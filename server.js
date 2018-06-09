@@ -1,4 +1,5 @@
 const express = require('express')
+const http = require('http')
 const https = require('https')
 const next = require('next')
 const path = require('path')
@@ -52,6 +53,9 @@ app.prepare()
       return handle(req, res)
     })
 
+    // runing on http
+    http.createServer(server).listen(80)
+    // running on https
     https.createServer(certOptions, server).listen(appConfig.port, () => {
       console.log(`${appConfig.name} v${appConfig.version} listening on port ${appConfig.port}`)
     })
