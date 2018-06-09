@@ -38,12 +38,21 @@ const Content = styled.div`
 // receive close function from props `close`
 // this function will be call when user click on modal background
 // `show` props (true = show) (false = display none)
+// `reset` props run when user close modal
 
 export default class extends Component {
+  closeModal = () => {
+    const {close, reset} = this.props
+    if (typeof reset === 'function') {
+      reset()
+    }
+    close()
+  }
+
   render() {
     return (
       <ModalContainer show={this.props.show}>
-        <Backdrop onClick={() => this.props.close()}/>
+        <Backdrop onClick={this.closeModal}/>
         <Content>
           {this.props.children}
         </Content>
