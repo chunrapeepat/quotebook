@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import {connect} from 'react-redux'
 
 import App from '../components/App'
 import Button from '../components/Button'
@@ -8,6 +9,7 @@ import QuoteCard from '../components/QuoteCard'
 import Error from './_error'
 
 import Menubar from '../containers/Menubar'
+import EditProfileModal from '../containers/EditProfileModal'
 
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
@@ -115,6 +117,11 @@ const BioContainer = styled.div`
 `
 
 class ProfileView extends Component {
+  state = {
+    editProfileModal: false,
+    profile: {},
+  }
+
   static async getInitialProps({query, req, res}) {
     let id = null
     if (req === undefined) id = query.id
@@ -122,15 +129,28 @@ class ProfileView extends Component {
     // fetch api to get profile information
     const resProfile = await axios.get(`/api/user/profile?id=${id}`).then(res => res.data)
     if (resProfile.success) {
-      return {profile: resProfile.payload}
+      return {profile: resProfile.payload, fbid: id}
     }
     // error user not found or something
     if (resProfile.error && res) res.statusCode = 404
     return {profile:{}, notfound: true}
   }
 
+  componentWillMount = () => {
+    this.setState({profile: this.props.profile})
+  }
+
+  closeModal = fbid => async() => {
+    this.setState({editProfileModal: false})
+    // fetch profile again and re-render
+    const resProfile = await axios.get(`/api/user/profile?id=${fbid}`).then(res => res.data)
+    if (resProfile.success) {
+      this.setState({profile: resProfile.payload})
+    }
+  }
+
   render() {
-    const {profile, notfound} = this.props
+    const {profile, notfound, user} = this.props
     // render error 404 notfound instead
     if (notfound) {
       return <Error statusCode={404} />
@@ -138,6 +158,15 @@ class ProfileView extends Component {
     return (
       <div>
         <Menubar night/>
+
+        {user.isUserLogin && user.userProfile.fbid === profile.fbid &&
+          <EditProfileModal
+            bio={profile.bio}
+            profile={profile.profile_image}
+            close={this.closeModal(this.props.fbid)}
+            show={this.state.editProfileModal} />
+        }
+
         <Container with-margin>
           <ProfileContainer>
 
@@ -146,14 +175,19 @@ class ProfileView extends Component {
                 <ProfileImage src={profile.profile_image} />
                 <div>
                   <ProfileName>{profile.display_name}</ProfileName>
-                  <Bio>{profile.bio}</Bio>
+                  <Bio>{this.state.profile.bio}</Bio>
+
                   {/* <BioIcon>
                     <div><i className="zmdi zmdi-case"></i> Founder at QuoteBook</div>
                     <div><i className="zmdi zmdi-pin"></i> Bangkok, Thailand</div>
                     <div><i className="zmdi zmdi-facebook-box"></i> Chun Rapeepat</div>
                     <div><i className="zmdi zmdi-link"></i> https://thechun.xyz</div>
                   </BioIcon> */}
-                  {/* <Button width regular style={{'marginTop': '30px'}}>Edit Bio</Button> */}
+                  {user.isUserLogin && user.userProfile.fbid === profile.fbid &&
+                    <Button onClick={() => this.setState({editProfileModal: true})} inline link style={{'marginTop': '15px'}}>
+                        <i className="zmdi zmdi-edit"></i> Edit Bio
+                    </Button>
+                  }
                 </div>
               </BioContainer>
             </div>
@@ -177,4 +211,10 @@ class ProfileView extends Component {
   }
 }
 
-export default ProfileView
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  }
+}
+
+export default App(connect(mapStateToProps, null)(ProfileView))

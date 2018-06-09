@@ -37,6 +37,7 @@ const Content = styled.div`
 // Modal Component
 // receive close function from props `close`
 // this function will be call when user click on modal background
+// `show` props (true = show) (false = display none)
 
 export default class extends Component {
   render() {

@@ -47,3 +47,15 @@ exports.getUserProfile = fbid => {
     return e
   }
 }
+
+// updateBio
+// update user profile bio by fbid (facebook id)
+exports.updateBio = (fbid, bio) => {
+  try {
+    return User.update({fbid}, {
+      $set: {bio},
+    })
+  } catch (e) {
+    return e
+  }
+}

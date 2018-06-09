@@ -8,6 +8,22 @@ router.get('/', (req, res) => {
   res.redirect(baseURL)
 })
 
+// update bio from profile page
+router.post('/updateBio', middlewares.userLogged, async (req, res) => {
+  const update = await userAPI.updateBio(req.headers.fbid, req.body.bio)
+  // check return type
+  if (typeof update == 'error') {
+    return res.json({
+      error: true,
+      message: update.message,
+    })
+  }
+  return res.json({
+    success: true,
+  })
+})
+
+// get public profile for render
 router.get('/profile', async (req, res) => {
   if (!req.query.id) {
     return res.json({
