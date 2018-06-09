@@ -112,7 +112,7 @@ export default class extends Component {
             <ProfileImage src={props.profile}/>
             <div>
               <form onSubmit={this.handleSubmit}>
-                <Textarea onChange={this.handleChange} value={this.state.bio} placeholder="Say what you think..." />
+                <Textarea onChange={this.handleChange} value={this.state.bio} placeholder="Tell about yourself..." />
                 <Footer>
                   {this.state.bio.length} / {limitChars} chars
                   <div>
