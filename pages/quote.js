@@ -8,6 +8,7 @@ import App from '../components/App'
 import Menubar from '../containers/Menubar'
 import QuoteComment from '../containers/QuoteComment'
 
+import {datetimeFormat} from '../core/helper'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const QuoteContainer = styled.div`
@@ -99,6 +100,17 @@ const ProfileImage = styled.span`
   transform: translateY(7px);
 `
 
+const DateTime = styled.div`
+  font-family: ${fonts.normal};
+  font-size: ${fontSize.normal}rem;
+  color: ${colors.content};
+  margin-top: 20px;
+
+  ${media.tablet`
+    font-size: ${fontSize.small}rem;
+  `}
+`
+
 class QuoteView extends Component {
   static async getInitialProps({query, req, res}) {
     let id = null
@@ -124,6 +136,7 @@ class QuoteView extends Component {
       <div>
         <Menubar night/>
         <Container>
+        <DateTime>Posted by {info.postedBy.name} - {datetimeFormat(info.createdAt)}</DateTime>
 
           <QuoteContainer>
             <QuoteText>“{info.quote}”</QuoteText>
