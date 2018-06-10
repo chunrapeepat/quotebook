@@ -78,17 +78,17 @@ router.get('/facebook', async (req, res) => {
     // update token on database
     userAPI.updateToken(profile.id, token)
     // response token
+    const userProfile = await userAPI.getUserProfile(profile.id)
     return res.json({
       success: true,
       payload: {
-        fbid: profile.id,
-        display_name: profile.name,
-        profile_image: `https://graph.facebook.com/${profile.id}/picture?type=large&width=720&height=720`,
+        fbid: userProfile.fbid,
+        display_name: userProfile.display_name,
+        profile_image: userProfile.profile_image,
         token,
       }
     })
   } catch (e) {
-    console.error('err', e)
     return res.json({
       error: true,
       message: 'invalid verification code.'

@@ -136,6 +136,7 @@ class Menubar extends Component {
     // if found code parameter
     const url = new URL(window.location.href)
     const fbCode = url.searchParams.get('code')
+    // check state
     if (fbCode !== null) {
       this.props.userLogin(fbCode)
       this.props.userLoginWaiting()
@@ -159,9 +160,13 @@ class Menubar extends Component {
           showSignInModal: false,
         })} show={this.state.showSignInModal}/>
 
-        <PostQuoteModal close={() => this.setState({
-          postQuoteModal: false,
-        })} show={this.state.postQuoteModal}/>
+        <PostQuoteModal
+          displayName={this.props.user.userProfile.display_name}
+          profile={this.props.user.userProfile.profile_image}
+          close={() => this.setState({
+            postQuoteModal: false,
+          })}
+          show={this.state.postQuoteModal}/>
 
         <Container relative>
 

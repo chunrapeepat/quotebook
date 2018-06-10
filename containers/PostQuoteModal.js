@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import Router from 'next/router'
 
 import Modal from '../components/Modal'
 import Button from '../components/Button'
 import {Textarea, Input} from '../components/Input'
+import {SpanSuccess, SpanError, SpanWaiting} from '../components/Span'
 
+import * as request from '../core/request'
 import {fonts, fontSize, media, colors} from '../core/styled'
 
 const Container = styled.div`
@@ -68,24 +71,120 @@ const Footer = styled.div`
   }
 `
 
+const AuthorContainer = styled.div`
+  display: flex;
+  font-family: ${fonts.normal};
+
+  & > span {
+    color: ${colors.content};
+    display: block;
+    margin-right: 10px;
+    transform: translateY(7px);
+  }
+
+  & > div {
+    flex: 1;
+  }
+`
+
+// max charaters
+const limitChars = 150
+
+// initial state
+const initialState = {
+  quoteInput: '',
+  authorInput: '',
+  response: {},
+  waiting: false,
+}
+
+// PostQuoteModal Component
+// - `displayName` :: user display name
+// - `profile` :: profile image url
 export default class extends Component {
+  state = initialState
+
+  resetState = () => {
+    this.setState(initialState)
+  }
+
+  componentWillReceiveProps() {
+    this.setState({authorInput: this.props.displayName})
+  }
+
+  quoteHandleChange = e => {
+    const value = e.target.value
+    if (value.length <= limitChars) {
+      this.setState({quoteInput: value})
+    }
+  }
+
+  authorHandleChange = e => {
+    const value = e.target.value
+    if (value.length <= 30) {
+      this.setState({authorInput: value})
+    }
+  }
+
+  handleSubmit = e => {
+    this.setState({waiting: true})
+    // make request
+    const {quoteInput, authorInput} = this.state
+    request.withToken(`/api/quote/post`, {quote: quoteInput, author: authorInput})
+      .then(response => {
+        if (response.success) {
+          const id = response.payload.id
+          Router.push(`/quote?id=${id}`, `/quote/${id}`)
+        }
+        this.setState({response, waiting: false})
+      })
+
+    e.preventDefault()
+  }
+
   render() {
     const props = this.props
     return (
-      <Modal {...props}>
+      <Modal reset={this.resetState} {...props}>
         <Container>
           <Heading>New Quote</Heading>
           <Content>
-            <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
+            <ProfileImage src={props.profile}/>
             <div>
-              <Textarea placeholder="Say what you think..." />
-              <Input placeholder="Chun Rapeepat" value="Chun Rapeepat" />
-              <Footer>
-                10 / 300 chars
-                <div>
-                  <Button success>Post to Timeline</Button>
-                </div>
-              </Footer>
+              <form onSubmit={this.handleSubmit}>
+                <Textarea
+                  onChange={this.quoteHandleChange}
+                  value={this.state.quoteInput}
+                  placeholder="Say what you think..." />
+
+                <AuthorContainer>
+                  <span>Author</span>
+                  <div>
+                    <Input
+                      onChange={this.authorHandleChange}
+                      placeholder={props.displayName}
+                      value={this.state.authorInput} />
+                  </div>
+                </AuthorContainer>
+
+                <Footer>
+                  {this.state.quoteInput.length} / {limitChars} chars
+                  <div>
+                    {!this.state.waiting && !this.state.response.error && !this.state.response.success &&
+                      <Button success>Post To Timeline</Button>
+                    }
+                    {this.state.waiting &&
+                      <SpanWaiting />
+                    }
+                    {this.state.response.error &&
+                      <SpanError>{this.state.response.message}</SpanError>
+                    }
+                    {this.state.response.success &&
+                      <SpanSuccess>Successfully Post</SpanSuccess>
+                    }
+                  </div>
+                </Footer>
+              </form>
             </div>
           </Content>
         </Container>

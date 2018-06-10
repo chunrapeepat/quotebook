@@ -9,6 +9,7 @@ import {createReducer, createAction, createActionType} from '../core/helper'
 // assign namespace to constant creator
 const create = createActionType('user')
 
+export const REDIRECT = create('REDIRECT')
 export const USER_LOGIN = create('USER_LOGIN')
 export const USER_LOGOUT = create('USER_LOGOUT')
 export const USER_LOGIN_WAITING = create('USER_LOGIN_WAITING')
@@ -78,6 +79,10 @@ export const userReducer = createReducer(initial, state => ({
   },
   [USER_LOGIN_ERROR]: () => {
     localStorage.removeItem('token')
+    const url = new URL(window.location.href)
+    if (url.searchParams.get('code')) {
+      Router.push(window.location.pathname)
+    }
     return {
       ...state,
       isUserLogin: false,
@@ -86,11 +91,15 @@ export const userReducer = createReducer(initial, state => ({
   },
   [USER_LOGIN_SUCCESS]: profile => {
     localStorage.setItem('token', profile.token)
+    const url = new URL(window.location.href)
+    if (url.searchParams.get('code')) {
+      Router.push(window.location.pathname)
+    }
     return {
       ...state,
       isWaiting: false,
       isUserLogin: true,
       userProfile: profile,
     }
-  }
+  },
 }))

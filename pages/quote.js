@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
+import Error from './_error'
 import App from '../components/App'
 
 import Menubar from '../containers/Menubar'
@@ -97,29 +99,52 @@ const ProfileImage = styled.span`
   transform: translateY(7px);
 `
 
-const QuoteView = () => (
-  <div>
-    <Menubar night/>
-    <Container>
+class QuoteView extends Component {
+  static async getInitialProps({query, req, res}) {
+    let id = null
+    if (req === undefined) id = query.id
+    else id = req.params.id
+    // fetch api to get quote information
+    const response = await axios.get(`/api/quote/getQuote?id=${id}`).then(res => res.data)
+    if (response.success) {
+      return {info: response.payload}
+    }
+    // error user not found or something
+    if (response.error && res) res.statusCode = 404
+    return {info:{}, notfound: true}
+  }
 
-      <QuoteContainer>
-        <QuoteText>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</QuoteText>
-        <QuoteAuthor>
-          <div />
-          <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg" />
-          Chun Rapeepat
-        </QuoteAuthor>
-      </QuoteContainer>
+  render() {
+    const {info} = this.props
+    // render error page if notfound
+    if (this.props.notfound) {
+      return <Error statusCode={404} />
+    }
+    return (
+      <div>
+        <Menubar night/>
+        <Container>
 
-      <ActionContainer>
-        <a href=""><i class="zmdi zmdi-facebook-box"></i> share to Facebook</a>
-        <div/>
-        <a href=""><i class="zmdi zmdi-twitter-box"></i> share to Twitter</a>
-      </ActionContainer>
+          <QuoteContainer>
+            <QuoteText>“{info.quote}”</QuoteText>
+            <QuoteAuthor>
+              <div />
+              <ProfileImage src={info.postedBy.profileImage} />
+              {info.author || info.postedBy.name}
+            </QuoteAuthor>
+          </QuoteContainer>
 
-      <QuoteComment />
-    </Container>
-  </div>
-)
+          <ActionContainer>
+            <a href=""><i class="zmdi zmdi-facebook-box"></i> share to Facebook</a>
+            <div/>
+            <a href=""><i class="zmdi zmdi-twitter-box"></i> share to Twitter</a>
+          </ActionContainer>
+
+          <QuoteComment />
+        </Container>
+      </div>
+    )
+  }
+}
 
 export default App(QuoteView)
