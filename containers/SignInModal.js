@@ -40,7 +40,7 @@ const JoinImage = styled.div`
 
 export default class extends Component {
   loginWithFacebook = () => {
-    window.location.href = '/api/openid/facebook'
+    window.location.href = `/api/openid/facebook?state=${window.location.pathname}`
   }
 
   render() {

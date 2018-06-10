@@ -136,6 +136,7 @@ class Menubar extends Component {
     // if found code parameter
     const url = new URL(window.location.href)
     const fbCode = url.searchParams.get('code')
+    // check state
     if (fbCode !== null) {
       this.props.userLogin(fbCode)
       this.props.userLoginWaiting()
