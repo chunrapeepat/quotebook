@@ -10,7 +10,16 @@ router.get('/', (req, res) => {
 
 // update bio from profile page
 router.post('/updateBio', middlewares.userLogged, async (req, res) => {
-  const update = await userAPI.updateBio(req.headers.fbid, req.body.bio)
+  const bio = req.body.bio
+  // validate bio string
+  if ((bio.length > 200 || bio.length <= 0) && typeof bio != 'string') {
+    return res.json({
+      error: true,
+      message: 'validate error',
+    })
+  }
+  // update on database
+  const update = await userAPI.updateBio(req.headers.fbid, bio)
   // check return type
   if (typeof update == 'error') {
     return res.json({

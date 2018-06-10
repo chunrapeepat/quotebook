@@ -18,6 +18,7 @@ export const Textarea = styled.textarea`
   background: #fafafa;
   padding: 20px;
   resize: none;
+  margin-bottom: 10px;
 `
 
 export const Input = styled.input`
@@ -26,12 +27,15 @@ export const Input = styled.input`
   outline: none;
   font-family: ${fonts.normal};
   font-size: ${fontSize.normal}rem;
-  background: #fdfdfd;
-  border: 1px solid #ddd;
-  padding: 10px 20px;
+  background: #f8f8f8;
+  border: 0;
+  padding: 7px 20px;
 
   &:focus {
-    background: #fafafa;
-    border: 1px solid #ccc;
+    background: #eee;
+  }
+
+  &:hover {
+    background: #eee;
   }
 `

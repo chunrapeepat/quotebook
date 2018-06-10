@@ -159,9 +159,13 @@ class Menubar extends Component {
           showSignInModal: false,
         })} show={this.state.showSignInModal}/>
 
-        <PostQuoteModal close={() => this.setState({
-          postQuoteModal: false,
-        })} show={this.state.postQuoteModal}/>
+        <PostQuoteModal
+          displayName={this.props.user.userProfile.display_name}
+          profile={this.props.user.userProfile.profile_image}
+          close={() => this.setState({
+            postQuoteModal: false,
+          })}
+          show={this.state.postQuoteModal}/>
 
         <Container relative>
 

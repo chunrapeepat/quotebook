@@ -105,7 +105,7 @@ export default class extends Component {
       .then(response => {
         this.setState({response, waiting: false})
       })
-    // render toast message
+
     event.preventDefault()
   }
 
@@ -130,7 +130,7 @@ export default class extends Component {
                       <SpanWaiting />
                     }
                     {this.state.response.error &&
-                      <SpanError>Something Went Wrong.</SpanError>
+                      <SpanError>{response.message}</SpanError>
                     }
                     {this.state.response.success &&
                       <SpanSuccess>Sucessfully Update!</SpanSuccess>

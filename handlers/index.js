@@ -2,6 +2,7 @@ const router = require('express').Router()
 const appConfig = require('../config/app')
 
 const openidHandler = require('./openid')
+const quoteHandler = require('./quote')
 const authHandler = require('./auth')
 const userHandler = require('./user')
 
@@ -21,7 +22,11 @@ router.use('/openid', openidHandler)
 router.use('/auth', authHandler)
 
 // user route
-// - /profile?id=xxx - get user public profile (get)
+// - /user/profile?id=xxx - get user public profile (get)
 router.use('/user', userHandler)
+
+// quote route
+// - /quote/post - post new quote (post)
+router.use('/quote', quoteHandler)
 
 module.exports = router
