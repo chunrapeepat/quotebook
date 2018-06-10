@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import FacebookProvider, {Comments} from 'react-facebook'
 
 import Error from './_error'
 import App from '../components/App'
 
 import Menubar from '../containers/Menubar'
-import QuoteComment from '../containers/QuoteComment'
 
 import {datetimeFormat} from '../core/helper'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
@@ -112,10 +112,19 @@ const DateTime = styled.div`
 `
 
 class QuoteView extends Component {
+  state = {
+    error: false,
+    info: {postedBy:{}},
+  }
+
   static async getInitialProps({query, req, res}) {
     let id = null
     if (req === undefined) id = query.id
     else id = req.params.id
+
+    if (id === undefined) {
+      return {refetch: true}
+    }
     // fetch api to get quote information
     const response = await axios.get(`/api/quote/getQuote?id=${id}`).then(res => res.data)
     if (response.success) {
@@ -123,13 +132,33 @@ class QuoteView extends Component {
     }
     // error user not found or something
     if (response.error && res) res.statusCode = 404
-    return {info:{}, notfound: true}
+    return {notfound: true}
+  }
+
+  componentWillMount = () => {
+    if (this.props.info) {
+      this.setState({info: this.props.info})
+    }
+  }
+
+  componentDidMount = async () => {
+    // refetch again if found
+    if (this.props.refetch) {
+      const id = window.location.pathname.split("/").pop()
+      const response = await axios.get(`/api/quote/getQuote?id=${id}`).then(res => res.data)
+      if (response.success) {
+        this.setState({info: response.payload})
+      }
+      if (response.error) {
+        this.setState({error: true})
+      }
+    }
   }
 
   render() {
-    const {info} = this.props
+    const {info} = this.state
     // render error page if notfound
-    if (this.props.notfound) {
+    if (this.props.notfound || this.state.error) {
       return <Error statusCode={404} />
     }
     return (
@@ -153,7 +182,10 @@ class QuoteView extends Component {
             <a href=""><i class="zmdi zmdi-twitter-box"></i> share to Twitter</a>
           </ActionContainer>
 
-          <QuoteComment />
+          <FacebookProvider appId={1234777286624803}>
+            <Comments width="100%" href="https://localhost/quote/5b1cd8c19557c6f3089f58d1" />
+          </FacebookProvider>
+          <br/>
         </Container>
       </div>
     )
