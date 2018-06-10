@@ -46,6 +46,14 @@ app.prepare()
       return app.render(req, res, '/profile', req.query)
     })
 
+    server.get('/quote', (req, res) => {
+      return res.redirect('/')
+    })
+
+    server.get('/quote/:id', (req, res) => {
+      return app.render(req, res, '/quote', req.query)
+    })
+
     // api server route
     server.use('/api', apiHandler)
 

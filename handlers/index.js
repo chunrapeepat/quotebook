@@ -27,6 +27,7 @@ router.use('/user', userHandler)
 
 // quote route
 // - /quote/post - post new quote (post)
+// - /quote/getQuote - get quote public (get)
 router.use('/quote', quoteHandler)
 
 module.exports = router

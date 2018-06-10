@@ -5,7 +5,7 @@ import Router from 'next/router'
 import Modal from '../components/Modal'
 import Button from '../components/Button'
 import {Textarea, Input} from '../components/Input'
-import {SpanError, SpanWaiting} from '../components/Span'
+import {SpanSuccess, SpanError, SpanWaiting} from '../components/Span'
 
 import * as request from '../core/request'
 import {fonts, fontSize, media, colors} from '../core/styled'
@@ -178,6 +178,9 @@ export default class extends Component {
                     }
                     {this.state.response.error &&
                       <SpanError>{this.state.response.message}</SpanError>
+                    }
+                    {this.state.response.success &&
+                      <SpanSuccess>Successfully Post</SpanSuccess>
                     }
                   </div>
                 </Footer>
