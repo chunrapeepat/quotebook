@@ -79,6 +79,10 @@ export const userReducer = createReducer(initial, state => ({
   },
   [USER_LOGIN_ERROR]: () => {
     localStorage.removeItem('token')
+    const url = new URL(window.location.href)
+    if (url.searchParams.get('code')) {
+      Router.push(window.location.pathname)
+    }
     return {
       ...state,
       isUserLogin: false,
@@ -87,6 +91,10 @@ export const userReducer = createReducer(initial, state => ({
   },
   [USER_LOGIN_SUCCESS]: profile => {
     localStorage.setItem('token', profile.token)
+    const url = new URL(window.location.href)
+    if (url.searchParams.get('code')) {
+      Router.push(window.location.pathname)
+    }
     return {
       ...state,
       isWaiting: false,
