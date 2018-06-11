@@ -4,10 +4,10 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 
 import App from '../components/App'
-import Button, {LoadMoreButton} from '../components/Button'
-import QuoteCard from '../components/QuoteCard'
+import Button from '../components/Button'
 import Error from './_error'
 
+import QuoteFetch from '../containers/QuoteFetch'
 import Menubar from '../containers/Menubar'
 import EditProfileModal from '../containers/EditProfileModal'
 
@@ -157,22 +157,6 @@ class ProfileView extends Component {
     }
   }
 
-  loadMoreQuotes = () => {
-    this.setState({loading: true})
-    axios.get(`/api/quote/getProfileQuote?id=${this.props.fbid}&page=${this.state.page}`).then(res => res.data)
-      .then(res => {
-        if (res.success) {
-          const payload = res.payload
-          if (res.done) {
-            this.setState({done: true})
-          } else {
-            this.setState({page: this.state.page + 1, quotes: [...this.state.quotes, ...payload]})
-          }
-          this.setState({loading: false})
-        }
-      })
-  }
-
   render() {
     const {profile, notfound, user} = this.props
     // render error 404 notfound instead
@@ -200,13 +184,6 @@ class ProfileView extends Component {
                 <div>
                   <ProfileName>{profile.display_name}</ProfileName>
                   <Bio>{this.state.profile.bio}</Bio>
-
-                  {/* <BioIcon>
-                    <div><i className="zmdi zmdi-case"></i> Founder at QuoteBook</div>
-                    <div><i className="zmdi zmdi-pin"></i> Bangkok, Thailand</div>
-                    <div><i className="zmdi zmdi-facebook-box"></i> Chun Rapeepat</div>
-                    <div><i className="zmdi zmdi-link"></i> https://thechun.xyz</div>
-                  </BioIcon> */}
                   {user.isUserLogin && user.userProfile.fbid === profile.fbid &&
                     <Button onClick={() => this.setState({editProfileModal: true})} inline link style={{'marginTop': '15px'}}>
                         <i className="zmdi zmdi-edit"></i> Edit Bio
@@ -216,15 +193,10 @@ class ProfileView extends Component {
               </BioContainer>
             </div>
 
-            <div>
-              {this.state.quotes.map((quote, i) => {
-                return <QuoteCard name={this.props.user.userProfile.display_name} data={quote} key={`quote_${i}`} noprofile/>
-              })}
-
-              {!this.state.done &&
-                <LoadMoreButton onClick={this.loadMoreQuotes} loading={this.state.loading}/>
-              }
-            </div>
+            <QuoteFetch
+              api={`/api/quote/getProfileQuote?id=${this.props.fbid}`}
+              done={this.props.done || this.state.done}
+              quotes={this.props.quotes || this.state.quotes} />
 
           </ProfileContainer>
         </Container>

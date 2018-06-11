@@ -82,7 +82,19 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
   }
   // add quote to database
   try {
-    const id = await quoteAPI.postNew(req.headers.fbid, quote, author)
+    // get user display name if author is not defined
+    const profile = {}
+    if (author.length <= 0) {
+      profile = await userAPI.getUserProfile(req.headers.fbid)
+      if (typeof profile != 'object') {
+        return res.json({
+          error: true,
+          message: 'validate error',
+        })
+      }
+    }
+    // post quote to database
+    const id = await quoteAPI.postNew(req.headers.fbid, quote || profile.display_name, author)
     return res.json({
       success: true,
       payload: {id},

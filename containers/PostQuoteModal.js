@@ -130,7 +130,7 @@ export default class extends Component {
     this.setState({waiting: true})
     // make request
     const {quoteInput, authorInput} = this.state
-    request.withToken(`/api/quote/post`, {quote: quoteInput, author: authorInput})
+    request.withToken(`/api/quote/post`, {quote: quoteInput, author: authorInput || this.props.displayName})
       .then(response => {
         if (response.success) {
           const id = response.payload.id

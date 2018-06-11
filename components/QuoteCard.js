@@ -107,7 +107,6 @@ const Content = styled.div`
 // QuoteCard Component
 // noprofile props: remove profile image from card
 // data props: response from server
-// name props: display name
 
 // data props example:
 // {
@@ -119,7 +118,7 @@ const Content = styled.div`
 //   "__v": 0
 // }
 
-export default ({ noprofile, data, name }) => (
+export default ({ noprofile, data }) => (
   <Container>
     <ProfileContainer noprofile={noprofile} src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
     <ContentContainer>
@@ -129,7 +128,7 @@ export default ({ noprofile, data, name }) => (
       <Link href={`/quote?id=${data._id}`} as={`/quote/${data._id}`}>
         <h2>“{data.quote}”</h2>
       </Link>
-      <QuoteAuthor><div/> {data.author || name}</QuoteAuthor>
+      <QuoteAuthor><div/> {data.author}</QuoteAuthor>
     </ContentContainer>
   </Container>
 )
