@@ -1,10 +1,8 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const Quote = require('../models/quote')
 
-const limit = 2
-
 // getProfileQuote
-exports.getProfileQuote = (fbid, page) => {
+exports.getProfileQuote = (fbid, page, limit = 10) => {
   try {
     return Quote.find({posted_by: fbid})
       .limit(limit)

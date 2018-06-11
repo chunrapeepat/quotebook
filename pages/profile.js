@@ -136,7 +136,7 @@ class ProfileView extends Component {
     const resQuote = await axios.get(`/api/quote/getProfileQuote?id=${id}&page=1`).then(res => res.data)
     // return props
     if (resProfile.success && resQuote.success) {
-      return {profile: resProfile.payload, quotes: resQuote.payload, fbid: id}
+      return {profile: resProfile.payload, done: resQuote.done, quotes: resQuote.payload, fbid: id}
     }
     // error user not found or something
     if (resProfile.error && res) res.statusCode = 404
@@ -145,10 +145,7 @@ class ProfileView extends Component {
 
   componentWillMount = () => {
     this.setState({profile: this.props.profile})
-    if (this.props.quotes.length === 0) {
-      return this.setState({done: true})
-    }
-    this.setState({quotes: this.props.quotes})
+    this.setState({quotes: this.props.quotes, done: this.props.done})
   }
 
   closeModal = fbid => async() => {
@@ -166,7 +163,7 @@ class ProfileView extends Component {
       .then(res => {
         if (res.success) {
           const payload = res.payload
-          if (payload.length === 0) {
+          if (res.done) {
             this.setState({done: true})
           } else {
             this.setState({page: this.state.page + 1, quotes: [...this.state.quotes, ...payload]})

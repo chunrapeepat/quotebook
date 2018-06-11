@@ -5,6 +5,9 @@ const baseURL = require('../config/app').baseURL
 const quoteAPI = require('../api/quote')
 const userAPI = require('../api/user')
 
+// limit quotes per page
+const quoteLimit = 10
+
 router.get('/', (req, res) => {
   res.redirect(baseURL)
 })
@@ -19,9 +22,10 @@ router.get('/getProfileQuote', async (req, res) => {
   }
   // get profile from database
   try {
-    const quotes = await quoteAPI.getProfileQuote(req.query.id, req.query.page)
+    const quotes = await quoteAPI.getProfileQuote(req.query.id, req.query.page, quoteLimit)
     return res.json({
       success: true,
+      done: quotes.length != quoteLimit,
       payload: quotes,
     })
   } catch (e) {
