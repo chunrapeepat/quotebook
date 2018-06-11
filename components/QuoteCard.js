@@ -105,7 +105,6 @@ const Content = styled.div`
 `
 
 // QuoteCard Component
-// noprofile props: remove profile image from card
 // data props: response from server
 
 // data props example:
@@ -118,9 +117,9 @@ const Content = styled.div`
 //   "__v": 0
 // }
 
-export default ({ noprofile, data }) => (
+export default ({data}) => (
   <Container>
-    <ProfileContainer noprofile={noprofile} src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
+    <ProfileContainer noprofile={data.profile == undefined} src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
     <ContentContainer>
       <Content>
         {datetimeFormat(data.created_at)}
