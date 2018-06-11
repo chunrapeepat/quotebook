@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import Router from 'next/router'
+import axios from 'axios'
 
 import App from '../components/App'
 import Footer from '../components/Footer'
-import QuoteCard from '../components/QuoteCard'
 
+import QuoteFetch from '../containers/QuoteFetch'
 import Menubar from '../containers/Menubar'
 import PopularUser from '../containers/PopularUser'
 
@@ -66,24 +68,77 @@ const SearchBox = styled.input`
   `}
 `
 
+let timeout
+
 class SearchView extends Component {
-  render() {
-    return (
+  state = {
+    search: '',
+    quotes: this.props.quotes,
+    done: this.props.done,
+  }
+
+  static async getInitialProps({query, req, res}) {
+    let q = null
+    if (req === undefined) q = query.query
+    else q = req.params.query
+    // fetch default query
+    if (q !== null) {
+      const resQuote = await axios.get(`/api/quote/search?query=${q}&page=1`).then(res => res.data)
+      if (resQuote.success) {
+        return {quotes: resQuote.payload, done: resQuote.done, query: q}
+      }
+    }
+    return {quotes: [], done: true, query: q}
+  }
+
+  fetchApi = query => {
+    axios.get(`/api/quote/search?query=${query}&page=1`).then(res => res.data)
+      .then(data => {
+        if (data.success) {
+          this.setState({quotes: data.payload, done: data.done})
+        }
+      })
+  }
+
+  handleInput = e => {
+    clearTimeout(timeout)
+    this.setState({search: e.target.value})
+    // auto submit after 2 seconds
+    timeout = setTimeout(() => {
+      Router.push(`/search?id=${this.state.search}`, `/search/${this.state.search}`)
+      // update quotes (fetch api)
+      this.fetchApi(this.state.search)
+    }, 1500)
+  }
+
+  handleSubmit = e => {
+    clearTimeout(timeout)
+    Router.push(`/search?id=${this.state.search}`, `/search/${this.state.search}`)
+    // update quotes (fetch api)
+    this.fetchApi(this.state.search)
+
+    e.preventDefault()
+  }
+
+  render = () => (
       <div>
         <Menubar night/>
         <Container>
-          <SearchBox
-            autoFocus
-            type="text" placeholder="Search Everything from QuoteBook" />
+          <form onSubmit={this.handleSubmit}>
+            <SearchBox
+              autoFocus
+              value={this.state.search || this.props.query}
+              onChange={this.handleInput}
+              type="text" placeholder="Search Everything from QuoteBook" />
+          </form>
+
           <IndexContainer>
-            <div>
-              <QuoteCard />
-              <QuoteCard />
-              <QuoteCard />
-              <QuoteCard />
-              <QuoteCard />
-              <QuoteCard />
-            </div>
+            <QuoteFetch
+              withProfile
+              api={`/api/quote/search?query=${this.state.search || this.props.query}`}
+              done={this.state.done}
+              quotes={this.state.quotes} />
+
             <div>
               <Sidebar>
                 <PopularUser />
@@ -93,8 +148,7 @@ class SearchView extends Component {
           </IndexContainer>
         </Container>
       </div>
-    )
-  }
+  )
 }
 
 export default App(SearchView)

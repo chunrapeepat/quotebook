@@ -10,13 +10,22 @@ import {fonts, colors, fontSize} from '../core/styled'
 // `quotes` - default quotes
 // `done` - is done for loading
 // `api` - api path
-// `noprofile` - not show profile image
+// `withProfile` - render profile image
 class QuoteFetch extends Component {
   state = {
+    api: this.props.api,
     quotes: this.props.quotes || [],
     done: this.props.done,
     page: 2,
     loading: false,
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({
+      page: 2,
+      quotes: nextProps.quotes,
+      done: nextProps.done,
+    })
   }
 
   loadMoreQuotes = () => {
@@ -35,7 +44,7 @@ class QuoteFetch extends Component {
     return (
       <div>
         {this.state.quotes.map((quote, i) => {
-          return <QuoteCard data={quote} key={`quote_${i}`}/>
+          return <QuoteCard withProfile={this.props.withProfile} data={quote} key={`quote_${i}`}/>
         })}
         {!this.state.done &&
           <LoadMoreButton onClick={this.loadMoreQuotes} loading={this.state.loading}/>

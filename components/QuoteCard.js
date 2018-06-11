@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import axios from 'axios'
 
 import {datetimeFormat} from '../core/helper'
 import {fonts, media, colors, fontSize} from '../core/styled'
@@ -117,17 +118,33 @@ const Content = styled.div`
 //   "__v": 0
 // }
 
-export default ({data}) => (
-  <Container>
-    <ProfileContainer noprofile={data.profile == undefined} src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
-    <ContentContainer>
-      <Content>
-        {datetimeFormat(data.created_at)}
-      </Content>
-      <Link href={`/quote?id=${data._id}`} as={`/quote/${data._id}`}>
-        <h2>“{data.quote}”</h2>
-      </Link>
-      <QuoteAuthor><div/> {data.author}</QuoteAuthor>
-    </ContentContainer>
-  </Container>
-)
+class QuoteCard extends Component {
+  state = {
+    image: '',
+  }
+
+  componentDidMount = () => {
+    if (this.props.withProfile) {
+      axios.get(`/api/user/getProfileImage?id=${this.props.data.posted_by}`)
+        .then(res => res.data)
+        .then(data => this.setState({image: data.payload.profile_image}))
+    }
+  }
+
+  render = () => (
+    <Container>
+      <ProfileContainer noprofile={!this.props.withProfile} src={this.state.image}/>
+      <ContentContainer>
+        <Content>
+          {datetimeFormat(this.props.data.created_at)}
+        </Content>
+        <Link href={`/quote?id=${this.props.data._id}`} as={`/quote/${this.props.data._id}`}>
+          <h2>“{this.props.data.quote}”</h2>
+        </Link>
+        <QuoteAuthor><div/> {this.props.data.author}</QuoteAuthor>
+      </ContentContainer>
+    </Container>
+  )
+}
+
+export default QuoteCard

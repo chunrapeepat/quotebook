@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import {Provider} from 'react-redux'
 import {lifecycle} from 'recompose'
 import {injectGlobal} from 'styled-components'
@@ -23,7 +24,12 @@ const enhance = lifecycle({
 const App = Component =>
   enhance(props => (
     <Provider store={store}>
-      <Component {...props} />
+      <div>
+        <Head>
+          <title>QuoteBook</title>
+        </Head>
+        <Component {...props} />
+      </div>
     </Provider>
   ))
 

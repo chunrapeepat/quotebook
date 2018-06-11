@@ -8,6 +8,30 @@ router.get('/', (req, res) => {
   res.redirect(baseURL)
 })
 
+// get public profile image
+router.get('/getProfileImage', async (req, res) => {
+  if (!req.query.id) {
+    return res.json({
+      error: true,
+      message: 'id parameter can not be empty',
+    })
+  }
+  // get profile from database
+  const profile = await userAPI.getUserProfile(req.query.id)
+  if (profile == null || typeof profile != 'object') {
+    return res.json({
+      error: true,
+      message: 'user not found',
+    })
+  }
+  return res.json({
+    success: true,
+    payload: {
+      profile_image: profile.profile_image,
+    },
+  })
+})
+
 // update bio from profile page
 router.post('/updateBio', middlewares.userLogged, async (req, res) => {
   const bio = req.body.bio

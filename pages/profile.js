@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Head from 'next/head'
 import styled from 'styled-components'
 import axios from 'axios'
 import {connect} from 'react-redux'
@@ -166,6 +167,11 @@ class ProfileView extends Component {
     return (
       <div>
         <Menubar night/>
+
+        <Head>
+          <title>QuoteBook - {profile.display_name}</title>
+          <meta name="description" content={profile.bio}/>
+        </Head>
 
         {user.isUserLogin && user.userProfile.fbid === profile.fbid &&
           <EditProfileModal
