@@ -13,10 +13,19 @@ import {fonts, colors, fontSize} from '../core/styled'
 // `withProfile` - render profile image
 class QuoteFetch extends Component {
   state = {
+    api: this.props.api,
     quotes: this.props.quotes || [],
     done: this.props.done,
     page: 2,
     loading: false,
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({
+      page: 2,
+      quotes: nextProps.quotes,
+      done: nextProps.done,
+    })
   }
 
   loadMoreQuotes = () => {

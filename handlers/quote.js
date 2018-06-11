@@ -60,6 +60,30 @@ router.get('/getProfileQuote', async (req, res) => {
   }
 })
 
+// get public quote for search
+router.get('/search', async (req, res) => {
+  if (!req.query.query || !req.query.page) {
+    return res.json({
+      error: true,
+      message: 'parameters can not be empty',
+    })
+  }
+  // get profile from database
+  try {
+    const quotes = await quoteAPI.getSearchQuote(req.query.query, req.query.page, quoteLimit)
+    return res.json({
+      success: true,
+      done: quotes.length != quoteLimit,
+      payload: quotes,
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 // get public quote and information
 router.get('/getQuote', async (req, res) => {
   if (!req.query.id) {

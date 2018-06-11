@@ -13,6 +13,21 @@ exports.getProfileQuote = (fbid, page, limit = 10) => {
   }
 }
 
+// getSearchQuote
+exports.getSearchQuote = (query, page, limit = 10) => {
+  try {
+    return Quote.find({quote: {
+      $regex: query,
+      $options: 'i',
+    }})
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .sort({created_at: 'descending'})
+  } catch (e) {
+    return e
+  }
+}
+
 // getHomeQuote
 exports.getHomeQuote = (page, limit = 10) => {
   try {

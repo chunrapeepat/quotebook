@@ -46,6 +46,14 @@ app.prepare()
       return app.render(req, res, '/profile', req.query)
     })
 
+    server.get('/search/', (req, res) => {
+      return app.render(req, res, '/search', req.query)
+    })
+
+    server.get('/search/:query', (req, res) => {
+      return app.render(req, res, '/search', req.query)
+    })
+
     server.get('/quote', (req, res) => {
       return res.redirect('/')
     })
