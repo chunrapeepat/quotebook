@@ -13,6 +13,18 @@ exports.getProfileQuote = (fbid, page, limit = 10) => {
   }
 }
 
+// getHomeQuote
+exports.getHomeQuote = (page, limit = 10) => {
+  try {
+    return Quote.find({})
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .sort({created_at: 'descending'})
+  } catch (e) {
+    return e
+  }
+}
+
 // postNew
 // add new quote to database
 exports.postNew = (fbid, quote, author = '') => {

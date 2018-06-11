@@ -12,6 +12,30 @@ router.get('/', (req, res) => {
   res.redirect(baseURL)
 })
 
+// get quotes for home page
+router.get('/getHomeQuote', async (req, res) => {
+  if (!req.query.page) {
+    return res.json({
+      error: true,
+      message: 'page parameter can not be empty',
+    })
+  }
+  // get quotes from database
+  try {
+    let quotes = await quoteAPI.getHomeQuote(req.query.page, quoteLimit)
+    return res.json({
+      success: true,
+      done: quotes.length != quoteLimit,
+      payload: quotes,
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 // get public quote for profile page
 router.get('/getProfileQuote', async (req, res) => {
   if (!req.query.id || !req.query.page) {

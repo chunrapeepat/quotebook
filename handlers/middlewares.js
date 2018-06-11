@@ -31,9 +31,6 @@ exports.userLogged = (req, res, next) => {
   // verify using jsonwebtoken
   jwt.verify(accessToken, jwtConfig.secret, (err, decoded) => {
     if (err) {
-      if (decoded.fbid != undefined)
-        userAPI.updateToken(decoded.fbid, '')
-
       return res.json({
         error: true,
         message: 'invalid access token',

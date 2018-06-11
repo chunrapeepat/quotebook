@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 import App from '../components/App'
-import QuoteCard from '../components/QuoteCard'
 import Footer from '../components/Footer'
 
+import QuoteFetch from '../containers/QuoteFetch'
 import Menubar from '../containers/Menubar'
 import PopularUser from '../containers/PopularUser'
 
@@ -83,6 +84,17 @@ const DailyQuote = ({src}) => (
 )
 
 class IndexView extends Component {
+  static async getInitialProps() {
+    // fetch api to get quotes
+    const resQuote = await axios.get(`/api/quote/getHomeQuote?page=1`).then(res => res.data)
+    // return props
+    if (resQuote.success) {
+      return {done: resQuote.done, quotes: resQuote.payload}
+    }
+
+    return {done: true, quotes: []}
+  }
+
   render() {
     return (
       <div>
@@ -92,14 +104,13 @@ class IndexView extends Component {
         </DailyQuote>
         <Container>
           <IndexContainer>
-            <div>
-              {/* <QuoteCard />
-              <QuoteCard />
-              <QuoteCard />
-              <QuoteCard />
-              <QuoteCard />
-              <QuoteCard /> */}
-            </div>
+
+            <QuoteFetch
+              withProfile={true}
+              api={`/api/quote/getHomeQuote?id=none`}
+              done={this.props.done}
+              quotes={this.props.quotes} />
+
             <div>
               <Sidebar>
                 <PopularUser />
