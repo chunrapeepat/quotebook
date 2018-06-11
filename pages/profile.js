@@ -4,7 +4,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 
 import App from '../components/App'
-import Button from '../components/Button'
+import Button, {LoadMoreButton} from '../components/Button'
 import QuoteCard from '../components/QuoteCard'
 import Error from './_error'
 
@@ -120,6 +120,10 @@ class ProfileView extends Component {
   state = {
     editProfileModal: false,
     profile: {},
+    quotes: [],
+    page: 2,
+    done: false,
+    loading: false,
   }
 
   static async getInitialProps({query, req, res}) {
@@ -128,8 +132,11 @@ class ProfileView extends Component {
     else id = req.params.id
     // fetch api to get profile information
     const resProfile = await axios.get(`/api/user/profile?id=${id}`).then(res => res.data)
-    if (resProfile.success) {
-      return {profile: resProfile.payload, fbid: id}
+    // fetch api to get quotes
+    const resQuote = await axios.get(`/api/quote/getProfileQuote?id=${id}&page=1`).then(res => res.data)
+    // return props
+    if (resProfile.success && resQuote.success) {
+      return {profile: resProfile.payload, quotes: resQuote.payload, fbid: id}
     }
     // error user not found or something
     if (resProfile.error && res) res.statusCode = 404
@@ -138,6 +145,10 @@ class ProfileView extends Component {
 
   componentWillMount = () => {
     this.setState({profile: this.props.profile})
+    if (this.props.quotes.length === 0) {
+      return this.setState({done: true})
+    }
+    this.setState({quotes: this.props.quotes})
   }
 
   closeModal = fbid => async() => {
@@ -147,6 +158,22 @@ class ProfileView extends Component {
     if (resProfile.success) {
       this.setState({profile: resProfile.payload})
     }
+  }
+
+  loadMoreQuotes = () => {
+    this.setState({loading: true})
+    axios.get(`/api/quote/getProfileQuote?id=${this.props.fbid}&page=${this.state.page}`).then(res => res.data)
+      .then(res => {
+        if (res.success) {
+          const payload = res.payload
+          if (payload.length === 0) {
+            this.setState({done: true})
+          } else {
+            this.setState({page: this.state.page + 1, quotes: [...this.state.quotes, ...payload]})
+          }
+          this.setState({loading: false})
+        }
+      })
   }
 
   render() {
@@ -193,15 +220,13 @@ class ProfileView extends Component {
             </div>
 
             <div>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
+              {this.state.quotes.map((quote, i) => {
+                return <QuoteCard name={this.props.user.userProfile.display_name} data={quote} key={`quote_${i}`} noprofile/>
+              })}
+
+              {!this.state.done &&
+                <LoadMoreButton onClick={this.loadMoreQuotes} loading={this.state.loading}/>
+              }
             </div>
 
           </ProfileContainer>

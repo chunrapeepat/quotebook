@@ -93,12 +93,12 @@ class IndexView extends Component {
         <Container>
           <IndexContainer>
             <div>
+              {/* <QuoteCard />
               <QuoteCard />
               <QuoteCard />
               <QuoteCard />
               <QuoteCard />
-              <QuoteCard />
-              <QuoteCard />
+              <QuoteCard /> */}
             </div>
             <div>
               <Sidebar>

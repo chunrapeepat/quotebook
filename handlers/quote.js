@@ -9,6 +9,29 @@ router.get('/', (req, res) => {
   res.redirect(baseURL)
 })
 
+// get public quote for profile page
+router.get('/getProfileQuote', async (req, res) => {
+  if (!req.query.id || !req.query.page) {
+    return res.json({
+      error: true,
+      message: 'parameters can not be empty',
+    })
+  }
+  // get profile from database
+  try {
+    const quotes = await quoteAPI.getProfileQuote(req.query.id, req.query.page)
+    return res.json({
+      success: true,
+      payload: quotes,
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 // get public quote and information
 router.get('/getQuote', async (req, res) => {
   if (!req.query.id) {

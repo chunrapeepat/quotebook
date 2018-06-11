@@ -1,6 +1,20 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const Quote = require('../models/quote')
 
+const limit = 2
+
+// getProfileQuote
+exports.getProfileQuote = (fbid, page) => {
+  try {
+    return Quote.find({posted_by: fbid})
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .sort({created_at: 'descending'})
+  } catch (e) {
+    return e
+  }
+}
+
 // postNew
 // add new quote to database
 exports.postNew = (fbid, quote, author = '') => {
