@@ -124,9 +124,11 @@ class QuoteCard extends Component {
   }
 
   componentDidMount = () => {
-    axios.get(`/api/user/getProfileImage?id=${this.props.data.posted_by}`)
-      .then(res => res.data)
-      .then(data => this.setState({image: data.payload.profile_image}))
+    if (this.props.withProfile) {
+      axios.get(`/api/user/getProfileImage?id=${this.props.data.posted_by}`)
+        .then(res => res.data)
+        .then(data => this.setState({image: data.payload.profile_image}))
+    }
   }
 
   render = () => (
