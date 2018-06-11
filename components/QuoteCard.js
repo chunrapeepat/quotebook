@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import Link from 'next/link'
 
+import {datetimeFormat} from '../core/helper'
 import {fonts, media, colors, fontSize} from '../core/styled'
 
 const imageSize = 55
 
 const Container = styled.div`
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   display: flex;
   border-radius: 3px;
   border: 1px solid #fafafa;
@@ -53,6 +55,7 @@ const ContentContainer = styled.div`
     font-size: ${fontSize.big}rem;
     font-family: ${fonts.normal};
     letter-spacing: 1px;
+    cursor: pointer;
   }
 `
 
@@ -102,19 +105,29 @@ const Content = styled.div`
 `
 
 // QuoteCard Component
-// noprofile props: remove profile image from card
+// data props: response from server
 
-export default ({ noprofile }) => (
+// data props example:
+// {
+//   "author": "Chun Rapeepat",
+//   "created_at": 1528619806968,
+//   "_id": "5b1ce436f92878f83659bc2c",
+//   "posted_by": "949619975212359",
+//   "quote": "restaurant is just an object containing the result to your query. It does not have a findOne method, only Restaurant does.",
+//   "__v": 0
+// }
+
+export default ({data}) => (
   <Container>
-    <ProfileContainer noprofile={noprofile} src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
+    <ProfileContainer noprofile={data.profile == undefined} src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg"/>
     <ContentContainer>
       <Content>
-        <a href=""><i class="zmdi zmdi-facebook-box"></i> share to Facebook</a>
-        <div/>
-        <a href=""><i class="zmdi zmdi-twitter-box"></i> share to Twitter</a>
+        {datetimeFormat(data.created_at)}
       </Content>
-      <h2>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</h2>
-      <QuoteAuthor><div/> Chun Rapeepat</QuoteAuthor>
+      <Link href={`/quote?id=${data._id}`} as={`/quote/${data._id}`}>
+        <h2>“{data.quote}”</h2>
+      </Link>
+      <QuoteAuthor><div/> {data.author}</QuoteAuthor>
     </ContentContainer>
   </Container>
 )

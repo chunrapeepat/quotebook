@@ -5,8 +5,35 @@ const baseURL = require('../config/app').baseURL
 const quoteAPI = require('../api/quote')
 const userAPI = require('../api/user')
 
+// limit quotes per page
+const quoteLimit = 10
+
 router.get('/', (req, res) => {
   res.redirect(baseURL)
+})
+
+// get public quote for profile page
+router.get('/getProfileQuote', async (req, res) => {
+  if (!req.query.id || !req.query.page) {
+    return res.json({
+      error: true,
+      message: 'parameters can not be empty',
+    })
+  }
+  // get profile from database
+  try {
+    const quotes = await quoteAPI.getProfileQuote(req.query.id, req.query.page, quoteLimit)
+    return res.json({
+      success: true,
+      done: quotes.length != quoteLimit,
+      payload: quotes,
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
 })
 
 // get public quote and information
@@ -55,7 +82,19 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
   }
   // add quote to database
   try {
-    const id = await quoteAPI.postNew(req.headers.fbid, quote, author)
+    // get user display name if author is not defined
+    const profile = {}
+    if (author.length <= 0) {
+      profile = await userAPI.getUserProfile(req.headers.fbid)
+      if (typeof profile != 'object') {
+        return res.json({
+          error: true,
+          message: 'validate error',
+        })
+      }
+    }
+    // post quote to database
+    const id = await quoteAPI.postNew(req.headers.fbid, quote || profile.display_name, author)
     return res.json({
       success: true,
       payload: {id},

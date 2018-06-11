@@ -5,9 +5,9 @@ import {connect} from 'react-redux'
 
 import App from '../components/App'
 import Button from '../components/Button'
-import QuoteCard from '../components/QuoteCard'
 import Error from './_error'
 
+import QuoteFetch from '../containers/QuoteFetch'
 import Menubar from '../containers/Menubar'
 import EditProfileModal from '../containers/EditProfileModal'
 
@@ -120,6 +120,10 @@ class ProfileView extends Component {
   state = {
     editProfileModal: false,
     profile: {},
+    quotes: [],
+    page: 2,
+    done: false,
+    loading: false,
   }
 
   static async getInitialProps({query, req, res}) {
@@ -128,8 +132,11 @@ class ProfileView extends Component {
     else id = req.params.id
     // fetch api to get profile information
     const resProfile = await axios.get(`/api/user/profile?id=${id}`).then(res => res.data)
-    if (resProfile.success) {
-      return {profile: resProfile.payload, fbid: id}
+    // fetch api to get quotes
+    const resQuote = await axios.get(`/api/quote/getProfileQuote?id=${id}&page=1`).then(res => res.data)
+    // return props
+    if (resProfile.success && resQuote.success) {
+      return {profile: resProfile.payload, done: resQuote.done, quotes: resQuote.payload, fbid: id}
     }
     // error user not found or something
     if (resProfile.error && res) res.statusCode = 404
@@ -138,6 +145,7 @@ class ProfileView extends Component {
 
   componentWillMount = () => {
     this.setState({profile: this.props.profile})
+    this.setState({quotes: this.props.quotes, done: this.props.done})
   }
 
   closeModal = fbid => async() => {
@@ -176,13 +184,6 @@ class ProfileView extends Component {
                 <div>
                   <ProfileName>{profile.display_name}</ProfileName>
                   <Bio>{this.state.profile.bio}</Bio>
-
-                  {/* <BioIcon>
-                    <div><i className="zmdi zmdi-case"></i> Founder at QuoteBook</div>
-                    <div><i className="zmdi zmdi-pin"></i> Bangkok, Thailand</div>
-                    <div><i className="zmdi zmdi-facebook-box"></i> Chun Rapeepat</div>
-                    <div><i className="zmdi zmdi-link"></i> https://thechun.xyz</div>
-                  </BioIcon> */}
                   {user.isUserLogin && user.userProfile.fbid === profile.fbid &&
                     <Button onClick={() => this.setState({editProfileModal: true})} inline link style={{'marginTop': '15px'}}>
                         <i className="zmdi zmdi-edit"></i> Edit Bio
@@ -192,17 +193,10 @@ class ProfileView extends Component {
               </BioContainer>
             </div>
 
-            <div>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-              <QuoteCard noprofile/>
-            </div>
+            <QuoteFetch
+              api={`/api/quote/getProfileQuote?id=${this.props.fbid}`}
+              done={this.props.done || this.state.done}
+              quotes={this.props.quotes || this.state.quotes} />
 
           </ProfileContainer>
         </Container>

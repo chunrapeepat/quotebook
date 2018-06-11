@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Ink from 'react-ink'
+import ReactLoading from 'react-loading'
 
 import {colors, fonts, fontSize} from '../core/styled'
 
@@ -76,6 +77,23 @@ const Button = styled.button`
     }
   `: ``}
 `
+
+const LoadMoreButtonContainer = styled.div`
+  padding: 30px 0;
+`
+
+export const LoadMoreButton = ({loading, ...props}) => (
+  <LoadMoreButtonContainer>
+    <center>
+    {loading &&
+      <ReactLoading type="spin" color="black" height={30} width={30} />
+    }
+    {!loading &&
+      <Button {...props} inline regular><Ink />Load More...</Button>
+    }
+    </center>
+  </LoadMoreButtonContainer>
+)
 
 export default ({children, ...props}) => (
   <Button {...props}>
