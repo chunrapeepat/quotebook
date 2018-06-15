@@ -131,6 +131,10 @@ class ProfileView extends Component {
     let id = null
     if (req === undefined) id = query.id
     else id = req.params.id
+
+    if (id === undefined) {
+      return {refetch: true}
+    }
     // fetch api to get profile information
     const resProfile = await axios.get(`/api/user/profile?id=${id}`).then(res => res.data)
     // fetch api to get quotes
@@ -144,9 +148,22 @@ class ProfileView extends Component {
     return {profile:{}, notfound: true}
   }
 
-  componentWillMount = () => {
-    this.setState({profile: this.props.profile})
-    this.setState({quotes: this.props.quotes, done: this.props.done})
+  componentWillMount = async () => {
+    // refetch profile and quote
+    if (this.props.refetch) {
+      const id = window.location.pathname.split("/").pop()
+      const profile = await axios.get(`/api/user/profile?id=${id}`).then(res => res.data)
+      const quote = await axios.get(`/api/quote/getProfileQuote?id=${id}&page=1`).then(res => res.data)
+      if (profile.success && quote.success) {
+        this.setState({profile: profile.payload, quotes: quote.payload, done: quote.done, fbid: id})
+      }
+      if (response.error || quote.error) {
+        this.setState({error: true})
+      }
+    } else {
+      this.setState({profile: this.props.profile})
+      this.setState({quotes: this.props.quotes, done: this.props.done})
+    }
   }
 
   closeModal = fbid => async() => {
@@ -159,7 +176,8 @@ class ProfileView extends Component {
   }
 
   render() {
-    const {profile, notfound, user} = this.props
+    const {notfound, user} = this.props
+    const {profile} = this.state
     // render error 404 notfound instead
     if (notfound) {
       return <Error statusCode={404} />
