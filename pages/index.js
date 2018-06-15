@@ -42,12 +42,11 @@ const Sidebar = styled.div`
   top: 20px;
 `
 
-const DailyQuoteContainer = styled.div`
+const WelcomeContainer = styled.div`
   width: 100%;
-  padding: 50px 0;
+  padding: 100px 0;
   background: url(${props => props.src});
   background-size: cover;
-  text-align: center;
 
   & h1 {
     margin: 0;
@@ -57,30 +56,38 @@ const DailyQuoteContainer = styled.div`
     font-size: ${fontSize.quote}rem;
   }
 
-  & h2 {
-    margin: 0;
-    margin-top: 15px;
-    color: ${colors.whiteContent};
-    font-family: ${fonts.normal};
-    font-size: ${fontSize.big}rem;
-  }
-
   & h3 {
     margin: 0;
     color: ${colors.whiteFade};
     font-family: ${fonts.normal};
     font-size: ${fontSize.normal}rem;
   }
+
+  ${media.desktop`
+    padding: 70px 20px;
+
+    & h1 {
+      font-size: ${fontSize.quote - 0.5}rem;
+    }
+  `}
+
+  ${media.tablet`
+    padding: 50px 20px;
+    text-align: center;
+
+    & h1 {
+      font-size: ${fontSize.quote - 1}rem;
+    }
+  `}
 `
 
 const DailyQuote = ({src}) => (
-  <DailyQuoteContainer src={src}>
+  <WelcomeContainer src={src}>
     <Container>
-      <h3>MOST POPULAR QUOTE TODAY</h3>
-      <h1>“จงเป็นมาตราฐานของคุณภาพ เพราะคนบางคนไม่ได้อยู่ในสิ่งแวดล้อมที่ความสุดยอดเป็นที่ต้องการ”</h1>
-      <h2>- Chun Rapeepat</h2>
+      <h3>WELCOME TO QUOTEBOOK</h3>
+      <h1>Collect your own quotes<br/>and share it with everyone.</h1>
     </Container>
-  </DailyQuoteContainer>
+  </WelcomeContainer>
 )
 
 class IndexView extends Component {
@@ -99,9 +106,7 @@ class IndexView extends Component {
     return (
       <div>
         <Menubar />
-        <DailyQuote src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png">
-
-        </DailyQuote>
+        <DailyQuote src="/static/background.png" />
         <Container>
           <IndexContainer>
 
