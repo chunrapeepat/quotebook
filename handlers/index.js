@@ -34,6 +34,7 @@ router.use('/user', userHandler)
 // - /quote/getHomeQuote - get home quotes public (get)
 // - /quote/search?query=xxx - get search quotes public (get)
 // - /quote/remove - remove quote (post)
+// - /quote/getPopularUser - get popular user sorted by total quote (get)
 router.use('/quote', quoteHandler)
 
 module.exports = router

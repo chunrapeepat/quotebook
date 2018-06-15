@@ -42,8 +42,9 @@ exports.getHomeQuote = (page, limit = 10) => {
 
 // postNew
 // add new quote to database
-exports.postNew = (fbid, quote, author = '') => {
+exports.postNew = (ref, fbid, quote, author = '') => {
   const newQuote = new Quote({
+    posted_by_ref: new ObjectId(ref),
     posted_by: fbid,
     author,
     quote,
@@ -88,4 +89,26 @@ exports.update = (quoteID, quote, author) => {
       },
     })
   }
+}
+
+// get user id sorted by quotes
+exports.getTopUser = () => {
+  return Quote.aggregate([
+    {
+      $group: {
+        _id: '$posted_by_ref',
+        total: {$sum: 1},
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'profile',
+      },
+    }
+  ])
+    .sort({total: 'desc'})
+    .limit(5)
 }

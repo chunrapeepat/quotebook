@@ -36,6 +36,31 @@ router.get('/getHomeQuote', async (req, res) => {
   }
 })
 
+// get top 5 popular user
+router.get('/getPopularUser', async (req, res) => {
+  // get user from database
+  try {
+    let quotes = await quoteAPI.getTopUser()
+    return res.json({
+      success: true,
+      payload: quotes.map(item => {
+        const profile = item.profile[0]
+        return {
+          total: item.total,
+          fbid: profile.fbid,
+          name: profile.display_name,
+          image: profile.profile_image,
+        }
+      }),
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 // get public quote for profile page
 router.get('/getProfileQuote', async (req, res) => {
   if (!req.query.id || !req.query.page) {
@@ -131,18 +156,15 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
   // add quote to database
   try {
     // get user display name if author is not defined
-    const profile = {}
-    if (author.length <= 0) {
-      profile = await userAPI.getUserProfile(req.headers.fbid)
-      if (typeof profile != 'object') {
-        return res.json({
-          error: true,
-          message: 'validate error',
-        })
-      }
+    const profile = await userAPI.getUserProfile(req.headers.fbid)
+    if (typeof profile != 'object') {
+      return res.json({
+        error: true,
+        message: 'validate error',
+      })
     }
     // post quote to database
-    const id = await quoteAPI.postNew(req.headers.fbid, quote || profile.display_name, author)
+    const id = await quoteAPI.postNew(profile._id, req.headers.fbid, quote || profile.display_name, author)
     return res.json({
       success: true,
       payload: {id},

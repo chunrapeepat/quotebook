@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 import App from '../components/App'
 import UserItem from '../components/UserItem'
@@ -24,15 +25,24 @@ const Heading = styled.div`
 `
 
 class PopularUser extends Component {
+  state = {
+    users: [],
+  }
+
+  componentWillMount = async () => {
+    const res = await axios.get(`/api/quote/getPopularUser`).then(res => res.data)
+    if (res.success) {
+      this.setState({users: res.payload})
+    }
+  }
+
   render() {
     return (
       <Container>
         <Heading>Popular User</Heading>
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
+        {this.state.users.map((user, i) => {
+          return <UserItem user={user} key={`user_${i}`} />
+        })}
       </Container>
     )
   }
