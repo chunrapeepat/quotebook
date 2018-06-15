@@ -14,7 +14,7 @@ const Container = styled.div`
   background: ${colors.background};
 
   ${media.tablet`
-    display: none;
+    margin-top: 30px;
   `}
 `
 

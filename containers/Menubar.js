@@ -241,7 +241,7 @@ class Menubar extends Component {
                 </Link>
                 <Button onClick={this.props.userLogout} inline>Logout</Button>
                 <Button inline onClick={() => this.setState({
-                  showSignInModal: true,
+                  postQuoteModal: true,
                 })}>Post Your Own</Button>
               </div>
             }
