@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add express
+  /usr/local/bin/node /usr/local/bin/yarn add antd
 
 PATH: 
   /usr/local/Cellar/zplug/2.4.1/repos/zplug/zplug/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Applications/Wireshark.app/Contents/MacOS:/Users/chunza2542/go/bin:/usr/local/opt/zplug/repos/unixorn/tumult.plugin.zsh/bin
@@ -26,21 +26,28 @@ npm manifest:
       "build": "next build"
     },
     "dependencies": {
+      "axios": "^0.18.0",
+      "body-parser": "^1.18.3",
       "express": "^4.16.3",
+      "hoist-non-react-statics": "^2.5.0",
+      "javascript-time-ago": "^1.0.30",
       "jsonwebtoken": "^8.2.2",
       "mongoose": "^5.1.4",
       "next": "^6.0.3",
       "passport": "^0.4.0",
       "passport-facebook": "^2.1.1",
+      "qs": "^6.5.2",
       "react": "^16.0.0",
       "react-dom": "^16.0.0",
+      "react-facebook": "^5.0.3",
       "react-facebook-login": "^4.0.1",
       "react-ink": "^6.2.0",
+      "react-loading": "^2.0.2",
       "react-redux": "^5.0.6",
+      "react-share": "^2.2.0",
       "recompose": "^0.26.0",
       "redux": "^3.7.2",
       "redux-saga": "^0.16.0",
-      "rimraf": "^2.6.2",
       "styled-components": "^3.2.6"
     }
   }

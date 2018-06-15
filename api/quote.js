@@ -52,6 +52,12 @@ exports.postNew = (fbid, quote, author = '') => {
   return newQuote.save().then(res => res._id)
 }
 
+// remove
+// remove quote from database
+exports.remove = (quoteID) => {
+  return Quote.remove({_id: new ObjectId(quoteID)})
+}
+
 // getQuote
 // get quote by quote id (_id)
 exports.getQuote = _id => {

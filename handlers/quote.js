@@ -155,4 +155,37 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
   }
 })
 
+// remove quote
+router.post('/remove', middlewares.userLogged, async (req, res) => {
+  const quoteID = req.body.quote_id
+  // get posted by
+  try {
+    const quote = await quoteAPI.getQuote(quoteID)
+    // check permission
+    if (quote.posted_by !== req.headers.fbid) {
+      return res.json({
+        error: true,
+        message: `you don't have permission to do this`,
+      })
+    }
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+  // remove quote from database
+  try {
+    const remove = await quoteAPI.remove(quoteID)
+    return res.json({
+      success: true,
+    })
+  } catch(e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 module.exports = router
