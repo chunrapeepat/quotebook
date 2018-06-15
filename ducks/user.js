@@ -1,7 +1,6 @@
 import axios from 'axios'
 import Router from 'next/router'
-import {takeLatest} from 'redux-saga'
-import {call, put} from 'redux-saga/effects'
+import {call, put, takeLatest} from 'redux-saga/effects'
 
 import * as request from '../core/request'
 import {createReducer, createAction, createActionType} from '../core/helper'
