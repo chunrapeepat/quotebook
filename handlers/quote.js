@@ -36,6 +36,31 @@ router.get('/getHomeQuote', async (req, res) => {
   }
 })
 
+// get top 5 popular user
+router.get('/getPopularUser', async (req, res) => {
+  // get user from database
+  try {
+    let quotes = await quoteAPI.getTopUser()
+    return res.json({
+      success: true,
+      payload: quotes.map(item => {
+        const profile = item.profile[0]
+        return {
+          total: item.total,
+          fbid: profile.fbid,
+          name: profile.display_name,
+          image: profile.profile_image,
+        }
+      }),
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 // get public quote for profile page
 router.get('/getProfileQuote', async (req, res) => {
   if (!req.query.id || !req.query.page) {
@@ -131,21 +156,92 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
   // add quote to database
   try {
     // get user display name if author is not defined
-    const profile = {}
-    if (author.length <= 0) {
-      profile = await userAPI.getUserProfile(req.headers.fbid)
-      if (typeof profile != 'object') {
-        return res.json({
-          error: true,
-          message: 'validate error',
-        })
-      }
+    const profile = await userAPI.getUserProfile(req.headers.fbid)
+    if (typeof profile != 'object') {
+      return res.json({
+        error: true,
+        message: 'validate error',
+      })
     }
     // post quote to database
-    const id = await quoteAPI.postNew(req.headers.fbid, quote || profile.display_name, author)
+    const id = await quoteAPI.postNew(profile._id, req.headers.fbid, quote || profile.display_name, author)
     return res.json({
       success: true,
       payload: {id},
+    })
+  } catch(e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
+// update quote
+router.post('/update', middlewares.userLogged, async (req, res) => {
+  const quoteID = req.body.quote_id
+  const updatedQuote = req.body.quote
+  const author = req.body.author
+  // check permission
+  try {
+    const quote = await quoteAPI.getQuote(quoteID)
+    if (quote.posted_by !== req.headers.fbid) {
+      return res.json({
+        error: true,
+        message: `you don't have permission to do this`,
+      })
+    }
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+  // validate quote and author
+  if (updatedQuote.length > 150 || updatedQuote.length <= 0 || author.length > 30) {
+    return res.json({
+      error: true,
+      message: 'validate error',
+    })
+  }
+  // update quote on database
+  try {
+    const update = await quoteAPI.update(quoteID, updatedQuote, author)
+    return res.json({
+      success: true,
+    })
+  } catch(e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
+// remove quote
+router.post('/remove', middlewares.userLogged, async (req, res) => {
+  const quoteID = req.body.quote_id
+  // get posted by
+  try {
+    const quote = await quoteAPI.getQuote(quoteID)
+    // check permission
+    if (quote.posted_by !== req.headers.fbid) {
+      return res.json({
+        error: true,
+        message: `you don't have permission to do this`,
+      })
+    }
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+  // remove quote from database
+  try {
+    const remove = await quoteAPI.remove(quoteID)
+    return res.json({
+      success: true,
     })
   } catch(e) {
     return res.json({

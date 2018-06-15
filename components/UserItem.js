@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Link from 'next/link'
 
 import {fonts, colors, fontSize} from '../core/styled'
 
@@ -46,12 +47,14 @@ const Content = styled.div`
 
 // UserItem Component
 
-export default () => (
-  <Container>
-    <ProfileImage src="https://cdn-images-1.medium.com/fit/c/64/64/1*FKjV0WBgu3xhpeUwOSaABQ.jpeg" />
-    <Content>
-      <h2>Chun Rapeepat</h2>
-      <div>101 quotes</div>
-    </Content>
-  </Container>
+export default ({user}) => (
+  <Link href={`/profile?id=${user.fbid}`} as={`/profile/${user.fbid}`}>
+    <Container>
+      <ProfileImage src={user.image} />
+      <Content>
+        <h2>{user.name}</h2>
+        <div>{user.total} quotes</div>
+      </Content>
+    </Container>
+  </Link>
 )

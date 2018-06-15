@@ -7,6 +7,12 @@ const quoteSchema = new Schema({
     type: String,
     required: true,
   },
+  // posted_by_ref reference to user object id
+  posted_by_ref: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   // quote author
   author: {
     type: String,

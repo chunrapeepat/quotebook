@@ -42,14 +42,21 @@ exports.getHomeQuote = (page, limit = 10) => {
 
 // postNew
 // add new quote to database
-exports.postNew = (fbid, quote, author = '') => {
+exports.postNew = (ref, fbid, quote, author = '') => {
   const newQuote = new Quote({
+    posted_by_ref: new ObjectId(ref),
     posted_by: fbid,
     author,
     quote,
   })
   // return promise with _id
   return newQuote.save().then(res => res._id)
+}
+
+// remove
+// remove quote from database
+exports.remove = (quoteID) => {
+  return Quote.remove({_id: new ObjectId(quoteID)})
 }
 
 // getQuote
@@ -60,4 +67,48 @@ exports.getQuote = _id => {
   } catch(e) {
     return e
   }
+}
+// update quote
+exports.update = (quoteID, quote, author) => {
+  const _id = new ObjectId(quoteID)
+  if (author.length <= 0) {
+    return Quote.update({
+      _id,
+    }, {
+      $set: {
+        quote,
+      },
+    })
+  } else {
+    return Quote.update({
+      _id,
+    }, {
+      $set: {
+        quote,
+        author,
+      },
+    })
+  }
+}
+
+// get user id sorted by quotes
+exports.getTopUser = () => {
+  return Quote.aggregate([
+    {
+      $group: {
+        _id: '$posted_by_ref',
+        total: {$sum: 1},
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'profile',
+      },
+    }
+  ])
+    .sort({total: 'desc'})
+    .limit(5)
 }
