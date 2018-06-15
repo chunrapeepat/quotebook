@@ -1,11 +1,17 @@
 import React from 'react'
 import Head from 'next/head'
+import Router from 'next/router'
+import NProgress from 'nprogress'
 import {Provider} from 'react-redux'
 import {lifecycle} from 'recompose'
 import {injectGlobal} from 'styled-components'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
 import store from '../ducks'
+
+Router.onRouteChangeStart = () => NProgress.start()
+Router.onRouteChangeComplete = () => NProgress.done()
+Router.onRouteChangeError = () => NProgress.done()
 
 // inject global css style
 const enhance = lifecycle({
