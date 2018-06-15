@@ -17,6 +17,7 @@ import Error from './_error'
 import App from '../components/App'
 
 import Menubar from '../containers/Menubar'
+import EditQuoteModal from '../containers/EditQuoteModal'
 
 import {baseURL} from '../config/app'
 import {datetimeFormat} from '../core/helper'
@@ -148,6 +149,7 @@ class QuoteView extends Component {
     error: false,
     id: '',
     info: {postedBy:{}},
+    editQuoteModal: false,
   }
 
   static async getInitialProps({query, req, res}) {
@@ -212,8 +214,18 @@ class QuoteView extends Component {
     })
   }
 
+  closeModal = quoteID => async () => {
+    this.setState({editQuoteModal: false})
+    // fetch profile again and re-render
+    const response = await axios.get(`/api/quote/getQuote?id=${this.state.id}`).then(res => res.data)
+    if (response.success) {
+      this.setState({info: response.payload})
+    }
+  }
+
   render() {
-    const {info} = this.state
+    const {info, editQuoteModal} = this.state
+    const {user} = this.props
     const {userProfile} = this.props.user
     // render error page if notfound
     if (this.props.notfound || this.state.error) {
@@ -231,6 +243,16 @@ class QuoteView extends Component {
           <meta property="og:type" content="website" />
         </Head>
 
+        {user.isUserLogin && userProfile.fbid === info.postedBy.fbid &&
+          <EditQuoteModal
+            profile={info.postedBy.profileImage}
+            quote={info.quote}
+            author={info.author}
+            quoteID={this.state.id}
+            close={this.closeModal(this.state.id)}
+            show={editQuoteModal} />
+        }
+
         <Container>
           {info.postedBy.fbid &&
             <DateTime>Posted by
@@ -239,11 +261,11 @@ class QuoteView extends Component {
                 href={`/profile?id=${info.postedBy.fbid}`}>{info.postedBy.name}</Link>
               - {datetimeFormat(info.createdAt)}
 
-              {info.postedBy.fbid === userProfile.fbid &&
+              {user.isUserLogin && info.postedBy.fbid === userProfile.fbid &&
                 <ActionContainer>
                   <Dropdown overlay={(
                     <Menu>
-                      <Menu.Item key="1">Edit Quote</Menu.Item>
+                      <Menu.Item onClick={() => this.setState({editQuoteModal: true})} key="1">Edit Quote</Menu.Item>
                       <Menu.Item onClick={this.removeQuote} key="2">Remove This Quote</Menu.Item>
                     </Menu>
                   )} trigger={['click']}>

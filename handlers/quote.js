@@ -155,6 +155,47 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
   }
 })
 
+// update quote
+router.post('/update', middlewares.userLogged, async (req, res) => {
+  const quoteID = req.body.quote_id
+  const updatedQuote = req.body.quote
+  const author = req.body.author
+  // check permission
+  try {
+    const quote = await quoteAPI.getQuote(quoteID)
+    if (quote.posted_by !== req.headers.fbid) {
+      return res.json({
+        error: true,
+        message: `you don't have permission to do this`,
+      })
+    }
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+  // validate quote and author
+  if (updatedQuote.length > 150 || updatedQuote.length <= 0 || author.length > 30) {
+    return res.json({
+      error: true,
+      message: 'validate error',
+    })
+  }
+  // update quote on database
+  try {
+    const update = await quoteAPI.update(quoteID, updatedQuote, author)
+    return res.json({
+      success: true,
+    })
+  } catch(e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 // remove quote
 router.post('/remove', middlewares.userLogged, async (req, res) => {
   const quoteID = req.body.quote_id

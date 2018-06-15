@@ -67,3 +67,25 @@ exports.getQuote = _id => {
     return e
   }
 }
+// update quote
+exports.update = (quoteID, quote, author) => {
+  const _id = new ObjectId(quoteID)
+  if (author.length <= 0) {
+    return Quote.update({
+      _id,
+    }, {
+      $set: {
+        quote,
+      },
+    })
+  } else {
+    return Quote.update({
+      _id,
+    }, {
+      $set: {
+        quote,
+        author,
+      },
+    })
+  }
+}
