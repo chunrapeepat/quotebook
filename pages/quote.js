@@ -42,6 +42,7 @@ const QuoteContainer = styled.div`
 const QuoteText = styled.h1`
   font-family: ${fonts.header};
   margin: 0;
+  word-wrap: break-word;
   font-size: ${fontSize.quote}rem;
   letter-spacing: 1px;
 
@@ -73,6 +74,7 @@ const ShareContainer = styled.div`
   font-family: ${fonts.normal};
   color: ${colors.content};
   font-size: ${fontSize.normal}rem;
+  margin-top: 10px;
   margin-bottom: 20px;
 
   & > span {

@@ -48,6 +48,7 @@ const ProfileContainer = styled.div`
 
 const ContentContainer = styled.div`
   width: 0px;
+  word-wrap: break-word;
 
   & h2 {
     margin: 0;
