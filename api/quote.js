@@ -45,6 +45,7 @@ exports.getHomeQuote = (page, limit = 10) => {
 exports.postNew = (ref, fbid, quote, author = '') => {
   const newQuote = new Quote({
     posted_by_ref: new ObjectId(ref),
+    created_at: Date.now(),
     posted_by: fbid,
     author,
     quote,

@@ -3,7 +3,7 @@ const en = require('javascript-time-ago/locale/en')
 
 // date & time format
 const datetimeFormat = timestamp => {
-  var seconds = Math.floor((new Date() - timestamp) / 1000);
+  var seconds = Math.floor((Date.now() - timestamp) / 1000);
   var interval = Math.floor(seconds / 31536000);
   if (interval > 1) {
     return interval + " years";
