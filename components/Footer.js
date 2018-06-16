@@ -20,11 +20,11 @@ const FooterContainer = styled.div`
 
 export default () => (
   <FooterContainer>
-    <div>
+    {/* <div>
       <a href="">About us</a>
       <a href="">Facebook</a><br/>
       <a href="">Privacy & Terms</a>
-    </div>
+    </div> */}
     <p>Copyright © 2018 QuoteBook, The Chun Rapeepat Production.</p>
   </FooterContainer>
 )

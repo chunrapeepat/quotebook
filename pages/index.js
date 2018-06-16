@@ -44,7 +44,7 @@ const Sidebar = styled.div`
 
 const WelcomeContainer = styled.div`
   width: 100%;
-  padding: 100px 0;
+  padding: 80px 0;
   background: url(${props => props.src});
   background-size: cover;
 

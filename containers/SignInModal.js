@@ -50,8 +50,8 @@ export default class extends Component {
         <Container>
           <Heading>Join QuoteBook</Heading>
           <JoinImage />
-          <Desc>Post your own quote to share with everyone, comment, and share. just sign in with your Facebook account.</Desc>
-          <Button onClick={this.loginWithFacebook} width facebook>SignIn with Facebook</Button>
+          <Desc>Start collecting your memorable quote today, just sign in with your Facebook account.</Desc>
+          <Button onClick={this.loginWithFacebook} width facebook>Sign in with Facebook</Button>
         </Container>
       </Modal>
     )

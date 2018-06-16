@@ -83,11 +83,6 @@ export const userReducer = createReducer(initial, state => ({
     if (url.searchParams.get('code')) {
       Router.push(window.location.pathname)
     }
-    // alert the error to user
-    notification['error']({
-      message: 'เกิดข้อผิดพลาด',
-      description: 'เข้าสู่ระบบผิดพลาด โปรดลองอีกครั้งหรือติดต่อผู้ดูแลระบบ',
-    })
     return {
       ...state,
       isUserLogin: false,
