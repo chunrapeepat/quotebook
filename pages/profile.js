@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 
 import App from '../components/App'
 import Button from '../components/Button'
+import NotFound from '../components/NotFound'
 import Error from './_error'
 
 import QuoteFetch from '../containers/QuoteFetch'
@@ -217,10 +218,15 @@ class ProfileView extends Component {
               </BioContainer>
             </div>
 
-            <QuoteFetch
-              api={`/api/quote/getProfileQuote?id=${this.props.fbid}`}
-              done={this.props.done || this.state.done}
-              quotes={this.props.quotes || this.state.quotes} />
+            {this.state.quotes.length === 0 &&
+              <NotFound msg="There is no quote to show here"/>
+            }
+            {this.state.quotes.length !== 0 &&
+              <QuoteFetch
+                api={`/api/quote/getProfileQuote?id=${this.props.fbid}`}
+                done={this.props.done || this.state.done}
+                quotes={this.props.quotes || this.state.quotes} />
+            }
 
           </ProfileContainer>
         </Container>

@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import App from '../components/App'
 import Footer from '../components/Footer'
+import NotFound from '../components/NotFound'
 
 import QuoteFetch from '../containers/QuoteFetch'
 import Menubar from '../containers/Menubar'
@@ -72,7 +73,8 @@ let timeout
 
 class SearchView extends Component {
   state = {
-    search: '',
+    query: this.props.query,
+    search: this.props.query || '',
     quotes: this.props.quotes,
     done: this.props.done,
   }
@@ -92,6 +94,7 @@ class SearchView extends Component {
   }
 
   fetchApi = query => {
+    this.setState({query})
     axios.get(`/api/quote/search?query=${query}&page=1`).then(res => res.data)
       .then(data => {
         if (data.success) {
@@ -127,17 +130,27 @@ class SearchView extends Component {
           <form onSubmit={this.handleSubmit}>
             <SearchBox
               autoFocus
-              value={this.state.search || this.props.query}
+              value={this.state.search}
               onChange={this.handleInput}
               type="text" placeholder="Search Everything from QuoteBook" />
           </form>
 
           <IndexContainer>
-            <QuoteFetch
-              withProfile
-              api={`/api/quote/search?query=${this.state.search || this.props.query}`}
-              done={this.state.done}
-              quotes={this.state.quotes} />
+            <div>
+              {this.state.search.length !== 0 &&
+                <NotFound msg={<span>
+                  Searching for <b>{this.state.search}</b>
+                  {this.state.search === this.state.query &&
+                    <span>, No results found</span>
+                  }
+                </span>}/>
+              }
+              <QuoteFetch
+                withProfile
+                api={`/api/quote/search?query=${this.state.search || this.props.query}`}
+                done={this.state.done}
+                quotes={this.state.quotes} />
+            </div>
 
             <div>
               <Sidebar>

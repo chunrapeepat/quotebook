@@ -23,8 +23,8 @@ export const remove = (index, data) => index === 0 ? data.slice(1) : [
 ]
 
 // date & time format (deprecated)
-export const datetimeFormat = timestamp => {
-  return timestamp
+export const datetimeFormat = message => {
+  return message + ` ago`
   // TimeAgo.locale(en)
   // const timeAgo = new TimeAgo('en-US')
   // return timeAgo.format(timestamp)
