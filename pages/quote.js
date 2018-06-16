@@ -291,11 +291,11 @@ class QuoteView extends Component {
 
           <ShareContainer>
             <FacebookShareButton style={{display: 'inline-block'}} url={`${baseURL}/quote/${this.state.id || this.props.id}`}>
-              <a href=""><i class="zmdi zmdi-facebook-box"></i> share to Facebook</a>
+              <a href=""><i className="zmdi zmdi-facebook-box"></i> share to Facebook</a>
             </FacebookShareButton>
             <span/>
             <TwitterShareButton style={{display: 'inline-block'}} url={`${baseURL}/quote/${this.state.id || this.props.id}`}>
-              <a href=""><i class="zmdi zmdi-twitter-box"></i> share to Twitter</a>
+              <a href=""><i className="zmdi zmdi-twitter-box"></i> share to Twitter</a>
             </TwitterShareButton>
           </ShareContainer>
 

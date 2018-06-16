@@ -5,6 +5,8 @@ const baseURL = require('../config/app').baseURL
 const quoteAPI = require('../api/quote')
 const userAPI = require('../api/user')
 
+const {datetimeFormat, datetimeFormatArr} = require('../core/server-helper')
+
 // limit quotes per page
 const quoteLimit = 10
 
@@ -26,7 +28,7 @@ router.get('/getHomeQuote', async (req, res) => {
     return res.json({
       success: true,
       done: quotes.length != quoteLimit,
-      payload: quotes,
+      payload: datetimeFormatArr(quotes),
     })
   } catch (e) {
     return res.json({
@@ -75,7 +77,7 @@ router.get('/getProfileQuote', async (req, res) => {
     return res.json({
       success: true,
       done: quotes.length != quoteLimit,
-      payload: quotes,
+      payload: datetimeFormatArr(quotes),
     })
   } catch (e) {
     return res.json({
@@ -99,7 +101,7 @@ router.get('/search', async (req, res) => {
     return res.json({
       success: true,
       done: quotes.length != quoteLimit,
-      payload: quotes,
+      payload: datetimeFormatArr(quotes),
     })
   } catch (e) {
     return res.json({
@@ -125,7 +127,7 @@ router.get('/getQuote', async (req, res) => {
       success: true,
       payload: {
         quote: quote.quote,
-        createdAt: quote.created_at,
+        createdAt: datetimeFormat(quote.created_at),
         author: quote.author,
         postedBy: {
           fbid: profile.fbid,

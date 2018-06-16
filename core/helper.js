@@ -1,5 +1,3 @@
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
 // These are helper functions to make life easier.
 
 // creates a reducer from an initial state and a handler function.
@@ -24,9 +22,10 @@ export const remove = (index, data) => index === 0 ? data.slice(1) : [
   ...data.slice(index + 1, data.length)
 ]
 
-// date & time format
+// date & time format (deprecated)
 export const datetimeFormat = timestamp => {
-  TimeAgo.locale(en)
-  const timeAgo = new TimeAgo('en-US')
-  return timeAgo.format(timestamp)
+  return timestamp
+  // TimeAgo.locale(en)
+  // const timeAgo = new TimeAgo('en-US')
+  // return timeAgo.format(timestamp)
 }
