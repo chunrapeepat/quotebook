@@ -79,6 +79,15 @@ router.get('/facebook', async (req, res) => {
     userAPI.updateToken(profile.id, token)
     // response token
     const userProfile = await userAPI.getUserProfile(profile.id)
+    // banned check
+    if (userProfile.banned) {
+      userAPI.updateToken(profile.id, '')
+      return res.json({
+        error: true,
+        message: 'this user has been banned.'
+      })
+    }
+    // response token & user profile
     return res.json({
       success: true,
       payload: {

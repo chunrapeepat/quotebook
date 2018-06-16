@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Router from 'next/router'
 import {call, put, takeLatest} from 'redux-saga/effects'
+import {notification} from 'antd'
 
 import * as request from '../core/request'
 import {createReducer, createAction, createActionType} from '../core/helper'
@@ -82,6 +83,11 @@ export const userReducer = createReducer(initial, state => ({
     if (url.searchParams.get('code')) {
       Router.push(window.location.pathname)
     }
+    // alert the error to user
+    notification['error']({
+      message: 'เกิดข้อผิดพลาด',
+      description: 'เข้าสู่ระบบผิดพลาด โปรดลองอีกครั้งหรือติดต่อผู้ดูแลระบบ',
+    })
     return {
       ...state,
       isUserLogin: false,
