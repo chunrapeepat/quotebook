@@ -69,6 +69,8 @@ const Bio = styled.div`
   color: ${colors.content};
   margin-top: 10px;
   line-height: 25px;
+  text-align: justify;
+  word-break: break-all;
 `
 
 const BioIcon = styled.div`

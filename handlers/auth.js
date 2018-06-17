@@ -70,7 +70,7 @@ router.get('/facebook', async (req, res) => {
     const profile = await axios.get(`https://graph.facebook.com/v3.0/me?fields=id%2Cname%2Cemail&access_token=${accessToken}`)
       .then(res => res.data)
     // if user not registered, add user to database.
-    userAPI.newUserRegister(profile)
+    await userAPI.newUserRegister(profile)
     // sign jwt token expired in 3 hours
     const token = jwt.sign({
       fbid: profile.id,
@@ -78,7 +78,8 @@ router.get('/facebook', async (req, res) => {
     // update token on database
     userAPI.updateToken(profile.id, token)
     // response token
-    const userProfile = await userAPI.getUserProfile(profile.id)
+    let userProfile = await userAPI.getUserProfile(profile.id)
+    if (userProfile == null) userProfile = {}
     // banned check
     if (userProfile.banned) {
       userAPI.updateToken(profile.id, '')
