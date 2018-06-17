@@ -3,7 +3,7 @@ const jwtConfig = require('../config/jwt')
 const User = require('../models/User')
 const userAPI = require('../api/user')
 
-exports.userLogged = (req, res, next) => {
+exports.userLogged = async (req, res, next) => {
   if (req.headers["authorization"] === undefined) {
     return res.json({
       error: true,
@@ -20,14 +20,13 @@ exports.userLogged = (req, res, next) => {
     })
   }
   // check in database
-  User.count({token: accessToken}, (err, count) => {
-    if (count <= 0) {
-      return res.json({
-        error: true,
-        message: 'invalid access token',
-      })
-    }
-  })
+  const count = User.count({token: accessToken})
+  if (count <= 0) {
+    return res.json({
+      error: true,
+      message: 'invalid access token',
+    })
+  }
   // verify using jsonwebtoken
   jwt.verify(accessToken, jwtConfig.secret, (err, decoded) => {
     if (err) {

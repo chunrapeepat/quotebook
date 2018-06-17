@@ -8,44 +8,42 @@ exports.newUserRegister = profile => {
   const email = profile.email
   const profileImage = `https://graph.facebook.com/${fbid}/picture?type=large&width=720&height=720`
   // if user not registered, add user to database.
-  User.count({fbid}, (err, count) => {
-    if (count <= 0) {
-      const newUser = new User({
-        fbid,
-        username: fbid,
-        display_name: name,
-        email,
-        profile_image: profileImage,
-      })
-      newUser.save().then(() => {
-        console.log(`new user registered `, fbid, name)
-      })
-    }
+  return new Promise((resolve, reject) => {
+    User.count({fbid}, (err, count) => {
+      if (err) reject(err)
+      if (count <= 0) {
+        const newUser = new User({
+          fbid,
+          username: fbid,
+          display_name: name,
+          email,
+          profile_image: profileImage,
+        })
+        newUser.save().then(() => {
+          resolve(fbid)
+          console.log(`new user registered `, fbid, name)
+        })
+      }
+    })
   })
 }
 
 // updateToken
 // update user token by fbid (facebook id)
 exports.updateToken = (fbid, token) => {
-  User.update({
+  return User.update({
     fbid,
   }, {
     $set: {
       token,
     },
-  }).catch(err => {
-    if (err) throw err
   })
 }
 
 // getUserProfile
 // get user profile by fbid (render on profile page)
 exports.getUserProfile = fbid => {
-  try {
-    return User.findOne({fbid})
-  } catch(e) {
-    return e
-  }
+  return User.findOne({fbid})
 }
 
 // updateBio
