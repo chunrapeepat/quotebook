@@ -23,6 +23,8 @@ exports.newUserRegister = profile => {
           resolve(fbid)
           console.log(`new user registered `, fbid, name)
         })
+      } else {
+        resolve({fbid})
       }
     })
   })
