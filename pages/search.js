@@ -140,7 +140,7 @@ class SearchView extends Component {
               {this.state.search.length !== 0 &&
                 <NotFound msg={<span>
                   Searching for <b>{this.state.search}</b>
-                  {this.state.search === this.state.query &&
+                  {(this.state.search === this.state.query) && (this.state.quotes.length <= 0) &&
                     <span>, No results found</span>
                   }
                 </span>}/>
