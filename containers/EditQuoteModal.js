@@ -144,6 +144,13 @@ export default class extends Component {
     e.preventDefault()
   }
 
+  componentWillReceiveProps = nextProps => {
+    this.setState({
+      quoteInput: nextProps.quote,
+      authorInput: nextProps.author,
+    })
+  }
+
   render() {
     const props = this.props
     return (
