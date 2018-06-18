@@ -36,8 +36,16 @@ function* userLoginAsync(action) {
   try {
     const response = yield call(axios.get, `/api/auth/facebook?code=${action.payload}`)
     if (response.data.success) {
+      notification[`success`]({
+        message: 'Success',
+        description: `Hello ${response.data.payload.display_name}. Welcome to QuoteBook, have a good day :)`,
+      })
       yield put({type: USER_LOGIN_SUCCESS, payload: response.data.payload})
     } else {
+      notification[`error`]({
+        message: 'Error',
+        description: response.data.message,
+      })
       yield put({type: USER_LOGIN_ERROR})
     }
   } catch (e) {
@@ -59,6 +67,10 @@ function* userLoginTokenAsync(action) {
 function* userLogoutAsync(action) {
   const response = yield call(request.withToken, `/api/auth/logout`, {})
   if (response.success) {
+    notification[`success`]({
+      message: 'Success',
+      description: 'Succesfully logout!, Goodbye~',
+    })
     yield put({type: USER_LOGIN_ERROR})
   }
 }

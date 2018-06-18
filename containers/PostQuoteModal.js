@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Router from 'next/router'
+import {notification} from 'antd'
 
 import Modal from '../components/Modal'
 import Button from '../components/Button'
@@ -94,7 +95,6 @@ const limitChars = 150
 const initialState = {
   quoteInput: '',
   authorInput: '',
-  response: {},
   waiting: false,
 }
 
@@ -132,11 +132,23 @@ export default class extends Component {
     const {quoteInput, authorInput} = this.state
     request.withToken(`/api/quote/post`, {quote: quoteInput, author: authorInput || this.props.displayName})
       .then(response => {
+        this.setState({waiting: false})
+        this.props.close()
+
         if (response.success) {
+          notification[`success`]({
+            message: 'Success',
+            description: 'Your quote has been posted.',
+          })
+          // redirect to quote page
           const id = response.payload.id
           Router.push(`/quote?id=${id}`, `/quote/${id}`)
+        } else {
+          notification[`error`]({
+            message: 'Error',
+            description: response.message,
+          })
         }
-        this.setState({response, waiting: false})
       })
 
     e.preventDefault()
@@ -170,17 +182,11 @@ export default class extends Component {
                 <Footer>
                   {this.state.quoteInput.length} / {limitChars} chars
                   <div>
-                    {!this.state.waiting && !this.state.response.error && !this.state.response.success &&
+                    {!this.state.waiting &&
                       <Button success>Post To Timeline</Button>
                     }
                     {this.state.waiting &&
                       <SpanWaiting />
-                    }
-                    {this.state.response.error &&
-                      <SpanError>{this.state.response.message}</SpanError>
-                    }
-                    {this.state.response.success &&
-                      <SpanSuccess>Successfully Post</SpanSuccess>
                     }
                   </div>
                 </Footer>

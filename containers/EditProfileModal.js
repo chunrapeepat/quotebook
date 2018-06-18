@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import {notification} from 'antd'
 
 import Modal from '../components/Modal'
 import Button from '../components/Button'
@@ -80,19 +81,17 @@ export default class extends Component {
   state = {
     bio: this.props.bio,
     waiting: false,
-    response: {},
   }
 
   resetState = () => {
     this.setState({
-      response: {},
       waiting: false,
     })
   }
 
   handleChange = event => {
     // reset state when user is typing
-    this.setState({response:{}, waiting: false})
+    this.setState({waiting: false})
     if (event.target.value.length < limitChars) {
       this.setState({bio: event.target.value})
     }
@@ -103,7 +102,20 @@ export default class extends Component {
     // request to update bio
     request.withToken(`/api/user/updateBio`, {bio: this.state.bio})
       .then(response => {
-        this.setState({response, waiting: false})
+        this.setState({waiting: false})
+        this.props.close()
+
+        if (response.success) {
+          notification[`success`]({
+            message: 'Success',
+            description: 'Your bio has been updated.',
+          })
+        } else {
+          notification[`error`]({
+            message: 'Error',
+            description: response.message,
+          })
+        }
       })
 
     event.preventDefault()
@@ -123,17 +135,11 @@ export default class extends Component {
                 <Footer>
                   {this.state.bio.length} / {limitChars} chars
                   <div>
-                    {!this.state.waiting && !this.state.response.error && !this.state.response.success &&
+                    {!this.state.waiting &&
                       <Button success>Update</Button>
                     }
                     {this.state.waiting &&
                       <SpanWaiting />
-                    }
-                    {this.state.response.error &&
-                      <SpanError>{this.state.response.message}</SpanError>
-                    }
-                    {this.state.response.success &&
-                      <SpanSuccess>Sucessfully Update!</SpanSuccess>
                     }
                   </div>
                 </Footer>

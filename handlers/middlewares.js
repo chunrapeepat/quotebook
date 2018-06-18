@@ -7,7 +7,7 @@ exports.userLogged = async (req, res, next) => {
   if (req.headers["authorization"] === undefined) {
     return res.json({
       error: true,
-      message: 'invalid access token',
+      message: 'Authentication Error',
     })
   }
   // get accessToken from header
@@ -16,7 +16,7 @@ exports.userLogged = async (req, res, next) => {
   if (accessToken === 'null') {
     return res.json({
       error: true,
-      message: 'invalid access token',
+      message: 'Authentication Error',
     })
   }
   // check in database
@@ -24,7 +24,7 @@ exports.userLogged = async (req, res, next) => {
   if (count <= 0) {
     return res.json({
       error: true,
-      message: 'invalid access token',
+      message: 'Authentication Error',
     })
   }
   // verify using jsonwebtoken
@@ -32,7 +32,7 @@ exports.userLogged = async (req, res, next) => {
     if (err) {
       return res.json({
         error: true,
-        message: 'invalid access token',
+        message: 'Authentication Error',
       })
     }
     // passing user facebook id
