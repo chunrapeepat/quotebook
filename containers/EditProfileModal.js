@@ -130,7 +130,7 @@ export default class extends Component {
                       <SpanWaiting />
                     }
                     {this.state.response.error &&
-                      <SpanError>{response.message}</SpanError>
+                      <SpanError>{this.state.response.message}</SpanError>
                     }
                     {this.state.response.success &&
                       <SpanSuccess>Sucessfully Update!</SpanSuccess>
