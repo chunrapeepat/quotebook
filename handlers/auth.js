@@ -76,16 +76,16 @@ router.get('/facebook', async (req, res) => {
       fbid: profile.id,
     }, jwtConfig.secret, { expiresIn: '3h' })
     // update token on database
-    userAPI.updateToken(profile.id, token)
+    await userAPI.updateToken(profile.id, token)
     // response token
     let userProfile = await userAPI.getUserProfile(profile.id)
     if (userProfile == null) userProfile = {}
     // banned check
     if (userProfile.banned) {
-      userAPI.updateToken(profile.id, '')
+      await userAPI.updateToken(profile.id, '')
       return res.json({
         error: true,
-        message: 'this user has been banned.'
+        message: 'Your account has been banned.'
       })
     }
     // response token & user profile
@@ -101,7 +101,7 @@ router.get('/facebook', async (req, res) => {
   } catch (e) {
     return res.json({
       error: true,
-      message: 'invalid verification code.'
+      message: e.message,
     })
   }
 })

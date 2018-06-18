@@ -152,7 +152,7 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
   if (quote.length > 150 || quote.length <= 0 || author.length > 30) {
     return res.json({
       error: true,
-      message: 'validate error',
+      message: 'Invalid input, please check and try again',
     })
   }
   // add quote to database
@@ -162,7 +162,7 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
     if (typeof profile != 'object') {
       return res.json({
         error: true,
-        message: 'validate error',
+        message: 'Something went wrong, please check and try again',
       })
     }
     // post quote to database
@@ -190,7 +190,7 @@ router.post('/update', middlewares.userLogged, async (req, res) => {
     if (quote.posted_by !== req.headers.fbid) {
       return res.json({
         error: true,
-        message: `you don't have permission to do this`,
+        message: `You don't have permission to do this`,
       })
     }
   } catch (e) {
@@ -203,7 +203,7 @@ router.post('/update', middlewares.userLogged, async (req, res) => {
   if (updatedQuote.length > 150 || updatedQuote.length <= 0 || author.length > 30) {
     return res.json({
       error: true,
-      message: 'validate error',
+      message: 'Invalid input, please check and try again',
     })
   }
   // update quote on database
@@ -230,7 +230,7 @@ router.post('/remove', middlewares.userLogged, async (req, res) => {
     if (quote.posted_by !== req.headers.fbid) {
       return res.json({
         error: true,
-        message: `you don't have permission to do this`,
+        message: `You don't have permission to do this`,
       })
     }
   } catch (e) {

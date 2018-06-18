@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import {fonts, fontSize, colors} from '../core/styled'
 
 const Container = styled.div`
+  margin-bottom: 20px;
 `
 
 const Message = styled.div`

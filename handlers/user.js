@@ -39,7 +39,7 @@ router.post('/updateBio', middlewares.userLogged, async (req, res) => {
   if ((bio.length > 200 || bio.length <= 0) && typeof bio != 'string') {
     return res.json({
       error: true,
-      message: 'validate error',
+      message: 'Invalid input, please check and try again',
     })
   }
   // update on database

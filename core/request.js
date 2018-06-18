@@ -18,7 +18,7 @@ export const withToken = async (route, data) => {
     const response = await axios(authOptions).then(res => res.data)
     // check error, if error = true and message = invalid access token
     // remove token from localStorage
-    if (response.error && response.message == 'invalid access token') {
+    if (response.error && response.message == 'Authentication Error') {
       localStorage.removeItem('token')
     }
     // return response data

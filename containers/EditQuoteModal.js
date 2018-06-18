@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Router from 'next/router'
+import {notification} from 'antd'
 
 import Modal from '../components/Modal'
 import Button from '../components/Button'
@@ -94,7 +95,6 @@ const limitChars = 150
 const initialState = {
   quoteInput: '',
   authorInput: '',
-  response: {},
   waiting: false,
 }
 
@@ -138,10 +138,30 @@ export default class extends Component {
     const {quoteInput, authorInput} = this.state
     request.withToken(`/api/quote/update`, {quote_id: this.props.quoteID, quote: quoteInput, author: authorInput || this.props.author})
       .then(response => {
-        this.setState({response, waiting: false})
+        this.setState({waiting: false})
+        this.props.close()
+
+        if (response.success) {
+          notification[`success`]({
+            message: 'Success',
+            description: 'This quote has been updated.',
+          })
+        } else {
+          notification[`error`]({
+            message: 'Error',
+            description: response.message,
+          })
+        }
       })
 
     e.preventDefault()
+  }
+
+  componentWillReceiveProps = nextProps => {
+    this.setState({
+      quoteInput: nextProps.quote,
+      authorInput: nextProps.author,
+    })
   }
 
   render() {
@@ -172,17 +192,11 @@ export default class extends Component {
                 <Footer>
                   {this.state.quoteInput.length} / {limitChars} chars
                   <div>
-                    {!this.state.waiting && !this.state.response.error && !this.state.response.success &&
+                    {!this.state.waiting &&
                       <Button success>Update</Button>
                     }
                     {this.state.waiting &&
                       <SpanWaiting />
-                    }
-                    {this.state.response.error &&
-                      <SpanError>{this.state.response.message}</SpanError>
-                    }
-                    {this.state.response.success &&
-                      <SpanSuccess>Successfully Update</SpanSuccess>
                     }
                   </div>
                 </Footer>
