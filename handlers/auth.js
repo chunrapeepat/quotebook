@@ -85,7 +85,7 @@ router.get('/facebook', async (req, res) => {
       await userAPI.updateToken(profile.id, '')
       return res.json({
         error: true,
-        message: 'this user has been banned.'
+        message: 'Your account has been banned.'
       })
     }
     // response token & user profile
@@ -101,7 +101,7 @@ router.get('/facebook', async (req, res) => {
   } catch (e) {
     return res.json({
       error: true,
-      message: 'invalid verification code.'
+      message: e.message,
     })
   }
 })
