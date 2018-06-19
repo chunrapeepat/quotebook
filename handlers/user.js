@@ -34,7 +34,7 @@ router.get('/getProfileImage', async (req, res) => {
 
 // update bio from profile page
 router.post('/updateBio', middlewares.userLogged, async (req, res) => {
-  const bio = req.body.bio
+  const bio = req.body.bio.trim()
   // validate bio string
   if ((bio.length > 200 || bio.length <= 0) && typeof bio != 'string') {
     return res.json({
