@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const jwtConfig = require('../config/jwt')
 const User = require('../models/User')
 const userAPI = require('../api/user')
+const logAPI = require('../api/log')
 
 exports.userLogged = async (req, res, next) => {
   if (req.headers["authorization"] === undefined) {
@@ -28,7 +29,7 @@ exports.userLogged = async (req, res, next) => {
     })
   }
   // verify using jsonwebtoken
-  jwt.verify(accessToken, jwtConfig.secret, (err, decoded) => {
+  jwt.verify(accessToken, jwtConfig.secret, async (err, decoded) => {
     if (err) {
       return res.json({
         error: true,
@@ -36,8 +37,22 @@ exports.userLogged = async (req, res, next) => {
       })
     }
     // passing user facebook id
-    if (decoded.fbid != undefined)
+    if (decoded.fbid != undefined) {
+      // assign fbid to header
       req.headers.fbid = decoded.fbid
+      // get user id and save to logs database
+      if (req.path !== '/token') {
+        try {
+          const userID = await userAPI.getUserProfile(decoded.fbid).then(r => r._id)
+          await logAPI.save(userID, req.path, req.body)
+        } catch (e) {
+          return res.json({
+            error: true,
+            message: e.message,
+          })
+        }
+      }
+    }
   })
   // passing token and next()
   req.headers.token = accessToken

@@ -97,7 +97,7 @@ router.get('/search', async (req, res) => {
   }
   // get profile from database
   try {
-    const quotes = await quoteAPI.getSearchQuote(req.query.query, req.query.page, quoteLimit)
+    const quotes = await quoteAPI.getSearchQuote(req.query.query.trim(), req.query.page, quoteLimit)
     return res.json({
       success: true,
       done: quotes.length != quoteLimit,
@@ -146,8 +146,8 @@ router.get('/getQuote', async (req, res) => {
 
 // post new quote
 router.post('/post', middlewares.userLogged, async (req, res) => {
-  const quote = req.body.quote
-  const author = req.body.author
+  const quote = req.body.quote.trim()
+  const author = req.body.author.trim()
   // validate quote and author
   if (quote.length > 150 || quote.length <= 0 || author.length > 30) {
     return res.json({
@@ -181,9 +181,9 @@ router.post('/post', middlewares.userLogged, async (req, res) => {
 
 // update quote
 router.post('/update', middlewares.userLogged, async (req, res) => {
-  const quoteID = req.body.quote_id
-  const updatedQuote = req.body.quote
-  const author = req.body.author
+  const quoteID = req.body.quote_id.trim()
+  const updatedQuote = req.body.quote.trim()
+  const author = req.body.author.trim()
   // check permission
   try {
     const quote = await quoteAPI.getQuote(quoteID)
