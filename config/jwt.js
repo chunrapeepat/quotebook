@@ -1,2 +1,2 @@
 // secret passphase
-exports.secret = 'this is a secret'
+exports.secret = 'tBBdrqZEW60h1mhptHPO6LlTG6CetQeD'

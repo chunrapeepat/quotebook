@@ -24,6 +24,9 @@ const enhance = lifecycle({
         box-sizing: border-box;
       }
     `
+  },
+  componentDidMount() {
+    FB.CustomerChat.show({shouldShowDialog: boolean})
   }
 })
 

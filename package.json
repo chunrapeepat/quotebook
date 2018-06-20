@@ -8,8 +8,9 @@
   "scripts": {
     "start": "node server.js",
     "prod": "NODE_ENV=production node server.js",
-    "dockerbuild": "docker build -t gcr.io/quotebook-207714/quotebook:beta .",
-    "dockerpush": "gcloud docker -- push gcr.io/quotebook-207714/quotebook:beta",
+    "dockerbuild": "docker build -t gcr.io/quotebook-207714/quotebook:alpha .",
+    "dockerpush": "gcloud docker -- push gcr.io/quotebook-207714/quotebook:alpha",
+    "update": "kubectl set image deployment/quotebook quotebook=gcr.io/quotebook-207714/quotebook:alpha",
     "build": "next build"
   },
   "dependencies": {

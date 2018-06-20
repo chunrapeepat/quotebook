@@ -1,6 +1,5 @@
 const express = require('express')
 const http = require('http')
-const https = require('https')
 const next = require('next')
 const path = require('path')
 const fs = require('fs')
@@ -15,12 +14,6 @@ const apiHandler = require('./handlers')
 const dev = appConfig.environment !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
-
-// certificate option
-const certOptions = {
-  key: fs.readFileSync(path.resolve('server.key')),
-  cert: fs.readFileSync(path.resolve('server.crt')),
-}
 
 // connect to mongo database
 mongoose.connect(dbConfig.mongourl, dbConfig.options)
