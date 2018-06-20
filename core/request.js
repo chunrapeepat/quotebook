@@ -1,11 +1,13 @@
 import axios from 'axios'
 import qs from 'qs'
 
+import {baseURL} from '../config/app'
+
 // request data from token in localStorage
 export const withToken = async (route, data) => {
   const authOptions = {
     method: 'POST',
-    url: route,
+    url: `${baseURL}route`,
     data: qs.stringify(data),
     headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,

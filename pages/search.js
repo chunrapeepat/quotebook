@@ -11,6 +11,7 @@ import QuoteFetch from '../containers/QuoteFetch'
 import Menubar from '../containers/Menubar'
 import PopularUser from '../containers/PopularUser'
 
+import {baseURL} from '../config/app'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const IndexContainer = styled.div`
@@ -85,7 +86,7 @@ class SearchView extends Component {
     else q = req.params.query
     // fetch default query
     if (q !== null) {
-      const resQuote = await axios.get(encodeURI(`/api/quote/search?query=${q}&page=1`)).then(res => res.data)
+      const resQuote = await axios.get(encodeURI(`${baseURL}/api/quote/search?query=${q}&page=1`)).then(res => res.data)
       if (resQuote.success) {
         return {quotes: resQuote.payload, done: resQuote.done, query: q}
       }
@@ -95,7 +96,7 @@ class SearchView extends Component {
 
   fetchApi = query => {
     this.setState({query})
-    axios.get(encodeURI(`/api/quote/search?query=${query}&page=1`)).then(res => res.data)
+    axios.get(encodeURI(`${baseURL}/api/quote/search?query=${query}&page=1`)).then(res => res.data)
       .then(data => {
         if (data.success) {
           this.setState({quotes: data.payload, done: data.done})

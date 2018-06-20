@@ -163,7 +163,7 @@ class QuoteView extends Component {
       return {refetch: true}
     }
     // fetch api to get quote information
-    const response = await axios.get(`/api/quote/getQuote?id=${id}`).then(res => res.data)
+    const response = await axios.get(`${baseURL}/api/quote/getQuote?id=${id}`).then(res => res.data)
     if (response.success) {
       return {info: response.payload, id}
     }
@@ -182,7 +182,7 @@ class QuoteView extends Component {
     // refetch again if found
     if (this.props.refetch) {
       const id = window.location.pathname.split("/").pop()
-      const response = await axios.get(`/api/quote/getQuote?id=${id}`).then(res => res.data)
+      const response = await axios.get(`${baseURL}/api/quote/getQuote?id=${id}`).then(res => res.data)
       if (response.success) {
         this.setState({info: response.payload, id})
       }
@@ -197,7 +197,7 @@ class QuoteView extends Component {
     Modal.confirm({
       title: 'Do you want to delete this quote?',
       async onOk() {
-        const res = await request.withToken(`/api/quote/remove`, {quote_id: state.id})
+        const res = await request.withToken(`${baseURL}/api/quote/remove`, {quote_id: state.id})
         if (res.success) {
           notification['success']({
             message: 'Success',
@@ -219,7 +219,7 @@ class QuoteView extends Component {
   closeModal = quoteID => async () => {
     this.setState({editQuoteModal: false})
     // fetch profile again and re-render
-    const response = await axios.get(`/api/quote/getQuote?id=${this.state.id}`).then(res => res.data)
+    const response = await axios.get(`${baseURL}/api/quote/getQuote?id=${this.state.id}`).then(res => res.data)
     if (response.success) {
       this.setState({info: response.payload})
     }
