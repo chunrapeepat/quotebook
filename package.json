@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "build": "next build"
+    "prod": "NODE_ENV=production node server.js",
+    "build": "next build",
+    "dockerbuild": "docker build -t test/quotebook ."
   },
   "dependencies": {
     "antd": "^3.6.2",

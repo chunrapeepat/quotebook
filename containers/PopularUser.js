@@ -5,6 +5,7 @@ import axios from 'axios'
 import App from '../components/App'
 import UserItem from '../components/UserItem'
 
+import {baseURL} from '../config/app'
 import {fonts, media, colors, fontSize} from '../core/styled'
 
 const Container = styled.div`
@@ -30,7 +31,7 @@ class PopularUser extends Component {
   }
 
   componentWillMount = async () => {
-    const res = await axios.get(`/api/quote/getPopularUser`).then(res => res.data)
+    const res = await axios.get(`${baseURL}/api/quote/getPopularUser`).then(res => res.data)
     if (res.success) {
       this.setState({users: res.payload})
     }

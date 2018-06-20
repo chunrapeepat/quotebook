@@ -70,9 +70,9 @@ app.prepare()
     })
 
     // runing on http
-    http.createServer(server).listen(80)
+    http.createServer(server).listen(appConfig.port)
     // running on https
-    https.createServer(certOptions, server).listen(appConfig.port, () => {
-      console.log(`${appConfig.name} v${appConfig.version} listening on port ${appConfig.port}`)
-    })
+    // https.createServer(certOptions, server).listen(appConfig.port, () => {
+    //   console.log(`${appConfig.name} v${appConfig.version} listening on port ${appConfig.port}`)
+    // })
   })

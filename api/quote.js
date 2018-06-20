@@ -1,5 +1,5 @@
 const ObjectId = require('mongoose').Types.ObjectId
-const Quote = require('../models/quote')
+const Quote = require('../models/Quote')
 
 // getProfileQuote
 exports.getProfileQuote = (fbid, page, limit = 10) => {

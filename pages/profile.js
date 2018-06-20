@@ -13,6 +13,7 @@ import QuoteFetch from '../containers/QuoteFetch'
 import Menubar from '../containers/Menubar'
 import EditProfileModal from '../containers/EditProfileModal'
 
+import {baseURL} from '../config/app'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const imageSize = 230;
@@ -139,9 +140,9 @@ class ProfileView extends Component {
       return {refetch: true}
     }
     // fetch api to get profile information
-    const resProfile = await axios.get(`/api/user/profile?id=${id}`).then(res => res.data)
+    const resProfile = await axios.get(`${baseURL}/api/user/profile?id=${id}`).then(res => res.data)
     // fetch api to get quotes
-    const resQuote = await axios.get(`/api/quote/getProfileQuote?id=${id}&page=1`).then(res => res.data)
+    const resQuote = await axios.get(`${baseURL}/api/quote/getProfileQuote?id=${id}&page=1`).then(res => res.data)
     // return props
     if (resProfile.success && resQuote.success) {
       return {profile: resProfile.payload, done: resQuote.done, quotes: resQuote.payload, fbid: id}
@@ -155,8 +156,8 @@ class ProfileView extends Component {
     // refetch profile and quote
     if (this.props.refetch) {
       const id = window.location.pathname.split("/").pop()
-      const profile = await axios.get(`/api/user/profile?id=${id}`).then(res => res.data)
-      const quote = await axios.get(`/api/quote/getProfileQuote?id=${id}&page=1`).then(res => res.data)
+      const profile = await axios.get(`${baseURL}/api/user/profile?id=${id}`).then(res => res.data)
+      const quote = await axios.get(`${baseURL}/api/quote/getProfileQuote?id=${id}&page=1`).then(res => res.data)
       if (profile.success && quote.success) {
         this.setState({profile: profile.payload, quotes: quote.payload, done: quote.done, fbid: id})
       }
@@ -172,7 +173,7 @@ class ProfileView extends Component {
   closeModal = fbid => async() => {
     this.setState({editProfileModal: false})
     // fetch profile again and re-render
-    const resProfile = await axios.get(`/api/user/profile?id=${fbid}`).then(res => res.data)
+    const resProfile = await axios.get(`${baseURL}/api/user/profile?id=${fbid}`).then(res => res.data)
     if (resProfile.success) {
       this.setState({profile: resProfile.payload})
     }

@@ -9,6 +9,7 @@ import QuoteFetch from '../containers/QuoteFetch'
 import Menubar from '../containers/Menubar'
 import PopularUser from '../containers/PopularUser'
 
+import {baseURL} from '../config/app'
 import {Container, media, fonts, colors, fontSize} from '../core/styled'
 
 const IndexContainer = styled.div`
@@ -93,7 +94,7 @@ const DailyQuote = ({src}) => (
 class IndexView extends Component {
   static async getInitialProps() {
     // fetch api to get quotes
-    const resQuote = await axios.get(`/api/quote/getHomeQuote?page=1`).then(res => res.data)
+    const resQuote = await axios.get(`${baseURL}/api/quote/getHomeQuote?page=1`).then(res => res.data)
     // return props
     if (resQuote.success) {
       return {done: resQuote.done, quotes: resQuote.payload}
@@ -112,7 +113,7 @@ class IndexView extends Component {
 
             <QuoteFetch
               withProfile={true}
-              api={`/api/quote/getHomeQuote?id=none`}
+              api={`${baseURL}/api/quote/getHomeQuote?id=none`}
               done={this.props.done}
               quotes={this.props.quotes} />
 
