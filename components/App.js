@@ -25,9 +25,6 @@ const enhance = lifecycle({
       }
     `
   },
-  componentDidMount() {
-    FB.CustomerChat.show({shouldShowDialog: boolean})
-  }
 })
 
 const App = Component =>

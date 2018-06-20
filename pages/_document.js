@@ -24,6 +24,7 @@ export default class BaseDocument extends Document {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.6.2/antd.css"/>
         <link rel="stylesheet" href="/static/progress.css"/>
+        <link rel="shortcut icon" type="image/x-icon" href='/static/favicon.ico' />
         {this.props.styleTags}
         {/* Google Analytic */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121110022-1"></script>
