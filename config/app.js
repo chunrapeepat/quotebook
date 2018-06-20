@@ -11,4 +11,4 @@ exports.version = 'beta'
 exports.environment = process.env.NODE_ENV || 'development'
 
 // Base url
-exports.baseURL = 'http://localhost:3000'
+exports.baseURL = 'https://quotebook.xyz'

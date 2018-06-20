@@ -8,8 +8,9 @@
   "scripts": {
     "start": "node server.js",
     "prod": "NODE_ENV=production node server.js",
-    "build": "next build",
-    "dockerbuild": "docker build -t test/quotebook ."
+    "dockerbuild": "docker build -t gcr.io/quotebook-207714/quotebook:beta .",
+    "dockerpush": "gcloud docker -- push gcr.io/quotebook-207714/quotebook:beta",
+    "build": "next build"
   },
   "dependencies": {
     "antd": "^3.6.2",

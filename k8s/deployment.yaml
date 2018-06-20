@@ -1,0 +1,17 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: quotebook
+  labels:
+    app: frontend
+spec:
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: quotebook
+        image: gcr.io/quotebook-207714/quotebook:beta
+        ports:
+        - containerPort: 3000
