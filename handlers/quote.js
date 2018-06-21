@@ -31,7 +31,6 @@ router.post('/incrementView', async (req, res) => {
       success: true
     })
   } catch (e) {
-    console.log('test', e.message)
     return res.json({
       error: true,
       message: e.message,
@@ -283,10 +282,11 @@ router.post('/remove', middlewares.userLogged, async (req, res) => {
 // love quote
 router.post('/love', middlewares.userLogged, async (req, res) => {
   const quoteID = req.body.quote_id
+  const quoteAuthor = await quoteAPI.getQuote(quoteID).then(r => r.posted_by_ref)
   const userID = await userAPI.getUserProfile(req.headers.fbid).then(r => r._id)
   // update love on database
   try {
-    const update = await quoteAPI.love(quoteID, userID)
+    const update = await quoteAPI.love(quoteID, quoteAuthor, userID)
     return res.json({
       success: true,
     })

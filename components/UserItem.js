@@ -53,7 +53,7 @@ export default ({user}) => (
       <ProfileImage src={user.image} />
       <Content>
         <h2>{user.name}</h2>
-        <div>{user.total} quotes</div>
+        <div>{user.total} loved</div>
       </Content>
     </Container>
   </Link>

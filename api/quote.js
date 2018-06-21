@@ -22,7 +22,7 @@ exports.isLoved = (quoteID, userID) => {
 
 // love
 // if user doesn't append, if have delete
-exports.love = (quoteID, userID) => {
+exports.love = (quoteID, quoteAuthor, userID) => {
   return new Promise((resolve, reject) => {
     Love.find({
       quote_id: new ObjectId(quoteID),
@@ -42,6 +42,7 @@ exports.love = (quoteID, userID) => {
         // append the new one
         const loved = new Love({
           quote_id: new ObjectId(quoteID),
+          quote_author: new ObjectId(quoteAuthor),
           user_id: new ObjectId(userID),
         })
         // save it now!
@@ -201,10 +202,10 @@ exports.update = (quoteID, quote, author) => {
 
 // get user id sorted by quotes
 exports.getTopUser = () => {
-  return Quote.aggregate([
+  return Love.aggregate([
     {
       $group: {
-        _id: '$posted_by_ref',
+        _id: '$quote_author',
         total: {$sum: 1},
       },
     },

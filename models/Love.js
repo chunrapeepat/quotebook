@@ -8,6 +8,12 @@ const loveSchema = new Schema({
     ref: 'Quote',
     required: true,
   },
+  // quote author reference user
+  quote_author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   // user reference
   user_id: {
     type: Schema.Types.ObjectId,
