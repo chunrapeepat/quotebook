@@ -8,7 +8,7 @@ exports.name = 'QuoteBook'
 exports.version = 'alpha'
 
 // Current environment
-exports.environment = process.env.NODE_ENV || 'development'
+const env = exports.environment = process.env.NODE_ENV || 'development'
 
 // Base url
-exports.baseURL = 'https://quotebook.xyz'
+exports.baseURL = env === 'production' ? 'https://quotebook.xyz' : 'http://localhost:3000'

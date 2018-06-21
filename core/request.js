@@ -7,7 +7,7 @@ import {baseURL} from '../config/app'
 export const withToken = async (route, data) => {
   const authOptions = {
     method: 'POST',
-    url: `${baseURL}route`,
+    url: `${baseURL}${route}`,
     data: qs.stringify(data),
     headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,

@@ -197,7 +197,7 @@ class QuoteView extends Component {
     Modal.confirm({
       title: 'Do you want to delete this quote?',
       async onOk() {
-        const res = await request.withToken(`${baseURL}/api/quote/remove`, {quote_id: state.id})
+        const res = await request.withToken(`/api/quote/remove`, {quote_id: state.id})
         if (res.success) {
           notification['success']({
             message: 'Success',
