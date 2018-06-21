@@ -152,6 +152,14 @@ class ProfileView extends Component {
     return {profile:{}, notfound: true}
   }
 
+  componentWillReceiveProps = nextProps => {
+    // update new profile
+    // bug: on other profile check profile link but profile not update except quotes
+    this.setState({
+      profile: nextProps.profile,
+    })
+  }
+
   componentWillMount = async () => {
     // refetch profile and quote
     if (this.props.refetch) {
