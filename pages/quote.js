@@ -162,6 +162,10 @@ class QuoteView extends Component {
     if (id === undefined) {
       return {refetch: true}
     }
+    // increment view on server
+    await request.withSecret(`/api/quote/incrementView`, {
+      quote_id: id,
+    })
     // fetch api to get quote information
     const response = await axios.get(`${baseURL}/api/quote/getQuote?id=${id}`).then(res => res.data)
     if (response.success) {
@@ -292,6 +296,8 @@ class QuoteView extends Component {
           </QuoteContainer>
 
           <ShareContainer>
+            {info.views || 0} views
+            <span/>
             <FacebookShareButton style={{display: 'inline-block'}} url={`${baseURL}/quote/${this.state.id || this.props.id}`}>
               <a href=""><i className="zmdi zmdi-facebook-box"></i> share to Facebook</a>
             </FacebookShareButton>

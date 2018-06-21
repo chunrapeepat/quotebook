@@ -5,7 +5,7 @@ exports.port = 3000
 exports.name = 'QuoteBook'
 
 // Current app version
-exports.version = 'alpha'
+exports.version = '1.4'
 
 // Current environment
 const env = exports.environment = process.env.NODE_ENV || 'development'

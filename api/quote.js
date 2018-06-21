@@ -1,6 +1,15 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const Quote = require('../models/Quote')
 
+// incrementView
+exports.incrementView = (quoteID) => {
+  return Quote.findOneAndUpdate({
+    _id: new ObjectId(quoteID),
+  }, {
+    $inc: {'views': 1},
+  })
+}
+
 // getProfileQuote
 exports.getProfileQuote = (fbid, page, limit = 10) => {
   try {

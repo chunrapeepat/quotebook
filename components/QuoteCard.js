@@ -86,7 +86,7 @@ const Content = styled.div`
   & > div {
     width: 4px;
     height: 4px;
-    margin: 0 10px;
+    margin: 0 5px;
     display: inline-block;
     transform: translateY(-3px);
     background: ${colors.content};
@@ -137,7 +137,7 @@ class QuoteCard extends Component {
       <ProfileContainer noprofile={!this.props.withProfile} src={this.state.image}/>
       <ContentContainer>
         <Content>
-          {datetimeFormat(this.props.data.created_at)}
+          {datetimeFormat(this.props.data.created_at)} <div/> {this.props.data.views || 0} views
         </Content>
         <Link href={`/quote?id=${this.props.data._id}`} as={`/quote/${this.props.data._id}`}>
           <h2>“{this.props.data.quote}”</h2>

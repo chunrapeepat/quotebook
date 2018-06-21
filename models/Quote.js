@@ -29,6 +29,11 @@ const quoteSchema = new Schema({
     required: true,
     default: Date.now(),
   },
+  // user view
+  views: {
+    type: Number,
+    default: 0,
+  }
 })
 
 module.exports = mongoose.model('Quote', quoteSchema)

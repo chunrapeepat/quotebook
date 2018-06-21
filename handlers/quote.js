@@ -5,6 +5,7 @@ const baseURL = require('../config/app').baseURL
 const quoteAPI = require('../api/quote')
 const userAPI = require('../api/user')
 
+const {SECRET} = require('../config/request')
 const {datetimeFormat, datetimeFormatArr} = require('../core/server-helper')
 
 // limit quotes per page
@@ -12,6 +13,30 @@ const quoteLimit = 10
 
 router.get('/', (req, res) => {
   res.redirect(baseURL)
+})
+
+// increment quote view
+router.post('/incrementView', async (req, res) => {
+  if (req.body.secret !== SECRET) {
+    return res.json({
+      error: true,
+      message: 'something went wrong, please try again.'
+    })
+  }
+  // update database
+  try {
+    const quoteID = req.body.quote_id
+    await quoteAPI.incrementView(quoteID)
+    return res.json({
+      success: true
+    })
+  } catch (e) {
+    console.log('test', e.message)
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
 })
 
 // get quotes for home page
@@ -129,6 +154,7 @@ router.get('/getQuote', async (req, res) => {
         quote: quote.quote,
         createdAt: datetimeFormat(quote.created_at),
         author: quote.author,
+        views: quote.views,
         postedBy: {
           fbid: profile.fbid,
           name: profile.display_name,

@@ -1,7 +1,27 @@
 import axios from 'axios'
 import qs from 'qs'
 
+import {SECRET} from '../config/request'
 import {baseURL} from '../config/app'
+
+// request data with secret
+export const withSecret = async (route, data) => {
+  data.secret = SECRET
+  const authOptions = {
+    method: 'POST',
+    url: `${baseURL}${route}`,
+    data: qs.stringify(data),
+    json: true,
+  }
+  // do http request
+  try {
+    const response = await axios(authOptions).then(res => res.data)
+    // return response data
+    return response
+  } catch (e) {
+    return e
+  }
+}
 
 // request data from token in localStorage
 export const withToken = async (route, data) => {

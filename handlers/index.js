@@ -35,6 +35,7 @@ router.use('/user', userHandler)
 // - /quote/search?query=xxx - get search quotes public (get)
 // - /quote/remove - remove quote (post)
 // - /quote/getPopularUser - get popular user sorted by total quote (get)
+// - /quote/incrementView - increment user view (post)
 router.use('/quote', quoteHandler)
 
 module.exports = router
