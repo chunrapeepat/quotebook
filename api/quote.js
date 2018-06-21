@@ -1,5 +1,58 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const Quote = require('../models/Quote')
+const Love = require('../models/Love')
+
+// isLoved
+// check is loved on not
+exports.isLoved = (quoteID, userID) => {
+  return new Promise((resolve, reject) => {
+    Love.find({
+      quote_id: new ObjectId(quoteID),
+      user_id: new ObjectId(userID),
+    }, (err, docs) => {
+      if (err) reject(err)
+      if (docs.length) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
+}
+
+// love
+// if user doesn't append, if have delete
+exports.love = (quoteID, userID) => {
+  return new Promise((resolve, reject) => {
+    Love.find({
+      quote_id: new ObjectId(quoteID),
+      user_id: new ObjectId(userID),
+    }, (err, docs) => {
+      if (err) reject(err)
+      if (docs.length) {
+        // remove the old
+        Love.remove({
+          quote_id: new ObjectId(quoteID),
+          user_id: new ObjectId(userID),
+        }, err => {
+          if (err) reject(err)
+          resolve('success')
+        })
+      } else {
+        // append the new one
+        const loved = new Love({
+          quote_id: new ObjectId(quoteID),
+          user_id: new ObjectId(userID),
+        })
+        // save it now!
+        loved.save(err => {
+          if (err) reject(err)
+          resolve('success')
+        })
+      }
+    })
+  })
+}
 
 // incrementView
 exports.incrementView = (quoteID) => {

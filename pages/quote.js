@@ -166,8 +166,8 @@ const LoveButtonStyle = styled.div`
   }
 `
 
-const LoveButton = ({loved, total}) => (
-  <LoveButtonStyle loved={loved}>
+const LoveButton = ({onClick, loved, total}) => (
+  <LoveButtonStyle loved={loved} onClick={() => onClick()}>
     {!loved &&
       <i className="zmdi zmdi-favorite-outline"/>
     }
@@ -184,6 +184,7 @@ class QuoteView extends Component {
     id: '',
     info: {postedBy:{}},
     editQuoteModal: false,
+    loved: false,
   }
 
   static async getInitialProps({query, req, res}) {
@@ -208,6 +209,16 @@ class QuoteView extends Component {
     return {notfound: true}
   }
 
+  fetchLove = async () => {
+    if (!this.props.user.isUserLogin) {
+      return
+    }
+    const response = await request.withToken(`/api/quote/isLoved`, {quote_id: this.state.id || this.props.id})
+    if (response.success) {
+      this.setState({loved: response.payload})
+    }
+  }
+
   componentWillMount = () => {
     if (this.props.info) {
       this.setState({info: this.props.info, id: this.props.id})
@@ -226,6 +237,12 @@ class QuoteView extends Component {
         this.setState({error: true})
       }
     }
+    let loved = setInterval(() => {
+      if (this.props.user.isUserLogin) {
+        this.fetchLove()
+        clearInterval(loved)
+      }
+    }, 500)
   }
 
   removeQuote = () => {
@@ -258,6 +275,28 @@ class QuoteView extends Component {
     const response = await axios.get(`${baseURL}/api/quote/getQuote?id=${this.state.id}`).then(res => res.data)
     if (response.success) {
       this.setState({info: response.payload})
+    }
+  }
+
+  loved = async () => {
+    // check login first
+    if (!this.props.user.isUserLogin) {
+      return notification['error']({
+        message: 'Error',
+        description: `Please login before do action`,
+      })
+    }
+    // set before check it
+    this.setState({loved: !this.state.loved})
+    // send request waiting for callback
+    const response = await request.withToken(`/api/quote/love`, {quote_id: this.state.id})
+    if (response.success) {
+      this.fetchLove()
+    } else {
+      return notification['error']({
+        message: 'Error',
+        description: response.message,
+      })
     }
   }
 
@@ -328,7 +367,7 @@ class QuoteView extends Component {
           </QuoteContainer>
 
           <ShareContainer>
-            <LoveButton loved total={101}/>
+            <LoveButton onClick={this.loved} loved={this.state.loved} total={101}/>
             <span/>
             {info.views || 0} views
             <span/>

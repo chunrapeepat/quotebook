@@ -279,4 +279,41 @@ router.post('/remove', middlewares.userLogged, async (req, res) => {
   }
 })
 
+// love quote
+router.post('/love', middlewares.userLogged, async (req, res) => {
+  const quoteID = req.body.quote_id
+  const userID = await userAPI.getUserProfile(req.headers.fbid).then(r => r._id)
+  // update love on database
+  try {
+    const update = await quoteAPI.love(quoteID, userID)
+    return res.json({
+      success: true,
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
+// check is user loved that quote
+router.post('/isLoved', middlewares.userLogged, async (req, res) => {
+  const quoteID = req.body.quote_id
+  const userID = await userAPI.getUserProfile(req.headers.fbid).then(r => r._id)
+  // update love on database
+  try {
+    const check = await quoteAPI.isLoved(quoteID, userID)
+    return res.json({
+      success: true,
+      payload: check,
+    })
+  } catch (e) {
+    return res.json({
+      error: true,
+      message: e.message,
+    })
+  }
+})
+
 module.exports = router

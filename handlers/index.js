@@ -29,13 +29,15 @@ router.use('/user', userHandler)
 
 // quote route
 // - /quote/post - post new quote (post)
+// - /quote/remove - remove quote (post)
+// - /quote/incrementView - increment user view (post)
+// - /quote/love - love and unlove button (post)
+
 // - /quote/getQuote - get quote public (get)
 // - /quote/getProfileQuote - get profile quotes public (get)
 // - /quote/getHomeQuote - get home quotes public (get)
 // - /quote/search?query=xxx - get search quotes public (get)
-// - /quote/remove - remove quote (post)
 // - /quote/getPopularUser - get popular user sorted by total quote (get)
-// - /quote/incrementView - increment user view (post)
 router.use('/quote', quoteHandler)
 
 module.exports = router
