@@ -52,6 +52,25 @@ export default class BaseDocument extends Document {
         `}}></script>
       </Head>
       <body>
+        {/* Facebook Customer Chat */}
+        <div id="fb-root"></div>
+        <script dangerouslySetInnerHTML={{__html: `
+          (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+        `}}/>
+        <div class="fb-customerchat"
+          attribution="setup_tool"
+          page_id="222466318345424"
+          theme_color="#333333"
+          logged_in_greeting="Hello, How can we help you? (Bugs, Questions, Feature Request & more...)"
+          logged_out_greeting="Hello, How can we help you? (Bugs, Questions, Feature Request & more...)">
+        </div>
+
         <Main />
         <NextScript />
       </body>
