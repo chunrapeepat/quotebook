@@ -185,6 +185,7 @@ class QuoteView extends Component {
     info: {postedBy:{}},
     editQuoteModal: false,
     loved: false,
+    totalLove: this.props.totalLove || 0,
   }
 
   static async getInitialProps({query, req, res}) {
@@ -202,7 +203,7 @@ class QuoteView extends Component {
     // fetch api to get quote information
     const response = await axios.get(`${baseURL}/api/quote/getQuote?id=${id}`).then(res => res.data)
     if (response.success) {
-      return {info: response.payload, id}
+      return {info: response.payload, id, totalLove: response.payload.totalLove}
     }
     // error user not found or something
     if (response.error && res) res.statusCode = 404
@@ -231,7 +232,7 @@ class QuoteView extends Component {
       const id = window.location.pathname.split("/").pop()
       const response = await axios.get(`${baseURL}/api/quote/getQuote?id=${id}`).then(res => res.data)
       if (response.success) {
-        this.setState({info: response.payload, id})
+        this.setState({info: response.payload, id, totalLove: response.payload.totalLove})
       }
       if (response.error) {
         this.setState({error: true})
@@ -288,6 +289,12 @@ class QuoteView extends Component {
     }
     // set before check it
     this.setState({loved: !this.state.loved})
+    // update total loved
+    if (this.state.loved) {
+      this.setState({totalLove: this.state.totalLove - 1})
+    } else {
+      this.setState({totalLove: this.state.totalLove + 1})
+    }
     // send request waiting for callback
     const response = await request.withToken(`/api/quote/love`, {quote_id: this.state.id})
     if (response.success) {
@@ -367,7 +374,7 @@ class QuoteView extends Component {
           </QuoteContainer>
 
           <ShareContainer>
-            <LoveButton onClick={this.loved} loved={this.state.loved} total={101}/>
+            <LoveButton onClick={this.loved} loved={this.state.loved} total={this.state.totalLove || 0}/>
             <span/>
             {info.views || 0} views
             <span/>

@@ -157,7 +157,7 @@ class QuoteCard extends Component {
         <Link href={`/quote?id=${this.props.data._id}`} as={`/quote/${this.props.data._id}`}>
           <Loved>
             <i class="zmdi zmdi-favorite-outline"></i>
-            <span>101</span>
+            <span>{this.props.data.total_love || 0}</span>
           </Loved>
         </Link>
       </div>

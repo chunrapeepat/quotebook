@@ -155,6 +155,7 @@ router.get('/getQuote', async (req, res) => {
         createdAt: datetimeFormat(quote.created_at),
         author: quote.author,
         views: quote.views,
+        totalLove: quote.total_love,
         postedBy: {
           fbid: profile.fbid,
           name: profile.display_name,

@@ -65,41 +65,80 @@ exports.incrementView = (quoteID) => {
 
 // getProfileQuote
 exports.getProfileQuote = (fbid, page, limit = 10) => {
-  try {
-    return Quote.find({posted_by: fbid})
+  return new Promise((resolve, reject) => {
+    Quote.find({posted_by: fbid})
       .limit(limit)
       .skip((page - 1) * limit)
       .sort({created_at: 'descending'})
-  } catch (e) {
-    return e
-  }
+      .exec(async (err, docs) => {
+        if (err) reject(err)
+        else {
+          // get quote count here
+          const pArray = docs.map(async doc => {
+            const count = await Love.count({quote_id: new ObjectId(doc._id)})
+            const quote = JSON.parse(JSON.stringify(doc))
+            quote.total_love = count
+            return quote
+          })
+          // passing to promise all
+          const quotes = await Promise.all(pArray)
+          resolve(quotes)
+        }
+      })
+  })
 }
 
 // getSearchQuote
 exports.getSearchQuote = (query, page, limit = 10) => {
-  try {
-    return Quote.find({quote: {
+  return new Promise((resolve, reject) => {
+    Quote.find({quote: {
       $regex: query,
       $options: 'i',
     }})
       .limit(limit)
       .skip((page - 1) * limit)
       .sort({created_at: 'descending'})
-  } catch (e) {
-    return e
-  }
+      .exec(async (err, docs) => {
+        if (err) reject(err)
+        else {
+          // get quote count here
+          const pArray = docs.map(async doc => {
+            const count = await Love.count({quote_id: new ObjectId(doc._id)})
+            const quote = JSON.parse(JSON.stringify(doc))
+            quote.total_love = count
+            return quote
+          })
+          // passing to promise all
+          const quotes = await Promise.all(pArray)
+          resolve(quotes)
+        }
+      })
+  })
 }
 
 // getHomeQuote
 exports.getHomeQuote = (page, limit = 10) => {
-  try {
-    return Quote.find({})
+  return new Promise((resolve, reject) => {
+    Quote.find({})
       .limit(limit)
       .skip((page - 1) * limit)
       .sort({created_at: 'descending'})
-  } catch (e) {
-    return e
-  }
+      .exec(async (err, docs) => {
+        if (err) reject(err)
+        else {
+          // get quote count here
+          const pArray = docs.map(async doc => {
+            const count = await Love.count({quote_id: new ObjectId(doc._id)})
+            const quote = JSON.parse(JSON.stringify(doc))
+            quote.total_love = count
+            return quote
+          })
+          // passing to promise all
+          const quotes = await Promise.all(pArray)
+          resolve(quotes)
+        }
+      })
+  })
 }
 
 // postNew
@@ -125,11 +164,17 @@ exports.remove = (quoteID) => {
 // getQuote
 // get quote by quote id (_id)
 exports.getQuote = _id => {
-  try {
-    return Quote.findOne({_id: new ObjectId(_id)})
-  } catch(e) {
-    return e
-  }
+  return new Promise((resolve, reject) => {
+    Quote.findOne({_id: new ObjectId(_id)}, (err, doc) => {
+      if (err) reject(err)
+      Love.count({quote_id: doc._id}, (err, count) => {
+        if (err) reject(err)
+        let quote = Object.assign({}, doc)._doc
+        quote.total_love = count
+        resolve(quote)
+      })
+    })
+  })
 }
 // update quote
 exports.update = (quoteID, quote, author) => {
