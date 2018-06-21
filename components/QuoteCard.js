@@ -106,6 +106,24 @@ const Content = styled.div`
   }
 `
 
+const Loved = styled.div`
+  text-align: center;
+  margin-top: 15px;
+  cursor: pointer;
+
+  & > span {
+    font-size: ${fontSize.small}rem;
+  }
+
+  & > i {
+    font-size: ${fontSize.normal}rem;
+  }
+
+  & > * {
+    display: block;
+  }
+`
+
 // QuoteCard Component
 // data props: response from server
 
@@ -134,7 +152,15 @@ class QuoteCard extends Component {
 
   render = () => (
     <Container>
-      <ProfileContainer noprofile={!this.props.withProfile} src={this.state.image}/>
+      <div>
+        <ProfileContainer noprofile={!this.props.withProfile} src={this.state.image}/>
+        <Link href={`/quote?id=${this.props.data._id}`} as={`/quote/${this.props.data._id}`}>
+          <Loved>
+            <i class="zmdi zmdi-favorite-outline"></i>
+            <span>101</span>
+          </Loved>
+        </Link>
+      </div>
       <ContentContainer>
         <Content>
           {datetimeFormat(this.props.data.created_at)} <div/> {this.props.data.views || 0} views

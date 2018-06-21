@@ -48,7 +48,7 @@ const ProfileImage = styled.div`
   width: ${imageSize}px;
   height: ${imageSize}px;
   background: url(${props => props.src}) no-repeat center center;
-  border: 1px solid ${colors.main};
+  border: 1px solid ${colors.background};
   background-size: cover;
   border-radius: 5px;
 `

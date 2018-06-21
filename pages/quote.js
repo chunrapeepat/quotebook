@@ -76,6 +76,7 @@ const ShareContainer = styled.div`
   font-size: ${fontSize.normal}rem;
   margin-top: 10px;
   margin-bottom: 20px;
+  line-height: 30px;
 
   & > span {
     width: 4px;
@@ -145,6 +146,37 @@ const ActionContainer = styled.div`
     font-size: ${fontSize.icon}rem;
   }
 `
+
+const LoveButtonStyle = styled.div`
+  display: inline-block;
+  cursor: pointer;
+
+  ${props => props.loved ? `` : `
+    &:hover {
+      color: black;
+      transform: scale(1.1);
+    }
+  `}
+
+  & > i {
+    margin-right: 7px;
+    font-size: 1.5rem;
+    transform: translateY(3px);
+    color: ${props => props.loved ? 'red' : 'auto'};
+  }
+`
+
+const LoveButton = ({loved, total}) => (
+  <LoveButtonStyle loved={loved}>
+    {!loved &&
+      <i className="zmdi zmdi-favorite-outline"/>
+    }
+    {loved &&
+      <i className="zmdi zmdi-favorite"/>
+    }
+    {total}
+  </LoveButtonStyle>
+)
 
 class QuoteView extends Component {
   state = {
@@ -296,6 +328,8 @@ class QuoteView extends Component {
           </QuoteContainer>
 
           <ShareContainer>
+            <LoveButton loved total={101}/>
+            <span/>
             {info.views || 0} views
             <span/>
             <FacebookShareButton style={{display: 'inline-block'}} url={`${baseURL}/quote/${this.state.id || this.props.id}`}>

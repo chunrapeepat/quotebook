@@ -7,6 +7,7 @@ import {lifecycle} from 'recompose'
 import {injectGlobal} from 'styled-components'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
+import {baseURL} from '../config/app'
 import store from '../ducks'
 
 Router.onRouteChangeStart = () => NProgress.start()
@@ -33,6 +34,10 @@ const App = Component =>
       <div>
         <Head>
           <title>QuoteBook</title>
+          <meta property="og:image" content={`${baseURL}/static/background.png`} />
+          <meta name="author" content="Chun Rapeepat"/>
+          <meta name="keywords" content="quote, share, post quote, love, funny, emotional, quotes, steve jobs, chun rapeepat, chunza2542, chun"/>
+          <meta name="description" content="The quotes sharing website. tell your story through your quote and share it with everyone."/>
         </Head>
         <Component {...props} />
       </div>
